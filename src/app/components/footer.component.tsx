@@ -25,19 +25,19 @@ export default function FooterComponent() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/License" className="hover:underline">
-                    라이선스
-                  </Link>
+                  <a href="https://github.com/vientorepublic/diary" className="hover:underline">
+                    소스코드
+                  </a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <hr className="my-6 border-gray-700 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <p className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             {new Date().getFullYear()}{" "}
-            <a href="https://github.com/vientorepublic/" target="_blank" className="text-blue-500">
+            <a href="https://github.com/vientorepublic/" className="text-blue-500">
               Viento
             </a>
           </p>
