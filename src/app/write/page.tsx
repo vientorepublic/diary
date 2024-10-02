@@ -11,7 +11,7 @@ const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((
   ssr: false,
   loading: () => (
     <div className="flex flex-col gap-4 justify-center items-center">
-      <div className="dots-loader"></div>
+      <div className="dots-loader-white"></div>
       <p className="phrase-text text-2xl">텍스트 편집기를 불러오고 있어요...</p>
     </div>
   ),

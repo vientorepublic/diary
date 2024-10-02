@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import FooterComponent from "./components/footer.component";
+import { Footer } from "./components/footer.component";
+import { Navbar } from "./components/navbar.component";
+import { ToastLayout } from "./layout/toast.layout";
+import { DataLayout } from "./layout/data.layout";
 import NextTopLoader from "nextjs-toploader";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/static/css/loader.css";
@@ -22,8 +26,15 @@ export default function RootLayout({
     <html lang="ko">
       <body className="bg-gray-900 text-gray-100">
         <NextTopLoader showSpinner={true} height={2} />
-        {children}
-        <FooterComponent />
+        <DataLayout>
+          <ToastLayout>
+            <Suspense>
+              <Navbar />
+              {children}
+              <Footer />
+            </Suspense>
+          </ToastLayout>
+        </DataLayout>
       </body>
     </html>
   );
