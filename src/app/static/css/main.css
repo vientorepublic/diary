@@ -16,6 +16,16 @@ body {
   font-family: "Nanum BaReumHiPi";
 }
 
+::-moz-selection {
+  color: #fff;
+  background: #34d399;
+}
+
+::selection {
+  color: #fff;
+  background: #34d399;
+}
+
 .animated-background {
   background-size: 400%;
 
@@ -33,4 +43,8 @@ body {
   50% {
     background-position: 100% 50%;
   }
+}
+
+.min-h-400px {
+  min-height: 400px;
 }

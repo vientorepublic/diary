@@ -36,7 +36,11 @@ export default function Home() {
                 <div className="absolute inset-0 animated-background bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.50] bg-red-500 rounded-full blur-3xl" />
                 <h1 className="relative px-4 py-8 text-gray-100">오늘 하루는 어땠나요?</h1>
               </div>
-              <h1 className="bg-gradient-to-r from-blue-200 to-cyan-200 text-transparent bg-clip-text">당신의 이야기를 써내려 보세요.</h1>
+              <div className="flex flex-row justify-center items-center">
+                <h1 className="text-gray-100">
+                  <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">당신의 이야기</span>를 써내려 보세요.
+                </h1>
+              </div>
             </div>
           </div>
           <hr className="my-10 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400" />
@@ -52,7 +56,7 @@ export default function Home() {
         </div>
         <Link
           href="/write"
-          className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
+          className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
         >
           새 글 작성하기
           <FontAwesomeIcon icon={faPencil} className="ml-2" />
