@@ -3,6 +3,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { ICardParams } from "../types";
 import Image from "next/image";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 export function PostCard(params: ICardParams) {
   return (
@@ -14,6 +15,7 @@ export function PostCard(params: ICardParams) {
           <Image className="w-7 h-7 rounded-full" src={params.profileImage} width={7} height={7} alt="" />
           <span className="text-gray-100 text-base">viento</span>
         </div>
+        <p className="text-gray-500 text-sm mt-1">{dayjs(params.createdAt).format("YYYY.MM.DD HH:mm:ss")}</p>
         <div className="flex flex-col gap-2 h-full">
           <h2 className="text-2xl text-slate-200 font-bold mt-2">{params.title}</h2>
           <p className="text-base text-slate-200">{params.text}</p>

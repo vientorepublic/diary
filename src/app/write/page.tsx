@@ -9,7 +9,7 @@ import { useState } from "react";
 import { IPost } from "../types";
 import { fetcher } from "../utility/fetcher";
 import { useReCaptcha } from "next-recaptcha-v3";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import toast from "react-hot-toast";
 import { isAxiosError } from "axios";
 import { getCookie } from "cookies-next";

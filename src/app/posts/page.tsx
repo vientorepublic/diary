@@ -5,6 +5,9 @@ import { IPaginationData, IPostData } from "../types";
 import { fetcher } from "../utility/fetcher";
 import { isAxiosError } from "axios";
 import { Alert } from "../components/alert.component";
+import { Utility } from "../utility";
+
+const utility = new Utility();
 
 export default function PostPage() {
   const [posts, setPosts] = useState<IPaginationData<IPostData[]>>();
@@ -32,7 +35,7 @@ export default function PostPage() {
     getPosts();
   }, []);
   return (
-    <section className="flex flex-col items-center justify-center px-10 py-20">
+    <section className="flex flex-col items-center justify-center px-10">
       <div className="py-10 w-full lg:w-4/5">
         {loading ? (
           <div className="flex flex-col gap-4 justify-center items-center h-screen">
@@ -44,10 +47,19 @@ export default function PostPage() {
             <Alert>{error}</Alert>
           </div>
         ) : (
-          <div className="grid grid-wrap lg:grid-cols-2 gap-5">
+          <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-20">
             {posts &&
               posts.data.map((e, i) => {
-                return <PostCard title={e.title} text={e.text} profileImage={e.profile_image} buttonLink="/" key={i} />;
+                return (
+                  <PostCard
+                    title={utility.shortenString(10, e.title)}
+                    text={utility.shortenString(50, e.text)}
+                    profileImage={e.profile_image}
+                    createdAt={e.created_at}
+                    buttonLink={`/posts/${e.id}`}
+                    key={i}
+                  />
+                );
               })}
           </div>
         )}

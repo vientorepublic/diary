@@ -22,6 +22,7 @@ export interface IPost {
 }
 
 export interface IPostData extends IPost {
+  id: number;
   author: string;
   profile_image: string;
   created_at: number;
@@ -41,6 +42,10 @@ export interface IPaginationData<T> {
 
 export interface DefaultResponse {
   message: string;
+}
+
+export interface IViewPostParams {
+  id: string;
 }
 
 export interface IssueTokenResponse extends DefaultResponse {
@@ -75,6 +80,7 @@ export interface ICardParams {
   title: string;
   text: string;
   profileImage: string;
+  createdAt: number;
   buttonLink: string;
   className?: string;
 }

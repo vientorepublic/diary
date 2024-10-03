@@ -10,7 +10,9 @@ import { PostCard } from "./components/card.component";
 import { fetcher } from "./utility/fetcher";
 import axios, { isAxiosError } from "axios";
 import { Alert } from "./components/alert.component";
-// import Image from "next/image";
+import { Utility } from "./utility";
+
+const utility = new Utility();
 
 export default function Home() {
   const [fetching, setFetching] = useState<boolean>(true);
@@ -108,7 +110,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      {/* Main Contents */}
+      {/* Main Content - Spolight Cards */}
       <div className="flex flex-col justify-center items-center py-10">
         <h1 className="dark:text-white text-gray text-4xl sm:text-5xl font-bold">자유로운 소통의 공간</h1>
         <Spotlight className="flex flex-col lg:flex-row py-10 gap-5 w-full mx-auto grid gap-6 lg:grid-cols-3 items-start lg:max-w-none group">
@@ -162,23 +164,32 @@ export default function Home() {
       {/* Recent Posts */}
       <div className="py-10">
         <h1 className="dark:text-white text-gray text-4xl sm:text-5xl font-bold">최근 게시글</h1>
-        <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
-          {loadingPosts ? (
-            <div className="flex flex-col gap-4 justify-center items-center">
-              <div className="dots-loader-white"></div>
-              <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
-            </div>
-          ) : error ? (
-            <div className="flex flex-col gap-4 justify-center items-center h-screen">
-              <Alert>{error}</Alert>
-            </div>
-          ) : (
-            posts &&
-            posts.data.map((e, i) => {
-              return <PostCard title={e.title} text={e.text} profileImage={e.profile_image} buttonLink="/" key={i} />;
-            })
-          )}
-        </div>
+        {loadingPosts ? (
+          <div className="flex flex-col gap-5 mt-10 justify-center items-center">
+            <div className="dots-loader-white"></div>
+            <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
+          </div>
+        ) : error ? (
+          <div className="flex flex-col gap-4 py-10 justify-center items-center">
+            <Alert>{error}</Alert>
+          </div>
+        ) : (
+          <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
+            {posts &&
+              posts.data.map((e, i) => {
+                return (
+                  <PostCard
+                    title={utility.shortenString(10, e.title)}
+                    text={utility.shortenString(50, e.text)}
+                    profileImage={e.profile_image}
+                    createdAt={e.created_at}
+                    buttonLink={`/posts/${e.id}`}
+                    key={i}
+                  />
+                );
+              })}
+          </div>
+        )}
       </div>
     </section>
   );
