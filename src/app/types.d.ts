@@ -47,3 +47,11 @@ export interface IRegisterAuthForm {
   passphrase: string;
   agree: boolean;
 }
+
+export interface ICardParams {
+  title: string;
+  text: string;
+  buttonName: string;
+  buttonLink: string;
+  className?: string;
+}
