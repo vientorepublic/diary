@@ -41,18 +41,22 @@ export function Navbar() {
                   </div>
                   <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                     <li>
-                      <Link href="/dashboard" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 hover:text-white">
-                        대시보드
+                      <Link href="/write" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
+                        새 글 쓰기
                       </Link>
                     </li>
                     <li>
-                      <Link href="/auth/account" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 hover:text-white">
+                      <Link href="/auth/account" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
                         계정 설정
                       </Link>
                     </li>
                   </ul>
                   <div className="py-2">
-                    <Link href="/auth/logout" onClick={() => closeDropdown()} className="block px-4 py-2 text-sm text-gray-200 hover:text-white">
+                    <Link
+                      href="/auth/logout"
+                      onClick={() => closeDropdown()}
+                      className="block px-4 py-2 hover:bg-gray-600 text-sm text-gray-200 text-white"
+                    >
                       로그아웃
                     </Link>
                   </div>

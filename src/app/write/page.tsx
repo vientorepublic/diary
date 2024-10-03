@@ -30,7 +30,13 @@ export default function WritePage() {
       <div className="py-10 w-full md:w-4/5">
         <MarkdownEditor value={text} onChange={setText} height="400px" autoFocus />
         <div className="sm:flex sm:items-center sm:justify-between">
-          <div className="py-10 phrase-text">
+          <div className="mt-10">
+            <button className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0">
+              게시하기
+              <FontAwesomeIcon icon={faUpload} className="ml-2" />
+            </button>
+          </div>
+          <div className="mt-10 phrase-text">
             <h1 className="text-3xl text-bold">도움말</h1>
             <div className="flex flex-row gap-2 text-lg">
               <FontAwesomeIcon icon={faEye} className="mt-1.5" />
@@ -53,10 +59,6 @@ export default function WritePage() {
               <p>: 인용문을 넣습니다.</p>
             </div>
           </div>
-          <button className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0">
-            게시하기
-            <FontAwesomeIcon icon={faUpload} className="ml-2" />
-          </button>
         </div>
       </div>
     </section>

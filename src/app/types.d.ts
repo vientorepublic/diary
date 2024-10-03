@@ -40,3 +40,10 @@ export interface ILoginAuthForm {
   user_id: string;
   passphrase: string;
 }
+
+export interface IRegisterAuthForm {
+  user_id: string;
+  email: string;
+  passphrase: string;
+  agree: boolean;
+}

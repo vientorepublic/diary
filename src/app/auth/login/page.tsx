@@ -16,10 +16,10 @@ import React from "react";
 export default function LoginPage() {
   const router = useRouter();
   const params = useSearchParams();
-  const [disabled, setDisabled] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<ILoginAuthForm>();
-  const { setUser } = UserStore();
+  const [disabled, setDisabled] = useState<boolean>(false);
   const { executeRecaptcha } = useReCaptcha();
+  const { setUser } = UserStore();
   async function submit(data: ILoginAuthForm) {
     setDisabled(true);
     try {
@@ -28,7 +28,8 @@ export default function LoginPage() {
         ...data,
         g_recaptcha_response: token,
       });
-      setCookie("access_token", result.data.data.access_token, {
+      const { access_token } = result.data.data;
+      setCookie("access_token", access_token, {
         secure: process.env.NODE_ENV === "production",
         maxAge: 60 * 60 * 24 * 7,
         sameSite: "strict",
@@ -36,7 +37,7 @@ export default function LoginPage() {
       });
       const user = await fetcher.get<IUserInfo>("/auth/user/info", {
         headers: {
-          Authorization: `Bearer ${result.data.data.access_token}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
       setUser({
@@ -65,9 +66,9 @@ export default function LoginPage() {
     }
   }
   return (
-    <div className="min-h-screen sm:mt-10 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="relative px-4 py-10 bg-white shadow-lg shadow-xl sm:rounded-2xl sm:p-20">
+    <div className="min-h-screen py-6 flex flex-col justify-center">
+      <div className="relative sm:max-w-xl sm:mx-auto">
+        <div className="relative bg-white shadow-lg shadow-xl sm:rounded-2xl p-20">
           <div className="max-w-md mx-auto">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-300 to-blue-300 inline-block text-transparent bg-clip-text mb-3">Hello!</h1>
             <h2 className="text-2x text-gray-700">다시 돌아오셔서 정말 반가워요</h2>
