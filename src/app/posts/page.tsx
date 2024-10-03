@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
 import { PostCard } from "../components/card.component";
 import { IPaginationData, IPostData } from "../types";
-import { fetcher } from "../utility/fetcher";
-import { isAxiosError } from "axios";
 import { Alert } from "../components/alert.component";
+import { fetcher } from "../utility/fetcher";
+import { useEffect, useState } from "react";
+import { isAxiosError } from "axios";
 import { Utility } from "../utility";
 
 const utility = new Utility();

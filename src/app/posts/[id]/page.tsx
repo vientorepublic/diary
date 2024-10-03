@@ -1,8 +1,8 @@
 "use client";
 import { IPostData, IViewPostParams } from "@/app/types";
 import { fetcher } from "@/app/utility/fetcher";
-import { isAxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { isAxiosError } from "axios";
 
 export default function ViewPostPage({ params }: { params: IViewPostParams }) {
   const [loading, setLoading] = useState<boolean>(true);

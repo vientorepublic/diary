@@ -80,7 +80,7 @@ export default function WritePage() {
         />
         <MarkdownEditor value={text} onChange={setText} height="400px" aria-disabled={uploading} autoFocus />
         <div className="py-5">
-          <Alert>게시하기 전에 제목, 본문 내용이 가이드라인에 위배되지 않는지 다시 한 번 확인 부탁드립니다.</Alert>
+          <Alert>게시하기 전에 제목, 본문 내용이 가이드라인을 위반하지 않는지 다시 한 번 확인 부탁드립니다.</Alert>
         </div>
         <div className="sm:flex sm:items-center sm:justify-between">
           <button

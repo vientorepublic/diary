@@ -1,10 +1,10 @@
 "use client";
 import { deleteCookie, getCookie } from "cookies-next";
+import { ReactNode, useEffect } from "react";
+import { fetcher } from "../utility/fetcher";
 import { UserStore } from "../store/user";
 import type { IUserInfo } from "../types";
-import { ReactNode, useEffect } from "react";
 import toast from "react-hot-toast";
-import { fetcher } from "../utility/fetcher";
 
 export function DataLayout({ children }: { children: ReactNode }) {
   const { setUser, removeUser, setLoading, user_id } = UserStore();

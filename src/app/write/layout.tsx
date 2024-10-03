@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import AuthLayout from "../layout/auth.layout";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
+import AuthLayout from "../layout/auth.layout";
+import { ReactNode } from "react";
 
 export default function WriteLayout({ children }: { children: ReactNode }) {
   return (
