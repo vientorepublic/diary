@@ -20,8 +20,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="/Terms" className="hover:underline">
-                    이용 약관
+                  <Link href="/Guideline" className="hover:underline">
+                    가이드라인
                   </Link>
                 </li>
                 <li>

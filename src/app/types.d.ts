@@ -16,6 +16,29 @@ export interface IPhraseData {
 
 export interface IPhrase extends Array<IPhraseData> {}
 
+export interface IPost {
+  title: string;
+  text: string;
+}
+
+export interface IPostData extends IPost {
+  author: string;
+  profile_image: string;
+  created_at: number;
+}
+
+export interface IPaginationInfo {
+  totalItemCount: number;
+  lastPageNumber: number;
+  currentPage: number;
+  pageSize: number;
+}
+
+export interface IPaginationData<T> {
+  data: T;
+  pagination: IPaginationInfo;
+}
+
 export interface DefaultResponse {
   message: string;
 }
@@ -51,7 +74,7 @@ export interface IRegisterAuthForm {
 export interface ICardParams {
   title: string;
   text: string;
-  buttonName: string;
+  profileImage: string;
   buttonLink: string;
   className?: string;
 }

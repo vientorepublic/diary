@@ -11,7 +11,7 @@ export function PostCard(params: ICardParams) {
     >
       <div className="relative h-full bg-slate-900 p-6 pb-8 rounded-[inherit] z-20 overflow-hidden">
         <div className="flex flex-row gap-2">
-          <Image className="w-7 h-7 rounded-full" src="/image/person.jpg" width={7} height={7} alt="" />
+          <Image className="w-7 h-7 rounded-full" src={params.profileImage} width={7} height={7} alt="" />
           <span className="text-gray-100 text-base">viento</span>
         </div>
         <div className="flex flex-col gap-2 h-full">
@@ -22,7 +22,7 @@ export function PostCard(params: ICardParams) {
             href={params.buttonLink}
           >
             <FontAwesomeIcon icon={faArrowRight} className="mr-2" />
-            {params.buttonName}
+            게시글 읽기
           </Link>
         </div>
       </div>

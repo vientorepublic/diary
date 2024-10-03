@@ -2,16 +2,21 @@
 import Spotlight, { SpotlightCard } from "./components/spotlight.component";
 import { faCode, faList, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IPhrase, IPhraseData } from "./types";
+import type { IPaginationData, IPhrase, IPhraseData, IPostData } from "./types";
 import { useEffect, useState } from "react";
 import { UserStore } from "./store/user";
 import Link from "next/link";
-import axios from "axios";
 import { PostCard } from "./components/card.component";
+import { fetcher } from "./utility/fetcher";
+import axios, { isAxiosError } from "axios";
+import { Alert } from "./components/alert.component";
 // import Image from "next/image";
 
 export default function Home() {
   const [fetching, setFetching] = useState<boolean>(true);
+  const [posts, setPosts] = useState<IPaginationData<IPostData[]>>();
+  const [error, setError] = useState<string>("");
+  const [loadingPosts, setLoadingPosts] = useState<boolean>(true);
   const [phrase, setPhrase] = useState<IPhraseData>({
     text: "",
     author: "",
@@ -29,7 +34,26 @@ export default function Home() {
         setFetching(false);
       }
     }
+    async function getPosts() {
+      try {
+        const params = new URLSearchParams();
+        params.append("page", "1");
+        const res = await fetcher.get<IPaginationData<IPostData[]>>("/post/getPosts", {
+          params,
+        });
+        setPosts(res.data);
+      } catch (err) {
+        if (isAxiosError(err)) {
+          if (err.response) {
+            setError(err.response.data.message);
+          }
+        }
+      } finally {
+        setLoadingPosts(false);
+      }
+    }
     getPhrase();
+    getPosts();
   }, []);
   return (
     <section className="px-10 text-center">
@@ -62,7 +86,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col sm:w-auto w-full sm:flex-row gap-3">
           {loading ? (
-            <div className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 bg-gray-400 rounded-2xl sm:w-auto sm:mb-0">
+            <div className="px-6 py-3 mb-2 text-lg text-white bg-gray-400 rounded-2xl sm:w-auto sm:mb-0">
               사용자 확인 중...
               <FontAwesomeIcon icon={faPencil} className="ml-2" />
             </div>
@@ -139,9 +163,21 @@ export default function Home() {
       <div className="py-10">
         <h1 className="dark:text-white text-gray text-4xl sm:text-5xl font-bold">최근 게시글</h1>
         <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
-          <PostCard title="테스트 게시글 1" text="키보토스 최강자 유우카 100kg" buttonName="게시글 읽기" buttonLink="/" />
-          <PostCard title="테스트 게시글 2" text="명란바게트 먹고싶다" buttonName="게시글 읽기" buttonLink="/" />
-          <PostCard title="테스트 게시글 3" text="우리는 어디서 왔고 무엇이며 어디로 가는가" buttonName="게시글 읽기" buttonLink="/" />
+          {loadingPosts ? (
+            <div className="flex flex-col gap-4 justify-center items-center">
+              <div className="dots-loader-white"></div>
+              <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
+            </div>
+          ) : error ? (
+            <div className="flex flex-col gap-4 justify-center items-center h-screen">
+              <Alert>{error}</Alert>
+            </div>
+          ) : (
+            posts &&
+            posts.data.map((e, i) => {
+              return <PostCard title={e.title} text={e.text} profileImage={e.profile_image} buttonLink="/" key={i} />;
+            })
+          )}
         </div>
       </div>
     </section>
