@@ -93,8 +93,9 @@ export interface IRegisterAuthForm {
 export interface ICardParams {
   title: string;
   text: string;
+  author: string;
   profileImage: string;
   createdAt: number;
   buttonLink: string;
-  interfaceName?: string;
+  className?: string;
 }

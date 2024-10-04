@@ -28,10 +28,7 @@ export default function Home() {
       refreshInterval: 5000,
     }
   );
-  const [phrase, setPhrase] = useState<IPhraseData>({
-    text: "",
-    author: "",
-  });
+  const [phrase, setPhrase] = useState<IPhraseData>();
   const { user_id, loading } = UserStore();
   useEffect(() => {
     async function getPhrase() {
@@ -71,9 +68,11 @@ export default function Home() {
           {fetching ? (
             <p>Loading...</p>
           ) : (
-            <p>
-              {phrase.text} - {phrase.author}
-            </p>
+            phrase && (
+              <p>
+                {phrase.text} - {phrase.author}
+              </p>
+            )
           )}
         </div>
         <div className="flex flex-col sm:w-auto w-full sm:flex-row gap-3">
@@ -174,6 +173,7 @@ export default function Home() {
                     <PostCard
                       title={utility.shortenString(10, e.title)}
                       text={utility.shortenString(50, e.preview)}
+                      author={utility.shortenString(10, e.author)}
                       profileImage={e.profile_image}
                       createdAt={e.created_at}
                       buttonLink={`/posts/${e.id}`}

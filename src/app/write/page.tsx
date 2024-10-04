@@ -33,9 +33,11 @@ export default function WritePage() {
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [uploading, setUploading] = useState<boolean>(false);
+  const titleLengthExceed = title.trim().length > maxTitleLength;
+  const textLengthExceed = text.trim().length > maxTextLength;
   const { executeRecaptcha } = useReCaptcha();
   async function publish(data: IWritePost, public_post: boolean) {
-    if (!data.title || !data.text) {
+    if (!data.title.trim() || !data.text.trim()) {
       toast.error("제목 또는 본문이 비어있습니다.");
       return;
     }
@@ -47,7 +49,7 @@ export default function WritePage() {
         {
           title: data.title.trim(),
           text: data.text.trim(),
-          public_post: public_post ? "1" : null,
+          public_post: public_post ? "1" : undefined,
           g_recaptcha_response: token,
         },
         {
@@ -99,8 +101,8 @@ export default function WritePage() {
         <div className="sm:flex sm:items-center sm:justify-between">
           <button
             className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-            onClick={() => publish({ title, text }, true)}
-            disabled={uploading || title.trim().length > maxTitleLength || text.trim().length > maxTextLength}
+            onClick={() => publish({ title, text }, false)}
+            disabled={uploading || titleLengthExceed || textLengthExceed}
           >
             게시하기
             <FontAwesomeIcon icon={faUpload} className="ml-2" />

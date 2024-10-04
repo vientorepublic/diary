@@ -12,8 +12,8 @@ export function PostCard(params: ICardParams) {
     >
       <div className="relative h-full bg-slate-900 p-6 pb-8 rounded-[inherit] z-20 overflow-hidden">
         <div className="flex flex-row gap-2">
-          <Image className="w-7 h-7 rounded-full" src={params.profileImage} width={7} height={7} alt="" />
-          <span className="text-gray-100 text-base">viento</span>
+          <Image className="w-6 h-6 rounded-full" src={params.profileImage} width={6} height={6} alt="" />
+          <span className="text-gray-100 text-base">{params.author}</span>
         </div>
         <p className="text-gray-500 text-sm mt-1">{dayjs(params.createdAt).format("YYYY.MM.DD HH:mm:ss")}</p>
         <div className="flex flex-col gap-2 h-full">
