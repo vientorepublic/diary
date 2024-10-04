@@ -1,24 +1,33 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import type { IPaginationData, IPhrase, IPhraseData, IPostData } from "./types";
+import type { IPaginationData, IPhrase, IPhraseData, IPostPreview } from "./types";
 import { faCode, faList, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Spotlight, { SpotlightCard } from "./components/spotlight.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PostCard } from "./components/card.component";
 import { Alert } from "./components/alert.component";
+import { swrFetcher } from "./utility/fetcher";
 import { useEffect, useState } from "react";
-import { fetcher } from "./utility/fetcher";
-import axios, { isAxiosError } from "axios";
 import { UserStore } from "./store/user";
 import { Utility } from "./utility";
 import Link from "next/link";
+import axios from "axios";
+import useSWR from "swr";
 
 const utility = new Utility();
 
 export default function Home() {
   const [fetching, setFetching] = useState<boolean>(true);
-  const [posts, setPosts] = useState<IPaginationData<IPostData[]>>();
-  const [error, setError] = useState<string>("");
-  const [loadingPosts, setLoadingPosts] = useState<boolean>(true);
+  // @ts-ignore
+  const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
+    {
+      url: `${process.env.NEXT_PUBLIC_API_URL}/post/getPosts?page=1`,
+    },
+    swrFetcher,
+    {
+      refreshInterval: 5000,
+    }
+  );
   const [phrase, setPhrase] = useState<IPhraseData>({
     text: "",
     author: "",
@@ -36,26 +45,7 @@ export default function Home() {
         setFetching(false);
       }
     }
-    async function getPosts() {
-      try {
-        const params = new URLSearchParams();
-        params.append("page", "1");
-        const res = await fetcher.get<IPaginationData<IPostData[]>>("/post/getPosts", {
-          params,
-        });
-        setPosts(res.data);
-      } catch (err) {
-        if (isAxiosError(err)) {
-          if (err.response) {
-            setError(err.response.data.message);
-          }
-        }
-      } finally {
-        setLoadingPosts(false);
-      }
-    }
     getPhrase();
-    getPosts();
   }, []);
   return (
     <section className="px-10 text-center">
@@ -167,23 +157,23 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center">
         <div className="py-10 w-full lg:w-4/5">
           <h1 className="dark:text-white text-gray text-4xl sm:text-5xl font-bold">최근 게시글</h1>
-          {loadingPosts ? (
+          {isLoading ? (
             <div className="flex flex-col gap-5 mt-10 justify-center items-center">
               <div className="dots-loader-white"></div>
               <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
             </div>
           ) : error ? (
             <div className="flex flex-col gap-4 py-10 justify-center items-center">
-              <Alert>{error}</Alert>
+              <Alert>최근 게시글을 불러오는 중 문제가 발생했어요. 페이지를 새로고침 해주세요.</Alert>
             </div>
           ) : (
             <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
-              {posts &&
-                posts.data.map((e, i) => {
+              {data &&
+                data.data.map((e, i) => {
                   return (
                     <PostCard
                       title={utility.shortenString(10, e.title)}
-                      text={utility.shortenString(50, e.text)}
+                      text={utility.shortenString(50, e.preview)}
                       profileImage={e.profile_image}
                       createdAt={e.created_at}
                       buttonLink={`/posts/${e.id}`}

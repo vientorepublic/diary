@@ -1,9 +1,9 @@
 "use client";
 import { isEmail, isPassword, isUserId } from "@/app/utility/regex";
+import type { IRegisterAuthForm } from "@/app/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { useReCaptcha } from "next-recaptcha-v3";
-import { IRegisterAuthForm } from "@/app/types";
 import { fetcher } from "@/app/utility/fetcher";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";

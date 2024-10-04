@@ -1,5 +1,5 @@
 "use client";
-import { IPostData, IViewPostParams } from "@/app/types";
+import type { IPostData, IViewPostParams } from "@/app/types";
 import { fetcher } from "@/app/utility/fetcher";
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";

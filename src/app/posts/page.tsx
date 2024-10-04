@@ -1,6 +1,6 @@
 "use client";
+import type { IPaginationData, IPostPreview } from "../types";
 import { PostCard } from "../components/card.component";
-import { IPaginationData, IPostData } from "../types";
 import { Alert } from "../components/alert.component";
 import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { Utility } from "../utility";
 const utility = new Utility();
 
 export default function PostPage() {
-  const [posts, setPosts] = useState<IPaginationData<IPostData[]>>();
+  const [posts, setPosts] = useState<IPaginationData<IPostPreview[]>>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function PostPage() {
       try {
         const params = new URLSearchParams();
         params.append("page", "1");
-        const res = await fetcher.get<IPaginationData<IPostData[]>>("/post/getPosts", {
+        const res = await fetcher.get<IPaginationData<IPostPreview[]>>("/post/getPosts", {
           params,
         });
         setPosts(res.data);
@@ -53,7 +53,7 @@ export default function PostPage() {
                 return (
                   <PostCard
                     title={utility.shortenString(10, e.title)}
-                    text={utility.shortenString(50, e.text)}
+                    text={utility.shortenString(50, e.preview)}
                     profileImage={e.profile_image}
                     createdAt={e.created_at}
                     buttonLink={`/posts/${e.id}`}

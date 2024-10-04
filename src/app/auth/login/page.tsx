@@ -1,5 +1,5 @@
 "use client";
-import { ILoginAuthForm, IssueTokenResponse, IUserInfo } from "@/app/types";
+import type { ILoginAuthForm, IssueTokenResponse, IUserInfo } from "@/app/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { useReCaptcha } from "next-recaptcha-v3";

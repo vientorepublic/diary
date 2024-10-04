@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { ICardParams } from "../types";
+import type { ICardParams } from "../types";
 import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";

@@ -16,18 +16,26 @@ export interface IPhraseData {
 
 export interface IPhrase extends Array<IPhraseData> {}
 
-export interface IPost {
+export interface IWritePost {
   title: string;
   text: string;
 }
 
-export interface IPostData extends IPost {
+export interface IPost {
   id: number;
+  title: string;
   author: string;
   profile_image: string;
   created_at: number;
 }
 
+export interface IPostPreview extends IPost {
+  preview: string;
+}
+
+export interface IPostData extends IPost {
+  text: string;
+}
 export interface IPaginationInfo {
   totalItemCount: number;
   lastPageNumber: number;
@@ -38,6 +46,12 @@ export interface IPaginationInfo {
 export interface IPaginationData<T> {
   data: T;
   pagination: IPaginationInfo;
+}
+
+export interface IFetcherParams {
+  url: string;
+  token?: string;
+  params?: URLSearchParams;
 }
 
 export interface DefaultResponse {
@@ -82,5 +96,5 @@ export interface ICardParams {
   profileImage: string;
   createdAt: number;
   buttonLink: string;
-  className?: string;
+  interfaceName?: string;
 }
