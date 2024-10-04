@@ -18,7 +18,7 @@ export default function PostPage() {
       try {
         const params = new URLSearchParams();
         params.append("page", "1");
-        const res = await fetcher.get<IPaginationData<IPostPreview[]>>("/post/getPosts", {
+        const res = await fetcher.get<IPaginationData<IPostPreview[]>>("/post/posts", {
           params,
         });
         setPosts(res.data);

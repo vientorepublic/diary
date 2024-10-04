@@ -21,7 +21,7 @@ export default function Home() {
   // @ts-ignore
   const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
     {
-      url: `${process.env.NEXT_PUBLIC_API_URL}/post/getPosts?page=1`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=1`,
     },
     swrFetcher,
     {
@@ -155,14 +155,14 @@ export default function Home() {
       {/* Recent Posts */}
       <div className="flex flex-col items-center justify-center">
         <div className="py-10 w-full lg:w-4/5">
-          <h1 className="dark:text-white text-gray text-4xl sm:text-5xl font-bold">최근 게시글</h1>
+          <h1 className="text-5xl font-bold">최근 게시글</h1>
           {isLoading ? (
-            <div className="flex flex-col gap-5 mt-10 justify-center items-center">
+            <div className="flex flex-col gap-5 py-20 justify-center items-center">
               <div className="dots-loader-white"></div>
               <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
             </div>
           ) : error ? (
-            <div className="flex flex-col gap-4 py-10 justify-center items-center">
+            <div className="flex py-20 justify-center items-center">
               <Alert>최근 게시글을 불러오는 중 문제가 발생했어요. 페이지를 새로고침 해주세요.</Alert>
             </div>
           ) : (

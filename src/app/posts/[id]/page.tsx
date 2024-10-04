@@ -7,7 +7,7 @@ async function getPost(id: string): Promise<IPostData | null> {
   try {
     const params = new URLSearchParams();
     params.append("id", id);
-    const res = await axios.get<IPostData>(`${process.env.NEXT_PUBLIC_API_URL}/post/getPost`, {
+    const res = await axios.get<IPostData>(`${process.env.NEXT_PUBLIC_API_URL}/post/view`, {
       params,
     });
     return res.data;

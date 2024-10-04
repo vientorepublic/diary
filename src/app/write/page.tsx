@@ -45,7 +45,7 @@ export default function WritePage() {
     try {
       const token = await executeRecaptcha("write_post");
       const res = await fetcher.post(
-        "/post/publish",
+        "/post/save",
         {
           title: data.title.trim(),
           text: data.text.trim(),
@@ -101,7 +101,7 @@ export default function WritePage() {
         <div className="sm:flex sm:items-center sm:justify-between">
           <button
             className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-            onClick={() => publish({ title, text }, false)}
+            onClick={() => publish({ title, text }, true)}
             disabled={uploading || titleLengthExceed || textLengthExceed}
           >
             게시하기
