@@ -10,4 +10,14 @@ export class Utility {
     const markdownPattern = /(\*\*|__)(.*?)\1|(\*|_)(.*?)\3|(`{1,3})(.*?)\5|!\[.*?\]\(.*?\)|\[.*?\]\(.*?\)|> .+|[-*+] \s*.*|#\s*.*|~~.*?~~|[\[\]()]/g;
     return input.replace(markdownPattern, "").trim();
   }
+  public escapeHTML(html: string): string {
+    const escapeChars: { [key: string]: string } = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return html.replace(/[&<>"']/g, (match) => escapeChars[match]);
+  }
 }

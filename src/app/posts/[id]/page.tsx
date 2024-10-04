@@ -3,6 +3,7 @@ import Markdown from "markdown-to-jsx";
 import Image from "next/image";
 import axios from "axios";
 import dayjs from "dayjs";
+import { Utility } from "@/app/utility";
 
 async function getPost(id: string): Promise<IPostData | null> {
   try {
@@ -17,6 +18,8 @@ async function getPost(id: string): Promise<IPostData | null> {
     return null;
   }
 }
+
+const utility = new Utility();
 
 export default async function ViewPostPage({ params }: { params: IViewPostParams }) {
   const post = await getPost(params.id);
@@ -49,7 +52,7 @@ export default async function ViewPostPage({ params }: { params: IViewPostParams
                 },
               }}
             >
-              {post.text}
+              {utility.escapeHTML(post.text)}
             </Markdown>
           </pre>
         </div>
