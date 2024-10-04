@@ -95,7 +95,8 @@ export default function WritePage() {
           {text.trim().length > maxTextLength && <p className="text-orange-500 text-sm">본문은 5000바이트를 초과할 수 없습니다.</p>}
         </div>
         <MarkdownEditor value={text} onChange={setText} height="400px" aria-disabled={uploading} autoFocus />
-        <div className="py-5">
+        <div className="flex flex-col gap-3 py-5">
+          <Alert>일부 마크다운 문법을 지원합니다. 지원 범위는 추후 확대 될 예정입니다.</Alert>
           <Alert>게시하기 전에 제목, 본문 내용이 가이드라인을 위반하지 않는지 다시 한 번 확인 부탁드립니다.</Alert>
         </div>
         <div className="sm:flex sm:items-center sm:justify-between">

@@ -1,4 +1,5 @@
 import type { IPostData, IViewPostParams } from "@/app/types";
+import Markdown from "markdown-to-jsx";
 import Image from "next/image";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -30,7 +31,27 @@ export default async function ViewPostPage({ params }: { params: IViewPostParams
           </div>
           <p className="text-gray-500 text-base mt-2">{dayjs(post.created_at).format("YYYY.MM.DD HH:mm:ss")}</p>
           <hr className="border-gray-700 my-5" />
-          <p className="mt-2">{post.text}</p>
+          <pre className="pretendard text-wrap">
+            <Markdown
+              options={{
+                overrides: {
+                  h1: { props: { className: "text-3xl font-bold mb-4 text-gray-100" } },
+                  h2: { props: { className: "text-2xl font-semibold mb-3 mt-6 text-gray-200" } },
+                  h3: { props: { className: "text-xl font-semibold mb-2 mt-4 text-gray-200" } },
+                  h4: { props: { className: "text-lg font-semibold mb-2 mt-4 text-gray-200" } },
+                  p: { props: { className: "mb-4 text-gray-300" } },
+                  a: { props: { className: "hover:underline text-blue-500" } },
+                  ul: { props: { className: "list-disc pl-5 mb-4 text-gray-300" } },
+                  ol: { props: { className: "list-decimal pl-5 mb-4 text-gray-300" } },
+                  li: { props: { className: "mb-1" } },
+                  code: { props: { className: "bg-gray-800 rounded px-1 py-0.5 text-sm font-mono text-gray-200" } },
+                  pre: { props: { className: "bg-gray-800 rounded p-4 mb-4 overflow-x-auto" } },
+                },
+              }}
+            >
+              {post.text}
+            </Markdown>
+          </pre>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-3 h-screen">

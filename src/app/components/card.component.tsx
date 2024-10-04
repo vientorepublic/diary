@@ -4,6 +4,9 @@ import type { ICardParams } from "../types";
 import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { Utility } from "../utility";
+
+const utility = new Utility();
 
 export function PostCard(params: ICardParams) {
   return (
@@ -18,7 +21,7 @@ export function PostCard(params: ICardParams) {
         <p className="text-gray-500 text-sm mt-1">{dayjs(params.createdAt).format("YYYY.MM.DD HH:mm:ss")}</p>
         <div className="flex flex-col gap-2 h-full">
           <h2 className="text-2xl text-slate-200 font-bold mt-2">{params.title}</h2>
-          <p className="text-base text-slate-200">{params.text}</p>
+          <p className="text-base text-slate-200">{utility.stripMarkdown(params.text)}</p>
           <Link
             className="inline-flex justify-center items-center whitespace-nowrap rounded-lg bg-slate-800 hover:bg-slate-900 border border-slate-700 px-3 py-1.5 mt-4 text-sm font-medium text-slate-300 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 transition-colors duration-150"
             href={params.buttonLink}
