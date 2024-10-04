@@ -1,21 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { faBold, faExpand, faEye, faItalic, faQuoteRight, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@uiw/react-markdown-editor/markdown-editor.css";
+import type { IDraftPost, IWritePost } from "../types";
 import { Alert } from "../components/alert.component";
 import "@uiw/react-markdown-preview/markdown.css";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
 import { fetcher } from "../utility/fetcher";
-import type { IWritePost } from "../types";
+import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { isAxiosError } from "axios";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 
 const maxTitleLength = 50;
 const maxTextLength = 5000;
+const autoSavePeriod = 20000;
 
 const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((mod) => mod.default), {
   ssr: false,
@@ -32,10 +34,23 @@ export default function WritePage() {
   const accessToken = getCookie("access_token");
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
+  const [lastCheckpoint, setLastCheckpoint] = useState({
+    title: "",
+    text: "",
+  });
   const [uploading, setUploading] = useState<boolean>(false);
   const titleLengthExceed = title.trim().length > maxTitleLength;
   const textLengthExceed = text.trim().length > maxTextLength;
   const { executeRecaptcha } = useReCaptcha();
+  async function removeDraft() {
+    try {
+      fetcher.delete("/post/draft/removeDraft", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    } catch (err) {}
+  }
   async function publish(data: IWritePost, public_post: boolean) {
     if (!data.title.trim() || !data.text.trim()) {
       toast.error("제목 또는 본문이 비어있습니다.");
@@ -58,6 +73,7 @@ export default function WritePage() {
           },
         }
       );
+      removeDraft();
       router.push("/posts");
       toast.success(res.data.message);
     } catch (err) {
@@ -70,6 +86,59 @@ export default function WritePage() {
       setUploading(false);
     }
   }
+  // Load Draft
+  useEffect(() => {
+    async function loadDraft() {
+      try {
+        const res = await fetcher.get<IDraftPost>("/post/draft/loadDraft", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const { title, text } = res.data;
+        setTitle(title);
+        setText(text);
+        toast.success("마지막 지점의 초안을 불러왔습니다.");
+      } catch (err) {}
+    }
+    loadDraft();
+  }, [accessToken]);
+  // Save Draft Every 20s
+  useEffect(() => {
+    async function saveDraft(data: IWritePost) {
+      try {
+        fetcher.post(
+          "/post/draft/saveDraft",
+          {
+            ...data,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setLastCheckpoint({
+          ...data,
+        });
+        toast.success("초안이 자동 저장되었습니다.");
+      } catch (err) {
+        if (isAxiosError(err)) {
+          if (err.response) {
+            toast.error(err.response.data.message);
+          }
+        }
+      }
+    }
+    const id = setInterval(() => {
+      if (title && text) {
+        if (lastCheckpoint.title !== title || lastCheckpoint.text !== text) {
+          saveDraft({ title, text });
+        }
+      }
+    }, autoSavePeriod);
+    return () => clearInterval(id);
+  }, [accessToken, lastCheckpoint.text, lastCheckpoint.title, text, title]);
   return (
     <section className="flex flex-col items-center justify-center px-10 py-20">
       <div className="py-10 w-full md:w-4/5">

@@ -29,6 +29,11 @@ export interface IPost {
   created_at: number;
 }
 
+export interface IDraftPost {
+  title: string;
+  text: string;
+}
+
 export interface IPostPreview extends IPost {
   preview: string;
 }
