@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { faBold, faExpand, faEye, faItalic, faQuoteRight, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faBold, faExpand, faEye, faItalic, faQuoteRight, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@uiw/react-markdown-editor/markdown-editor.css";
 import type { IDraftPost, IWritePost } from "../types";
@@ -32,6 +32,8 @@ const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((
 export default function WritePage() {
   const router = useRouter();
   const accessToken = getCookie("access_token");
+  const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true);
+  const [draftLoaded, setDraftLoaded] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [lastCheckpoint, setLastCheckpoint] = useState({
@@ -44,12 +46,24 @@ export default function WritePage() {
   const { executeRecaptcha } = useReCaptcha();
   async function removeDraft() {
     try {
-      fetcher.delete("/post/draft/removeDraft", {
+      const res = await fetcher.delete("/post/draft/removeDraft", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-    } catch (err) {}
+      setTitle("");
+      setText("");
+      setLastCheckpoint({
+        title: "",
+        text: "",
+      });
+      setDraftLoaded(false);
+      toast.success(res.data.message);
+    } catch (err) {
+      if (isAxiosError(err) && err.response) {
+        toast.error(err.response.data.message);
+      }
+    }
   }
   async function publish(data: IWritePost, public_post: boolean) {
     if (!data.title.trim() || !data.text.trim()) {
@@ -77,10 +91,8 @@ export default function WritePage() {
       router.push("/posts");
       toast.success(res.data.message);
     } catch (err) {
-      if (isAxiosError(err)) {
-        if (err.response) {
-          toast.error(err.response.data.message);
-        }
+      if (isAxiosError(err) && err.response) {
+        toast.error(err.response.data.message);
       }
     } finally {
       setUploading(false);
@@ -98,12 +110,17 @@ export default function WritePage() {
         const { title, text } = res.data;
         setTitle(title);
         setText(text);
+        setLastCheckpoint({
+          title,
+          text,
+        });
+        setDraftLoaded(true);
         toast.success("마지막 지점의 초안을 불러왔습니다.");
       } catch (err) {}
     }
     loadDraft();
   }, [accessToken]);
-  // Save Draft Every 20s
+  // Auto Save
   useEffect(() => {
     async function saveDraft(data: IWritePost) {
       try {
@@ -121,28 +138,48 @@ export default function WritePage() {
         setLastCheckpoint({
           ...data,
         });
+        if (!draftLoaded) setDraftLoaded(true);
         toast.success("초안이 자동 저장되었습니다.");
       } catch (err) {
-        if (isAxiosError(err)) {
-          if (err.response) {
-            toast.error(err.response.data.message);
-          }
+        if (isAxiosError(err) && err.response) {
+          toast.error(err.response.data.message);
         }
       }
     }
-    const id = setInterval(() => {
-      if (title && text) {
-        if (lastCheckpoint.title !== title || lastCheckpoint.text !== text) {
+    // Disable auto save when browser lost focus
+    const handleFocus = () => {
+      setAutoSaveEnabled(false);
+    };
+    const handleBlur = () => {
+      setAutoSaveEnabled(true);
+    };
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+    const autoSave = setInterval(() => {
+      const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
+      if (title && text && autoSaveEnabled) {
+        if (checkpointTitle !== title || checkpointText !== text) {
           saveDraft({ title, text });
         }
       }
     }, autoSavePeriod);
-    return () => clearInterval(id);
-  }, [accessToken, lastCheckpoint.text, lastCheckpoint.title, text, title]);
+    return () => {
+      // Clear browser window focus listener
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+      // Clear auto save interval
+      clearInterval(autoSave);
+    };
+  }, [accessToken, autoSaveEnabled, draftLoaded, lastCheckpoint, text, title]);
   return (
     <section className="flex flex-col items-center justify-center px-10 py-20">
       <div className="py-10 w-full md:w-4/5">
+        <div className="flex flex-col gap-3 py-5">
+          <Alert>일부 마크다운 문법을 지원합니다. 지원 범위는 추후 확대 될 예정입니다.</Alert>
+          <Alert>게시하기 전에 제목, 본문 내용이 가이드라인을 위반하지 않는지 다시 한 번 확인 부탁드립니다.</Alert>
+        </div>
         <div className="mb-1">
+          <h1 className="text-2xl text-gray-100">제목</h1>
           <p className="text-gray-500 text-sm">
             {title.trim().length}/{maxTitleLength}
           </p>
@@ -158,26 +195,29 @@ export default function WritePage() {
           required
         />
         <div className="mb-1">
+          <h1 className="text-2xl text-gray-100">본문</h1>
           <p className="text-gray-500 text-sm">
             {text.trim().length}/{maxTextLength}
           </p>
           {text.trim().length > maxTextLength && <p className="text-orange-500 text-sm">본문은 5000바이트를 초과할 수 없습니다.</p>}
         </div>
         <MarkdownEditor value={text} onChange={setText} height="400px" aria-disabled={uploading} autoFocus />
-        <div className="flex flex-col gap-3 py-5">
-          <Alert>일부 마크다운 문법을 지원합니다. 지원 범위는 추후 확대 될 예정입니다.</Alert>
-          <Alert>게시하기 전에 제목, 본문 내용이 가이드라인을 위반하지 않는지 다시 한 번 확인 부탁드립니다.</Alert>
-        </div>
+        {draftLoaded && (
+          <button className="text-sm text-gray-300 bg-gray-600 hover:bg-gray-700 px-3 py-3 rounded-xl my-5" onClick={() => removeDraft()}>
+            <FontAwesomeIcon icon={faTrashCan} className="mr-2" />
+            초안 삭제
+          </button>
+        )}
         <div className="sm:flex sm:items-center sm:justify-between">
           <button
-            className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
+            className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl my-5"
             onClick={() => publish({ title, text }, true)}
             disabled={uploading || titleLengthExceed || textLengthExceed}
           >
+            <FontAwesomeIcon icon={faUpload} className="mr-2" />
             게시하기
-            <FontAwesomeIcon icon={faUpload} className="ml-2" />
           </button>
-          <div className="phrase-text">
+          <div className="phrase-text my-5">
             <h1 className="text-3xl text-bold">도움말</h1>
             <div className="flex flex-row gap-2 text-lg">
               <FontAwesomeIcon icon={faEye} className="mt-1.5" />

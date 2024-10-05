@@ -55,7 +55,7 @@ export default async function ViewPostPage({ params }: { params: { id: string } 
           </div>
           <p className="text-gray-500 text-base mt-2">{dayjs(post.created_at).format("YYYY.MM.DD HH:mm:ss")}</p>
           <hr className="border-gray-700 my-5" />
-          <pre className="pretendard text-wrap">
+          <pre className="pretendard text-wrap overflow-hidden">
             <Markdown
               options={{
                 overrides: {

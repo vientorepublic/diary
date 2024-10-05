@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IPaginationData, IPostPreview } from "../types";
 import { PostCard } from "../components/card.component";
 import { Alert } from "../components/alert.component";
@@ -71,6 +73,7 @@ export default function PostPage() {
                     onClick={() => setPage(page - 1)}
                     disabled={page === 1}
                   >
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
                     Previous
                   </button>
                   <button
@@ -79,6 +82,7 @@ export default function PostPage() {
                     onClick={() => setPage(page + 1)}
                   >
                     Next
+                    <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
                   </button>
                 </div>
               </div>

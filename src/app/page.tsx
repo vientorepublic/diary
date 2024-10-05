@@ -78,24 +78,23 @@ export default function Home() {
         <div className="flex flex-col sm:w-auto w-full sm:flex-row gap-3">
           {loading ? (
             <div className="px-6 py-3 mb-2 text-lg text-white bg-gray-400 rounded-2xl sm:w-auto sm:mb-0">
+              <FontAwesomeIcon icon={faPencil} className="mr-2" />
               사용자 확인 중...
-              <FontAwesomeIcon icon={faPencil} className="ml-2" />
             </div>
           ) : (
             <Link
               href={user_id ? "/write" : "/auth/login?redirect_to=/write"}
               className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
             >
-              새 글 작성하기
-              <FontAwesomeIcon icon={faPencil} className="ml-2" />
+              <FontAwesomeIcon icon={faPencil} className="mr-2" />새 글 작성하기
             </Link>
           )}
           <Link
             href="/posts"
             className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
           >
+            <FontAwesomeIcon icon={faList} className="mr-2" />
             모든 게시글 보기
-            <FontAwesomeIcon icon={faList} className="ml-2" />
           </Link>
         </div>
       </div>
