@@ -35,7 +35,7 @@ export default function LoginPage() {
         sameSite: "strict",
         path: "/",
       });
-      const user = await fetcher.get<IUserInfo>("/auth/user/info", {
+      const user = await fetcher.get<IUserInfo>("/auth/user/profile", {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

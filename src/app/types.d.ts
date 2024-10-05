@@ -63,15 +63,18 @@ export interface DefaultResponse {
   message: string;
 }
 
-export interface IViewPostParams {
-  id: string;
-}
-
 export interface IssueTokenResponse extends DefaultResponse {
   data: {
     access_token: string;
     expires_at: number;
   };
+}
+
+export interface IUserProfile {
+  id: number;
+  user_id: string;
+  profile_image: string;
+  permission: number;
 }
 
 export interface IUserInfo {
@@ -81,6 +84,10 @@ export interface IUserInfo {
   profile_image: string;
   created_at: number;
   permission: number;
+}
+
+export interface IPostProps {
+  params: { id: string };
 }
 
 export interface ILoginAuthForm {

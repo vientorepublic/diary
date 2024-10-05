@@ -51,8 +51,8 @@ export function Navbar() {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/auth/account" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
-                        계정 설정
+                      <Link href={`/user/${user_id}`} onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
+                        내 프로필
                       </Link>
                     </li>
                   </ul>

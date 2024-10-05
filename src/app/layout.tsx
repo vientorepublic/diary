@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "./components/footer.component";
 import { Navbar } from "./components/navbar.component";
@@ -10,17 +10,18 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/static/css/loader.css";
 import "@/app/static/css/main.css";
 import "@/app/globals.css";
+import { OpenGraph } from "./opengraph";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
-  title: "글귀저장소",
-  description: "매일 한 줄씩, 차곡차곡",
+  title: OpenGraph.title,
+  description: OpenGraph.description,
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="ko">

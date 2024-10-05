@@ -15,9 +15,7 @@ export class Utility {
       "&": "&amp;",
       "<": "&lt;",
       ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;",
     };
-    return html.replace(/[&<>"']/g, (match) => escapeChars[match]);
+    return html.replace(/[&<>]/g, (match) => escapeChars[match]);
   }
 }

@@ -12,7 +12,7 @@ export function DataLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function getUser() {
       try {
-        const user = await fetcher.get<IUserInfo>("/auth/user/info", {
+        const user = await fetcher.get<IUserInfo>("/auth/user/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

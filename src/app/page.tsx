@@ -163,7 +163,7 @@ export default function Home() {
             </div>
           ) : error ? (
             <div className="flex py-20 justify-center items-center">
-              <Alert>최근 게시글을 불러오는 중 문제가 발생했어요. 페이지를 새로고침 해주세요.</Alert>
+              <Alert>{error.response.data.message}</Alert>
             </div>
           ) : (
             <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">

@@ -1,9 +1,13 @@
-import type { IPostData, IViewPostParams } from "@/app/types";
+import type { IPostData, IPostProps } from "@/app/types";
+import { OpenGraph } from "@/app/opengraph";
+import { Utility } from "@/app/utility";
+import { Metadata } from "next";
 import Markdown from "markdown-to-jsx";
 import Image from "next/image";
 import axios from "axios";
 import dayjs from "dayjs";
-import { Utility } from "@/app/utility";
+
+const utility = new Utility();
 
 async function getPost(id: string): Promise<IPostData | null> {
   try {
@@ -19,9 +23,26 @@ async function getPost(id: string): Promise<IPostData | null> {
   }
 }
 
-const utility = new Utility();
+export async function generateMetadata({ params }: IPostProps): Promise<Metadata> {
+  const { id } = params;
 
-export default async function ViewPostPage({ params }: { params: IViewPostParams }) {
+  const post = await getPost(id);
+
+  if (post) {
+    const text = post.text.replace(/\n/g, "");
+    return {
+      title: post.title,
+      description: utility.shortenString(50, text),
+    };
+  } else {
+    return {
+      title: OpenGraph.title,
+      description: OpenGraph.description,
+    };
+  }
+}
+
+export default async function ViewPostPage({ params }: { params: { id: string } }) {
   const post = await getPost(params.id);
   return (
     <section className="flex flex-col items-center justify-center px-10">
