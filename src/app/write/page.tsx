@@ -125,14 +125,14 @@ export default function WritePage() {
       }
     }
     // Disable auto save when browser lost focus
-    const handleFocus = () => {
-      setAutoSaveEnabled(true);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        setAutoSaveEnabled(false);
+      } else {
+        setAutoSaveEnabled(true);
+      }
     };
-    const handleBlur = () => {
-      setAutoSaveEnabled(false);
-    };
-    window.addEventListener("focus", handleFocus);
-    window.addEventListener("blur", handleBlur);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     const autoSave = setInterval(() => {
       const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
       if (title && text && autoSaveEnabled) {
@@ -143,8 +143,7 @@ export default function WritePage() {
     }, autoSavePeriod);
     return () => {
       // Clear browser window focus listener
-      window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("blur", handleBlur);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       // Clear auto save interval
       clearInterval(autoSave);
     };
