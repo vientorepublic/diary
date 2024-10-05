@@ -44,27 +44,6 @@ export default function WritePage() {
   const titleLengthExceed = title.trim().length > maxTitleLength;
   const textLengthExceed = text.trim().length > maxTextLength;
   const { executeRecaptcha } = useReCaptcha();
-  async function removeDraft() {
-    try {
-      const res = await fetcher.delete("/post/draft/removeDraft", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      setTitle("");
-      setText("");
-      setLastCheckpoint({
-        title: "",
-        text: "",
-      });
-      setDraftLoaded(false);
-      toast.success(res.data.message);
-    } catch (err) {
-      if (isAxiosError(err) && err.response) {
-        toast.error(err.response.data.message);
-      }
-    }
-  }
   async function publish(data: IWritePost, public_post: boolean) {
     if (!data.title.trim() || !data.text.trim()) {
       toast.error("제목 또는 본문이 비어있습니다.");
@@ -87,7 +66,6 @@ export default function WritePage() {
           },
         }
       );
-      removeDraft();
       router.push("/posts");
       toast.success(res.data.message);
     } catch (err) {
@@ -171,6 +149,27 @@ export default function WritePage() {
       clearInterval(autoSave);
     };
   }, [accessToken, autoSaveEnabled, draftLoaded, lastCheckpoint, text, title]);
+  async function removeDraft() {
+    try {
+      const res = await fetcher.delete("/post/draft/removeDraft", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setTitle("");
+      setText("");
+      setLastCheckpoint({
+        title: "",
+        text: "",
+      });
+      setDraftLoaded(false);
+      toast.success(res.data.message);
+    } catch (err) {
+      if (isAxiosError(err) && err.response) {
+        toast.error(err.response.data.message);
+      }
+    }
+  }
   return (
     <section className="flex flex-col items-center justify-center px-10 py-20">
       <div className="py-10 w-full md:w-4/5">
