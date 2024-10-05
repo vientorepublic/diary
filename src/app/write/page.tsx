@@ -34,6 +34,7 @@ export default function WritePage() {
   const accessToken = getCookie("access_token");
   const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true);
   const [draftLoaded, setDraftLoaded] = useState<boolean>(false);
+  const [publicPost, setPublicPost] = useState<boolean>(true);
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [lastCheckpoint, setLastCheckpoint] = useState({
@@ -66,7 +67,11 @@ export default function WritePage() {
           },
         }
       );
-      router.push("/posts");
+      if (publicPost) {
+        router.push("/posts");
+      } else {
+        router.push("/posts/private");
+      }
       toast.success(res.data.message);
     } catch (err) {
       if (isAxiosError(err) && err.response) {
@@ -200,8 +205,18 @@ export default function WritePage() {
           {text.trim().length > maxTextLength && <p className="text-orange-500 text-sm">본문은 5000바이트를 초과할 수 없습니다.</p>}
         </div>
         <MarkdownEditor value={text} onChange={setText} height="400px" aria-disabled={uploading} autoFocus />
+        <input
+          id="default-checkbox"
+          type="checkbox"
+          defaultChecked
+          onClick={() => setPublicPost(!publicPost)}
+          className="w-4 h-4 mt-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label htmlFor="default-checkbox" className="ms-2 mr-3 text-sm font-medium text-gray-300">
+          게시글을 공개합니다.
+        </label>
         {draftLoaded && (
-          <button className="text-sm text-gray-300 bg-gray-600 hover:bg-gray-700 px-3 py-3 rounded-xl my-5" onClick={() => removeDraft()}>
+          <button className="text-sm text-gray-300 bg-gray-600 hover:bg-gray-700 px-3 py-3 rounded-xl mt-5" onClick={() => removeDraft()}>
             <FontAwesomeIcon icon={faTrashCan} className="mr-2" />
             초안 삭제
           </button>
@@ -209,7 +224,7 @@ export default function WritePage() {
         <div className="sm:flex sm:items-center sm:justify-between">
           <button
             className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl my-5"
-            onClick={() => publish({ title, text }, true)}
+            onClick={() => publish({ title, text }, publicPost)}
             disabled={uploading || titleLengthExceed || textLengthExceed}
           >
             <FontAwesomeIcon icon={faUpload} className="mr-2" />

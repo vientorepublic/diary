@@ -1,11 +1,11 @@
 "use client";
 import { Alert } from "@/app/components/alert.component";
-import { IUserProfile } from "@/app/types";
+import type { IUserProfile } from "@/app/types";
 import { fetcher } from "@/app/utility/fetcher";
+import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
 import Image from "next/image";
 import React from "react";
-import { useEffect, useState } from "react";
 
 export default function UserPage({ params }: { params: { id: string } }) {
   const { id } = params;

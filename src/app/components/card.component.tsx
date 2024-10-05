@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import type { ICardParams } from "../types";
+import { Utility } from "../utility";
 import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
-import { Utility } from "../utility";
 
 const utility = new Utility();
 
