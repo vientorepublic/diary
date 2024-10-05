@@ -126,10 +126,10 @@ export default function WritePage() {
     }
     // Disable auto save when browser lost focus
     const handleFocus = () => {
-      setAutoSaveEnabled(false);
+      setAutoSaveEnabled(true);
     };
     const handleBlur = () => {
-      setAutoSaveEnabled(true);
+      setAutoSaveEnabled(false);
     };
     window.addEventListener("focus", handleFocus);
     window.addEventListener("blur", handleBlur);
