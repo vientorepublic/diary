@@ -1,0 +1,9 @@
+services:
+  backend:
+    build: .
+    container_name: "diary-frontend"
+    restart: "always"
+    ports:
+      - "3600:3000"
+    environment:
+      NODE_ENV: "production"
