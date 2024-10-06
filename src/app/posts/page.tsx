@@ -46,8 +46,12 @@ export default function PostPage() {
             <Alert>{error.response.data.message}</Alert>
           </div>
         ) : (
-          <>
-            <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-20">
+          <div className="text-left py-20">
+            <div className="phrase-text text-gray-100 mb-10">
+              <h1 className="text-4xl">모든 게시글</h1>
+              <h2 className="text-2xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
+            </div>
+            <div className="grid grid-wrap lg:grid-cols-3 gap-5">
               {pageData &&
                 pageData.data &&
                 pageData.data.map((e, i) => {
@@ -56,6 +60,7 @@ export default function PostPage() {
                       title={utility.shortenString(10, e.title)}
                       text={utility.shortenString(50, e.preview)}
                       author={utility.shortenString(10, e.author)}
+                      isPublic={true}
                       profileImage={e.profile_image}
                       createdAt={e.created_at}
                       buttonLink={`/posts/${e.id}`}
@@ -65,7 +70,7 @@ export default function PostPage() {
                 })}
             </div>
             {pageData && pageData.data && (
-              <div className="flex flex-col gap-2 justify-center items-center">
+              <div className="flex flex-col gap-4 justify-center items-center mt-10">
                 <p className="">현재 {pageData.pagination.currentPage}페이지</p>
                 <div className="flex flex-row gap-4 justify-center items-center">
                   <button
@@ -87,7 +92,7 @@ export default function PostPage() {
                 </div>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </section>

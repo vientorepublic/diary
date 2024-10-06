@@ -38,24 +38,27 @@ export default function PrivatePostPage() {
             <Alert>{error.response.data.message}</Alert>
           </div>
         ) : (
-          <>
-            <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-20">
+          <div className="text-left py-20">
+            <div className="phrase-text text-gray-100 mb-10">
+              <h1 className="text-4xl">나의 게시글</h1>
+              <h2 className="text-2xl mt-2">게시글을 모두 확인할 수 있습니다. 비공개 게시글을 포함합니다.</h2>
+            </div>
+            <div className="grid grid-wrap lg:grid-cols-3 gap-5">
               {data &&
                 data.data &&
                 data.data.map((e, i) => {
-                  if (!e.public_post) {
-                    return (
-                      <PostCard
-                        title={utility.shortenString(10, e.title)}
-                        text={utility.shortenString(50, e.preview)}
-                        author={utility.shortenString(10, e.author)}
-                        profileImage={e.profile_image}
-                        createdAt={e.created_at}
-                        buttonLink={`/posts/private/${e.id}`}
-                        key={i}
-                      />
-                    );
-                  }
+                  return (
+                    <PostCard
+                      title={utility.shortenString(10, e.title)}
+                      text={utility.shortenString(50, e.preview)}
+                      author={utility.shortenString(10, e.author)}
+                      isPublic={e.public_post}
+                      profileImage={e.profile_image}
+                      createdAt={e.created_at}
+                      buttonLink={`/posts/myPosts/${e.id}`}
+                      key={i}
+                    />
+                  );
                 })}
             </div>
             {data && data.data && (
@@ -81,7 +84,7 @@ export default function PrivatePostPage() {
                 </div>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </section>

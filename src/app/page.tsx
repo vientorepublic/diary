@@ -173,6 +173,7 @@ export default function Home() {
                       title={utility.shortenString(10, e.title)}
                       text={utility.shortenString(50, e.preview)}
                       author={utility.shortenString(10, e.author)}
+                      isPublic={true}
                       profileImage={e.profile_image}
                       createdAt={e.created_at}
                       buttonLink={`/posts/${e.id}`}

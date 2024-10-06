@@ -111,6 +111,7 @@ export interface ICardParams {
   title: string;
   text: string;
   author: string;
+  isPublic: boolean;
   profileImage: string;
   createdAt: number;
   buttonLink: string;

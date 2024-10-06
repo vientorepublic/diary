@@ -29,10 +29,11 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
   const post = await getPost(id);
 
   if (post) {
-    const text = post.text.replace(/\n/g, "");
+    const plainText = post.text.replace(/\n/g, "");
+    const stripMarkdown = utility.stripMarkdown(plainText);
     return {
       title: post.title,
-      description: utility.shortenString(50, text),
+      description: utility.shortenString(50, stripMarkdown),
     };
   } else {
     return {

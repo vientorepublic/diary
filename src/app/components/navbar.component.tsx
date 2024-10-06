@@ -46,8 +46,8 @@ export function Navbar() {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/posts/private" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
-                        비공개 글 목록
+                      <Link href="/posts/myPosts" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
+                        나의 게시글
                       </Link>
                     </li>
                     {/* coming soon */}
