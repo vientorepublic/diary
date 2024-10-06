@@ -62,7 +62,7 @@ export default function PrivatePostPage() {
                 })}
             </div>
             {data && data.data && (
-              <div className="flex flex-col gap-2 justify-center items-center">
+              <div className="flex flex-col gap-4 justify-center items-center mt-10">
                 <p className="">현재 {data.pagination.currentPage}페이지</p>
                 <div className="flex flex-row gap-4 justify-center items-center">
                   <button
