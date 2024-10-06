@@ -72,7 +72,7 @@ export default function WritePage() {
       if (publicPost) {
         router.push("/posts");
       } else {
-        router.push("/posts/private");
+        router.push("/posts/myPosts");
       }
       toast.success(res.data.message);
     } catch (err) {
