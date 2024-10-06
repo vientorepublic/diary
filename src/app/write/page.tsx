@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@uiw/react-markdown-editor/markdown-editor.css";
 import type { IDraftPost, IWritePost } from "../types";
 import { Alert } from "../components/alert.component";
+import { confirmAlert } from "react-confirm-alert";
 import "@uiw/react-markdown-preview/markdown.css";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
@@ -12,12 +13,13 @@ import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { isAxiosError } from "axios";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 
 const maxTitleLength = 50;
 const maxTextLength = 5000;
-const autoSavePeriod = 20000;
+const autoSavePeriod = 10000;
 
 const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((mod) => mod.default), {
   ssr: false,
@@ -153,6 +155,26 @@ export default function WritePage() {
       clearInterval(autoSave);
     };
   }, [accessToken, autoSaveEnabled, draftLoaded, lastCheckpoint, text, title]);
+  function confirmRemoveDraft() {
+    confirmAlert({
+      title: "잠시만요!",
+      message: "정말 저장된 초안을 삭제 하시겠어요? 현재 작성 중인 내용도 함께 삭제됩니다.",
+      buttons: [
+        {
+          label: "예",
+          onClick: () => {
+            removeDraft();
+          },
+        },
+        {
+          label: "아니요",
+          onClick: () => {
+            return;
+          },
+        },
+      ],
+    });
+  }
   async function removeDraft() {
     try {
       const res = await fetcher.delete("/post/draft/removeDraft", {
@@ -216,7 +238,7 @@ export default function WritePage() {
           게시글을 공개합니다.
         </label>
         {draftLoaded && (
-          <button className="text-sm text-gray-300 bg-gray-600 hover:bg-gray-700 px-3 py-3 rounded-xl mt-5" onClick={() => removeDraft()}>
+          <button className="text-sm text-gray-100 bg-red-500 hover:bg-red-600 px-3 py-3 rounded-xl mt-5" onClick={() => confirmRemoveDraft()}>
             <FontAwesomeIcon icon={faTrashCan} className="mr-2" />
             초안 삭제
           </button>
