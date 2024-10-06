@@ -3,10 +3,11 @@
 import { faBold, faExpand, faEye, faItalic, faQuoteRight, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@uiw/react-markdown-editor/markdown-editor.css";
-import type { IDraftPost, IWritePost } from "../types";
+import type { IDraftPost, IPostData, IWritePost } from "../types";
 import { Alert } from "../components/alert.component";
 import { confirmAlert } from "react-confirm-alert";
 import "@uiw/react-markdown-preview/markdown.css";
+import { useSearchParams } from "next/navigation";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
 import { fetcher } from "../utility/fetcher";
@@ -33,7 +34,10 @@ const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((
 
 export default function WritePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const postId = searchParams.get("post_id");
   const accessToken = getCookie("access_token");
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true);
   const [draftLoaded, setDraftLoaded] = useState<boolean>(false);
   const [publicPost, setPublicPost] = useState<boolean>(true);
@@ -83,6 +87,70 @@ export default function WritePage() {
       setUploading(false);
     }
   }
+  async function editPost(data: IWritePost, public_post: boolean) {
+    if (!data.title.trim() || !data.text.trim()) {
+      toast.error("제목 또는 본문이 비어있습니다.");
+      return;
+    }
+    setUploading(true);
+    try {
+      const token = await executeRecaptcha("edit_post");
+      const res = await fetcher.patch(
+        "/post/editPost",
+        {
+          id: Number(postId),
+          title: data.title.trim(),
+          text: data.text.trim(),
+          public_post: public_post ? "1" : undefined,
+          g_recaptcha_response: token,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (publicPost) {
+        router.push("/posts");
+      } else {
+        router.push("/posts/myPosts");
+      }
+      toast.success(res.data.message);
+    } catch (err) {
+      if (isAxiosError(err) && err.response) {
+        toast.error(err.response.data.message);
+      }
+    } finally {
+      setUploading(false);
+    }
+  }
+  // Check edit mode
+  useEffect(() => {
+    async function getPost(id: string) {
+      try {
+        const params = new URLSearchParams();
+        params.append("id", id);
+        const res = await fetcher.get<IPostData>("/post/viewPrivate", {
+          params,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const { title, text } = res.data;
+        setTitle(title);
+        setText(text);
+      } catch (err) {
+        if (isAxiosError(err) && err.response) {
+          toast.error(err.response.data.message);
+        }
+      }
+    }
+    if (postId) {
+      getPost(postId);
+      setAutoSaveEnabled(false);
+      setIsEditMode(true);
+    }
+  }, [accessToken, postId]);
   // Load Draft
   useEffect(() => {
     async function loadDraft() {
@@ -103,8 +171,8 @@ export default function WritePage() {
         toast.success("마지막 지점의 초안을 불러왔습니다.");
       } catch (err) {}
     }
-    loadDraft();
-  }, [accessToken]);
+    if (!postId) loadDraft();
+  }, [accessToken, postId]);
   // Auto Save
   useEffect(() => {
     async function saveDraft(data: IWritePost) {
@@ -246,11 +314,11 @@ export default function WritePage() {
         <div className="sm:flex sm:items-center sm:justify-between">
           <button
             className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl my-5"
-            onClick={() => publish({ title, text }, publicPost)}
+            onClick={() => (isEditMode ? editPost({ title, text }, publicPost) : publish({ title, text }, publicPost))}
             disabled={uploading || titleLengthExceed || textLengthExceed}
           >
             <FontAwesomeIcon icon={faUpload} className="mr-2" />
-            게시하기
+            {isEditMode ? "저장하기" : "게시하기"}
           </button>
           <div className="phrase-text my-5">
             <h1 className="text-3xl text-bold">도움말</h1>

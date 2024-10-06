@@ -3,9 +3,9 @@ import { faEdit, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "@/app/components/alert.component";
 import { confirmAlert } from "react-confirm-alert";
+import { useRouter } from "nextjs-toploader/app";
 import { fetcher } from "@/app/utility/fetcher";
 import type { IPostData } from "@/app/types";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { Utility } from "@/app/utility";
@@ -120,6 +120,7 @@ export default function ViewPrivatePostPage({ params }: { params: { id: string }
               </button>
               <button
                 className="px-4 py-2 mb-2 text-sm text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-xl sm:w-auto sm:mb-0"
+                onClick={() => router.push(`/write?post_id=${post.id}`)}
                 disabled={disabled}
               >
                 <FontAwesomeIcon icon={faEdit} className="mr-1" />
