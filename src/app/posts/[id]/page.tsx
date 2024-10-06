@@ -29,11 +29,13 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
   const post = await getPost(id);
 
   if (post) {
-    const plainText = post.text.replace(/\n/g, "");
-    const stripMarkdown = utility.stripMarkdown(plainText);
+    // EOL to Space
+    const text = post.text.replace(/\n/g, " ");
+    // Remove markdown
+    const plainText = utility.stripMarkdown(text);
     return {
       title: post.title,
-      description: utility.shortenString(50, stripMarkdown),
+      description: utility.shortenString(50, plainText),
     };
   } else {
     return {
@@ -50,7 +52,7 @@ export default async function ViewPostPage({ params }: { params: { id: string } 
       {post ? (
         <div className="py-40 w-full lg:w-4/5">
           <h1 className="text-4xl font-bold">{post.title}</h1>
-          <div className="flex flex-row gap-2 mt-2">
+          <div className="flex flex-row gap-2 mt-3">
             <Image className="w-6 h-6 rounded-full" src={post.profile_image} width={6} height={6} alt="" />
             <span className="text-gray-100 text-base">{post.author}</span>
           </div>

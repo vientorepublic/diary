@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import type { IPaginationData, IPhrase, IPhraseData, IPostPreview } from "./types";
+import type { IPaginationData, IPhraseData, IPostPreview } from "./types";
 import { faCode, faList, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Spotlight, { SpotlightCard } from "./components/spotlight.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,7 +33,7 @@ export default function Home() {
   useEffect(() => {
     async function getPhrase() {
       try {
-        const res = await axios.get<IPhrase>("/phrase.json");
+        const res = await axios.get<IPhraseData[]>("/phrase.json");
         const randomIndex = Math.floor(Math.random() * res.data.length);
         setPhrase(res.data[randomIndex]);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

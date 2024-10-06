@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -13,8 +11,6 @@ export interface IPhraseData {
   text: string;
   author: string;
 }
-
-export interface IPhrase extends Array<IPhraseData> {}
 
 export interface IWritePost {
   title: string;
