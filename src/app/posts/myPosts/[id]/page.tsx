@@ -5,7 +5,6 @@ import { Alert } from "@/app/components/alert.component";
 import { confirmAlert } from "react-confirm-alert";
 import { fetcher } from "@/app/utility/fetcher";
 import type { IPostData } from "@/app/types";
-import { UserStore } from "@/app/store/user";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
@@ -22,7 +21,6 @@ const utility = new Utility();
 export default function ViewPrivatePostPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const router = useRouter();
-  const { loading, user_id } = UserStore();
   const token = getCookie("access_token");
   const [fetching, setFetching] = useState<boolean>(true);
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -111,25 +109,23 @@ export default function ViewPrivatePostPage({ params }: { params: { id: string }
               <span className="text-gray-100 text-base">{post.author}</span>
             </div>
             <p className="text-gray-500 text-base mt-2">{dayjs(post.created_at).format("YYYY.MM.DD HH:mm:ss")}</p>
-            {!loading && user_id === post.author && (
-              <div className="flex flex-row gap-3 mt-3">
-                <button
-                  className="px-4 py-2 mb-2 text-sm text-white bg-red-500 disabled:bg-gray-400 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-700 rounded-xl sm:w-auto sm:mb-0"
-                  onClick={() => confirmDelete(post.id)}
-                  disabled={disabled}
-                >
-                  <FontAwesomeIcon icon={faTrashCan} className="mr-1" />
-                  삭제
-                </button>
-                <button
-                  className="px-4 py-2 mb-2 text-sm text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-xl sm:w-auto sm:mb-0"
-                  disabled={disabled}
-                >
-                  <FontAwesomeIcon icon={faEdit} className="mr-1" />
-                  수정
-                </button>
-              </div>
-            )}
+            <div className="flex flex-row gap-3 mt-3">
+              <button
+                className="px-4 py-2 mb-2 text-sm text-white bg-red-500 disabled:bg-gray-400 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-700 rounded-xl sm:w-auto sm:mb-0"
+                onClick={() => confirmDelete(post.id)}
+                disabled={disabled}
+              >
+                <FontAwesomeIcon icon={faTrashCan} className="mr-1" />
+                삭제
+              </button>
+              <button
+                className="px-4 py-2 mb-2 text-sm text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-xl sm:w-auto sm:mb-0"
+                disabled={disabled}
+              >
+                <FontAwesomeIcon icon={faEdit} className="mr-1" />
+                수정
+              </button>
+            </div>
             <hr className="border-gray-700 my-5" />
             <pre className="pretendard text-wrap overflow-hidden">
               <Markdown

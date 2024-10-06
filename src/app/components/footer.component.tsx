@@ -12,8 +12,18 @@ export function Footer() {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
+              <h2 className="mb-6 text-sm font-semibold uppercase text-white">Resources</h2>
+              <ul className="text-gray-400 font-medium">
+                <li>
+                  <a href="https://github.com/vientorepublic/diary" className="hover:underline">
+                    소스코드
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
               <h2 className="mb-6 text-sm font-semibold uppercase text-white">Legal</h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-gray-400 font-medium">
                 <li className="mb-4">
                   <Link href="/PrivacyPolicy" className="hover:underline">
                     개인정보 보호정책
@@ -23,11 +33,6 @@ export function Footer() {
                   <Link href="/Guideline" className="hover:underline">
                     가이드라인
                   </Link>
-                </li>
-                <li>
-                  <a href="https://github.com/vientorepublic/diary" className="hover:underline">
-                    소스코드
-                  </a>
                 </li>
               </ul>
             </div>
