@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { faBold, faExpand, faEye, faItalic, faQuoteRight, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "@uiw/react-markdown-editor/markdown-editor.css";
 import type { IDraftPost, IPostData, IWritePost } from "../types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "../components/alert.component";
 import { confirmAlert } from "react-confirm-alert";
-import "@uiw/react-markdown-preview/markdown.css";
 import { useSearchParams } from "next/navigation";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
@@ -15,6 +13,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import "@uiw/react-markdown-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 
@@ -295,16 +295,20 @@ export default function WritePage() {
           {text.trim().length > maxTextLength && <p className="text-orange-500 text-sm">본문은 5000바이트를 초과할 수 없습니다.</p>}
         </div>
         <MarkdownEditor value={text} onChange={setText} height="400px" aria-disabled={uploading} autoFocus />
-        <input
-          id="default-checkbox"
-          type="checkbox"
-          defaultChecked
-          onClick={() => setPublicPost(!publicPost)}
-          className="w-4 h-4 mt-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label htmlFor="default-checkbox" className="ms-2 mr-3 text-sm font-medium text-gray-300">
-          게시글을 공개합니다.
-        </label>
+        {!isEditMode && (
+          <>
+            <input
+              id="default-checkbox"
+              type="checkbox"
+              defaultChecked
+              onClick={() => setPublicPost(!publicPost)}
+              className="w-4 h-4 mt-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label htmlFor="default-checkbox" className="ms-2 mr-3 text-sm font-medium text-gray-300">
+              게시글을 공개합니다.
+            </label>
+          </>
+        )}
         {draftLoaded && (
           <button className="text-sm text-gray-100 bg-red-500 hover:bg-red-600 px-3 py-3 rounded-xl mt-5" onClick={() => confirmRemoveDraft()}>
             <FontAwesomeIcon icon={faTrashCan} className="mr-2" />

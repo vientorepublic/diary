@@ -50,12 +50,6 @@ export function Navbar() {
                         나의 게시글
                       </Link>
                     </li>
-                    {/* coming soon */}
-                    {/* <li>
-                      <Link href={`/user/${user_id}`} onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
-                        내 프로필
-                      </Link>
-                    </li> */}
                   </ul>
                   <div className="py-2">
                     <Link
