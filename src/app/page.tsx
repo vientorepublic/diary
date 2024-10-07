@@ -162,7 +162,8 @@ export default function Home() {
             </div>
           ) : error ? (
             <div className="flex py-20 justify-center items-center">
-              <Alert>{error.response.data.message}</Alert>
+              {/* stack,message,name,code,config,request,response,status */}
+              <Alert>{error.response ? error.response.data.message : error.message}</Alert>
             </div>
           ) : (
             <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
