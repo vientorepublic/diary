@@ -64,8 +64,8 @@ export default function WritePage() {
         {
           title: data.title.trim(),
           text: data.text.trim(),
-          public_post: public_post ? "1" : undefined,
           g_recaptcha_response: token,
+          public_post,
         },
         {
           headers: {
@@ -96,13 +96,13 @@ export default function WritePage() {
     try {
       const token = await executeRecaptcha("edit_post");
       const res = await fetcher.patch(
-        "/post/editPost",
+        "/post/edit",
         {
-          id: Number(postId),
+          id: Number(postId), // Post ID
           title: data.title.trim(),
           text: data.text.trim(),
-          public_post: public_post ? "1" : undefined,
           g_recaptcha_response: token,
+          public_post,
         },
         {
           headers: {

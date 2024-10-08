@@ -51,7 +51,7 @@ export default function ViewPrivatePostPage({ params }: { params: { id: string }
     try {
       const params = new URLSearchParams();
       params.append("id", String(id));
-      const res = await fetcher.delete("/post/removePost", {
+      const res = await fetcher.delete("/post/remove", {
         params,
         headers: {
           Authorization: `Bearer ${token}`,

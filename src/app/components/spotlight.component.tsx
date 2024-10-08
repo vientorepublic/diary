@@ -14,9 +14,17 @@ export default function Spotlight({ children, className = "" }: SpotlightProps) 
   const containerSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
   const [boxes, setBoxes] = useState<Array<HTMLElement>>([]);
 
+  const initContainer = () => {
+    if (containerRef.current) {
+      containerSize.current.w = containerRef.current.offsetWidth;
+      containerSize.current.h = containerRef.current.offsetHeight;
+    }
+  };
+
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    containerRef.current && setBoxes(Array.from(containerRef.current.children).map((el) => el as HTMLElement));
+    if (containerRef.current) {
+      setBoxes(Array.from(containerRef.current.children).map((el) => el as HTMLElement));
+    }
   }, []);
 
   useEffect(() => {
@@ -50,13 +58,6 @@ export default function Spotlight({ children, className = "" }: SpotlightProps) 
     };
     onMouseMove();
   }, [boxes, mousePosition]);
-
-  const initContainer = () => {
-    if (containerRef.current) {
-      containerSize.current.w = containerRef.current.offsetWidth;
-      containerSize.current.h = containerRef.current.offsetHeight;
-    }
-  };
 
   return (
     <div className={className} ref={containerRef}>
