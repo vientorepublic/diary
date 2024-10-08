@@ -43,7 +43,7 @@ export default function PostPage() {
         ) : error ? (
           <div className="flex flex-col gap-4 justify-center items-center h-screen">
             {/* stack,message,name,code,config,request,response,status */}
-            <Alert>{error.response.data.message}</Alert>
+            <Alert>{error.response ? error.response.data.message : error.message}</Alert>
           </div>
         ) : (
           <div className="text-left py-20">

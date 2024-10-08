@@ -113,3 +113,26 @@ export interface ICardParams {
   buttonLink: string;
   className?: string;
 }
+export interface HTMLEscapeChars {
+  [key: string]: string;
+}
+
+export type SpotlightProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+export type SpotlightCardProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+export interface IMousePosition {
+  x: number;
+  y: number;
+}
+
+export interface IContainerSize {
+  w: number;
+  h: number;
+}

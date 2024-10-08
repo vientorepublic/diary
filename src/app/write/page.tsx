@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { faBold, faExpand, faEye, faItalic, faQuoteRight, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "@uiw/react-markdown-editor/markdown-editor.css";
 import type { IDraftPost, IPostData, IWritePost } from "../types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "../components/alert.component";
 import { confirmAlert } from "react-confirm-alert";
-import "@uiw/react-markdown-preview/markdown.css";
 import { useSearchParams } from "next/navigation";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
@@ -15,6 +13,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import "@uiw/react-markdown-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 
@@ -64,8 +64,8 @@ export default function WritePage() {
         {
           title: data.title.trim(),
           text: data.text.trim(),
-          public_post: public_post ? "1" : undefined,
           g_recaptcha_response: token,
+          public_post,
         },
         {
           headers: {
@@ -96,13 +96,13 @@ export default function WritePage() {
     try {
       const token = await executeRecaptcha("edit_post");
       const res = await fetcher.patch(
-        "/post/editPost",
+        "/post/edit",
         {
-          id: Number(postId),
+          id: Number(postId), // Post ID
           title: data.title.trim(),
           text: data.text.trim(),
-          public_post: public_post ? "1" : undefined,
           g_recaptcha_response: token,
+          public_post,
         },
         {
           headers: {

@@ -1,22 +1,26 @@
 "use client";
+import type { IContainerSize, IMousePosition, SpotlightCardProps, SpotlightProps } from "../types";
 import React, { useRef, useState, useEffect } from "react";
 import useMousePosition from "../utility/mouse";
-
-type SpotlightProps = {
-  children: React.ReactNode;
-  className?: string;
-};
 
 export default function Spotlight({ children, className = "" }: SpotlightProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mousePosition = useMousePosition();
-  const mouse = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const containerSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
+  const mouse = useRef<IMousePosition>({ x: 0, y: 0 });
+  const containerSize = useRef<IContainerSize>({ w: 0, h: 0 });
   const [boxes, setBoxes] = useState<Array<HTMLElement>>([]);
 
+  const initContainer = () => {
+    if (containerRef.current) {
+      containerSize.current.w = containerRef.current.offsetWidth;
+      containerSize.current.h = containerRef.current.offsetHeight;
+    }
+  };
+
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    containerRef.current && setBoxes(Array.from(containerRef.current.children).map((el) => el as HTMLElement));
+    if (containerRef.current) {
+      setBoxes(Array.from(containerRef.current.children).map((el) => el as HTMLElement));
+    }
   }, []);
 
   useEffect(() => {
@@ -51,24 +55,12 @@ export default function Spotlight({ children, className = "" }: SpotlightProps) 
     onMouseMove();
   }, [boxes, mousePosition]);
 
-  const initContainer = () => {
-    if (containerRef.current) {
-      containerSize.current.w = containerRef.current.offsetWidth;
-      containerSize.current.h = containerRef.current.offsetHeight;
-    }
-  };
-
   return (
     <div className={className} ref={containerRef}>
       {children}
     </div>
   );
 }
-
-type SpotlightCardProps = {
-  children: React.ReactNode;
-  className?: string;
-};
 
 export function SpotlightCard({ children, className = "" }: SpotlightCardProps) {
   return (
