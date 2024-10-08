@@ -13,8 +13,7 @@ const utility = new Utility();
 
 async function getPost(id: string) {
   try {
-    const idNum = Number(id);
-    if (isNaN(idNum) || !Number.isInteger(idNum) || idNum < 0) {
+    if (!utility.isPostId(id)) {
       throw new Error("게시글 ID 형식이 잘못되었습니다.");
     }
     const params = new URLSearchParams();

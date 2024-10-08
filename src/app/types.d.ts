@@ -113,6 +113,11 @@ export interface ICardParams {
   buttonLink: string;
   className?: string;
 }
+
+export interface PostOptionProps {
+  postId: number;
+}
+
 export interface HTMLEscapeChars {
   [key: string]: string;
 }

@@ -21,4 +21,8 @@ export class Utility {
     };
     return html.replace(/[&<>]/g, (match) => escapeChars[match]);
   }
+  public isPostId(id: string) {
+    const idNum = Number(id);
+    return !isNaN(idNum) && Number.isInteger(idNum) && idNum > 0;
+  }
 }
