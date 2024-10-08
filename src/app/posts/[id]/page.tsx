@@ -1,40 +1,50 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import type { IPostData, IPostProps } from "@/app/types";
 import { OpenGraph } from "@/app/opengraph";
+import axios, { isAxiosError } from "axios";
 import { Utility } from "@/app/utility";
 import { Metadata } from "next";
 import Image from "next/image";
-import axios from "axios";
 import dayjs from "dayjs";
 
 const utility = new Utility();
 
-async function getPost(id: string): Promise<IPostData | null> {
+async function getPost(id: string) {
   try {
+    const idNum = Number(id);
+    if (isNaN(idNum) || !Number.isInteger(idNum) || idNum < 0) {
+      throw new Error("게시글 ID 형식이 잘못되었습니다.");
+    }
     const params = new URLSearchParams();
     params.append("id", id);
     const res = await axios.get<IPostData>(`${process.env.NEXT_PUBLIC_API_URL}/post/view`, {
       params,
     });
     return res.data;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {
-    return null;
+  } catch (err: any) {
+    if (isAxiosError(err) && err.response) {
+      throw new Error(err.response.data.message);
+    } else {
+      throw new Error(err.message);
+    }
   }
 }
 
 export async function generateMetadata({ params }: IPostProps): Promise<Metadata> {
   const { id } = params;
-
-  const post = await getPost(id);
-
-  if (post) {
+  let data: IPostData | undefined;
+  try {
+    data = await getPost(id);
+  } catch (err) {}
+  if (data) {
     // EOL to Space
-    const text = post.text.replace(/\n/g, " ");
+    const text = data.text.replace(/\n/g, " ");
     // Remove markdown
     const plainText = utility.stripMarkdown(text);
     return {
-      title: post.title,
+      title: data.title,
       description: utility.shortenString(50, plainText),
     };
   } else {
@@ -46,26 +56,32 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
 }
 
 export default async function ViewPostPage({ params }: { params: { id: string } }) {
-  const post = await getPost(params.id);
+  let data: IPostData | undefined;
+  let error: string | undefined;
+  try {
+    data = await getPost(params.id);
+  } catch (err: any) {
+    error = err.message;
+  }
   return (
     <section className="flex flex-col items-center justify-center px-10">
-      {post ? (
+      {data ? (
         <div className="py-40 w-full lg:w-4/5">
-          <h1 className="text-4xl font-bold">{post.title}</h1>
+          <h1 className="text-4xl font-bold">{data.title}</h1>
           <div className="flex flex-row gap-2 mt-3">
-            <Image className="w-6 h-6 rounded-full" src={post.profile_image} width={6} height={6} alt="" />
-            <span className="text-gray-100 text-base">{post.author}</span>
+            <Image className="w-6 h-6 rounded-full" src={data.profile_image} width={6} height={6} alt="" />
+            <span className="text-gray-100 text-base">{data.author}</span>
           </div>
-          <p className="text-gray-500 text-base mt-2">{dayjs(post.created_at).format("YYYY.MM.DD HH:mm:ss")}</p>
+          <p className="text-gray-500 text-base mt-2">{dayjs(data.created_at).format("YYYY.MM.DD HH:mm:ss")}</p>
           <hr className="border-gray-700 my-5" />
           <pre className="pretendard text-wrap overflow-hidden">
-            <RenderMarkdown>{utility.escapeHTML(post.text)}</RenderMarkdown>
+            <RenderMarkdown>{utility.escapeHTML(data.text)}</RenderMarkdown>
           </pre>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-3 h-screen">
           <h1 className="text-4xl font-bold">Error</h1>
-          <p className="text-2xl">게시글을 불러오는 중 오류가 발생했습니다.</p>
+          <p className="text-2xl">{error}</p>
         </div>
       )}
     </section>
