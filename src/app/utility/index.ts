@@ -1,3 +1,5 @@
+import type { HTMLEscapeChars } from "../types";
+
 export class Utility {
   public shortenString(maxLength: number, str: string): string {
     if (str.length > maxLength) {
@@ -12,7 +14,7 @@ export class Utility {
     return plainText;
   }
   public escapeHTML(html: string): string {
-    const escapeChars: { [key: string]: string } = {
+    const escapeChars: HTMLEscapeChars = {
       "&": "&amp;",
       "<": "&lt;",
       ">": "&gt;",
