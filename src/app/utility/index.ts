@@ -10,8 +10,7 @@ export class Utility {
   }
   public stripMarkdown(input: string) {
     const markdownRegex = /[*_~`#+\-\[\]{}|<>]/g;
-    const plainText = input.replace(markdownRegex, "");
-    return plainText;
+    return input.replace(markdownRegex, "");
   }
   public escapeHTML(html: string): string {
     const escapeChars: HTMLEscapeChars = {

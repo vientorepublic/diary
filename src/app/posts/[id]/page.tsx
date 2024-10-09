@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 const utility = new Utility();
 
-async function getPost(id: string) {
+async function getPost(id: string): Promise<IPostData> {
   try {
     if (!utility.isPostId(id)) {
       throw new Error("게시글 ID 형식이 잘못되었습니다.");
