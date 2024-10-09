@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { faBold, faExpand, faEye, faItalic, faQuoteRight, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
 import type { IDraftPost, IPostData, IWritePost } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "../components/alert.component";
@@ -320,27 +320,35 @@ export default function WritePage() {
             <FontAwesomeIcon icon={faUpload} className="mr-2" />
             {isEditMode ? "저장하기" : "게시하기"}
           </button>
-          <div className="phrase-text my-5">
+          <div className="my-5 text-lg phrase-text">
             <h1 className="text-3xl text-bold">도움말</h1>
-            <div className="flex flex-row gap-2 text-lg">
+            <div className="flex flex-row gap-2">
               <FontAwesomeIcon icon={faEye} className="mt-1.5" />
               <p>: 미리보기 패널을 엽니다.</p>
             </div>
-            <div className="flex flex-row gap-2 text-lg">
+            <div className="flex flex-row gap-2">
               <FontAwesomeIcon icon={faExpand} className="mt-1.5" />
               <p>: 편집기를 전체화면으로 전환합니다.</p>
             </div>
-            <div className="flex flex-row gap-2 text-lg">
+            <div className="flex flex-row gap-2">
+              <FontAwesomeIcon icon={faHeading} className="mt-1.5" />
+              <p>: 제목을 삽입합니다.</p>
+            </div>
+            <div className="flex flex-row gap-2">
               <FontAwesomeIcon icon={faBold} className="mt-1.5" />
               <p>: 굵은 글씨(강조)를 사용합니다.</p>
             </div>
-            <div className="flex flex-row gap-2 text-lg">
+            <div className="flex flex-row gap-2">
               <FontAwesomeIcon icon={faItalic} className="mt-1.5" />
               <p>: 기울임(이텔릭)을 사용합니다.</p>
             </div>
-            <div className="flex flex-row gap-2 text-lg">
-              <FontAwesomeIcon icon={faQuoteRight} className="mt-1.5" />
-              <p>: 인용문을 넣습니다.</p>
+            <div className="flex flex-row gap-2">
+              <FontAwesomeIcon icon={faLink} className="mt-1.5" />
+              <p>: 링크를 삽입합니다.</p>
+            </div>
+            <div className="flex flex-row gap-2">
+              <FontAwesomeIcon icon={faImage} className="mt-1.5" />
+              <p>: 외부 링크로부터 사진을 삽입합니다.</p>
             </div>
           </div>
         </div>
