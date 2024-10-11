@@ -294,7 +294,7 @@ export default function WritePage() {
           </p>
           {text.trim().length > maxTextLength && <p className="text-orange-500 text-sm">본문은 5000바이트를 초과할 수 없습니다.</p>}
         </div>
-        <MarkdownEditor value={text} onChange={setText} height="400px" aria-disabled={uploading} autoFocus />
+        <MarkdownEditor value={text} onChange={setText} height="400px" aria-disabled={uploading} />
         <input
           id="default-checkbox"
           type="checkbox"
