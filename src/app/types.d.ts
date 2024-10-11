@@ -58,7 +58,6 @@ export interface IPaginationData<T> {
 export interface IFetcherParams {
   url: string;
   token?: string;
-  params?: URLSearchParams;
 }
 
 export interface DefaultResponse {

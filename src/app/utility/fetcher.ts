@@ -6,10 +6,9 @@ export const fetcher = axios.create({
 });
 
 export function swrFetcher(e: IFetcherParams): Promise<AxiosResponse> {
-  const { url, params, token } = e;
+  const { url, token } = e;
   return axios
     .get(url, {
-      params,
       headers: {
         Authorization: `Bearer ${token}`,
       },
