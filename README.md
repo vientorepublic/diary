@@ -22,6 +22,14 @@
 <img width="1388" alt="Screenshot 2024-10-05 at 11 22 40 PM" src="https://github.com/user-attachments/assets/9738a9e1-2126-48f7-915e-23cca2c95582">
 <img width="778" alt="Screenshot 2024-10-05 at 11 23 36 PM" src="https://github.com/user-attachments/assets/4cd62387-c37c-4f91-8482-982d49bf2c83">
 
+# 환경변수
+
+```
+NEXT_PUBLIC_API_URL=
+INTERNAL_API_URL=
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
+```
+
 # 라이선스
 
 - 본 리포지토리: MIT
