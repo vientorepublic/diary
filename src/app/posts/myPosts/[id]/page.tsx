@@ -61,9 +61,9 @@ export default function ViewPrivatePostPage({ params }: { params: { id: string }
               <Image className="w-6 h-6 rounded-full" src={post.profile_image} width={6} height={6} alt="" />
               <span className="text-gray-100 text-base">{post.author}</span>
             </div>
-            <p className="text-gray-500 text-base mt-2">{dayjs(post.created_at).format("YYYY.MM.DD HH:mm:ss")}에 게시됨</p>
+            <p className="text-gray-500 text-base mt-2">{dayjs(post.created_at).format("YYYY.MM.DD HH:mm:ss")} 게시됨</p>
             {post.edited_at && post.edited_at !== 0 ? (
-              <p className="text-gray-500 text-base">{dayjs(post.edited_at).format("YYYY.MM.DD HH:mm:ss")}에 수정됨</p>
+              <p className="text-gray-500 text-base">{dayjs(post.edited_at).format("YYYY.MM.DD HH:mm:ss")} 수정됨</p>
             ) : (
               <></>
             )}

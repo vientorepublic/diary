@@ -17,6 +17,8 @@ import useSWR from "swr";
 const utility = new Utility();
 
 export default function Home() {
+  const { user_id, loading } = UserStore();
+  const [phrase, setPhrase] = useState<IPhraseData>();
   const [fetching, setFetching] = useState<boolean>(true);
   // @ts-ignore
   const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
@@ -28,8 +30,6 @@ export default function Home() {
       refreshInterval: 5000,
     }
   );
-  const [phrase, setPhrase] = useState<IPhraseData>();
-  const { user_id, loading } = UserStore();
   useEffect(() => {
     async function getPhrase() {
       try {
