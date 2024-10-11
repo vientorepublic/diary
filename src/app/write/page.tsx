@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faSave, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
 import type { IDraftPost, IPostData, IWritePost } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "../components/alert.component";
@@ -210,7 +210,7 @@ export default function WritePage() {
     document.addEventListener("visibilitychange", handleVisibilityChange);
     const autoSave = setInterval(() => {
       const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
-      if (title && text && autoSaveEnabled) {
+      if (title && text && autoSaveEnabled && !isEditMode) {
         if (checkpointTitle !== title || checkpointText !== text) {
           saveDraft({ title, text });
         }
@@ -222,7 +222,7 @@ export default function WritePage() {
       // Clear auto save interval
       clearInterval(autoSave);
     };
-  }, [accessToken, autoSaveEnabled, draftLoaded, lastCheckpoint, text, title]);
+  }, [accessToken, autoSaveEnabled, draftLoaded, isEditMode, lastCheckpoint, text, title]);
   function confirmRemoveDraft() {
     confirmAlert({
       title: "잠시만요!",
@@ -317,7 +317,7 @@ export default function WritePage() {
             onClick={() => (isEditMode ? editPost({ title, text }, publicPost) : publish({ title, text }, publicPost))}
             disabled={uploading || titleLengthExceed || textLengthExceed}
           >
-            <FontAwesomeIcon icon={faUpload} className="mr-2" />
+            {isEditMode ? <FontAwesomeIcon icon={faSave} className="mr-2" /> : <FontAwesomeIcon icon={faUpload} className="mr-2" />}
             {isEditMode ? "저장하기" : "게시하기"}
           </button>
           <div className="my-5 text-lg phrase-text">
