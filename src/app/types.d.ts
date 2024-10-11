@@ -23,6 +23,7 @@ export interface IPost {
   author: string;
   profile_image: string;
   created_at: number;
+  edited_at?: number;
 }
 
 export interface IMyPost extends IPost {
