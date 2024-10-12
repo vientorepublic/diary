@@ -51,10 +51,7 @@ export default function Home() {
         <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12">
           <div className="mb-8 text-3xl sm:text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl">
             <div className="flex flex-col gap-10 text-center">
-              <div className="relative">
-                <div className="absolute inset-0 animated-background bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.50] bg-red-500 rounded-full blur-3xl" />
-                <h1 className="relative px-4 py-8 text-gray-100">오늘 하루는 어땠나요?</h1>
-              </div>
+              <h1 className="relative px-4 py-4 text-gray-100">오늘 하루는 어땠나요?</h1>
               <div className="flex flex-row justify-center items-center">
                 <h1 className="text-gray-100">
                   <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">당신의 이야기</span>를 써내려 보세요.
