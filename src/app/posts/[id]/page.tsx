@@ -38,13 +38,10 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
     data = await getPost(id);
   } catch (err) {}
   if (data) {
-    // EOL to Space
-    const text = data.text.replace(/\n/g, " ");
-    // Remove markdown
-    const plainText = utility.stripMarkdown(text);
+    const description = utility.convertDescription(data.text);
     return {
       title: data.title,
-      description: utility.shortenString(50, plainText),
+      description: description,
     };
   } else {
     return {

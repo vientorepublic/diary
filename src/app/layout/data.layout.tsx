@@ -18,14 +18,8 @@ export function DataLayout({ children }: { children: ReactNode }) {
           },
         });
         setUser({
-          id: user.data.id,
-          user_id: user.data.user_id,
-          email: user.data.email,
-          profile_image: user.data.profile_image,
-          created_at: user.data.created_at,
-          permission: user.data.permission,
+          ...user.data,
         });
-        setLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         const cookie = getCookie("access_token");
@@ -34,6 +28,7 @@ export function DataLayout({ children }: { children: ReactNode }) {
           deleteCookie("access_token");
           toast("세션이 만료 되었습니다. 다시 로그인 해주세요.");
         }
+      } finally {
         setLoading(false);
       }
     }
