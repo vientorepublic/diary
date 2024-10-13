@@ -6,11 +6,11 @@ import { Navbar } from "./components/navbar.component";
 import { ToastLayout } from "./layout/toast.layout";
 import { DataLayout } from "./layout/data.layout";
 import NextTopLoader from "nextjs-toploader";
+import { OpenGraph } from "./opengraph";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/static/css/loader.css";
 import "@/app/static/css/main.css";
 import "@/app/globals.css";
-import { OpenGraph } from "./opengraph";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
