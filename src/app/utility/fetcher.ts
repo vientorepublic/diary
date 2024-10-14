@@ -5,15 +5,12 @@ export const fetcher = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "",
 });
 
-export function swrFetcher(e: IFetcherParams): Promise<AxiosResponse> {
+export async function swrFetcher(e: IFetcherParams): Promise<AxiosResponse> {
   const { url, token } = e;
-  return axios
-    .get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((data) => {
-      return data.data;
-    });
+  const data = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data.data;
 }
