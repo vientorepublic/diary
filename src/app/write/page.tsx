@@ -40,7 +40,6 @@ export default function WritePage() {
   const postId = searchParams.get("post_id");
   const accessToken = getCookie(name);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true);
   const [draftLoaded, setDraftLoaded] = useState<boolean>(false);
   const [publicPost, setPublicPost] = useState<boolean>(true);
   const [title, setTitle] = useState<string>("");
@@ -149,7 +148,6 @@ export default function WritePage() {
     }
     if (postId) {
       getPost(postId);
-      setAutoSaveEnabled(false);
       setIsEditMode(true);
     }
   }, [accessToken, postId]);
@@ -179,7 +177,7 @@ export default function WritePage() {
   useEffect(() => {
     async function saveDraft(data: IWritePost) {
       try {
-        fetcher.post(
+        const res = await fetcher.post(
           "/post/draft/saveDraft",
           {
             ...data,
@@ -194,37 +192,28 @@ export default function WritePage() {
           ...data,
         });
         if (!draftLoaded) setDraftLoaded(true);
-        toast.success("초안이 자동 저장되었습니다.");
-      } catch (err) {
-        if (isAxiosError(err) && err.response) {
-          toast.error(err.response.data.message);
-        }
-      }
+        toast.success(res.data.message);
+      } catch (err) {}
     }
-    // Disable auto save when browser lost focus
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
-        setAutoSaveEnabled(false);
-      } else {
-        setAutoSaveEnabled(true);
-      }
+    // Auto save when browser window lost focus
+    const handleBlur = () => {
+      saveDraft({ title, text });
     };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("blur", handleBlur);
     const autoSave = setInterval(() => {
       const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
-      if (title && text && autoSaveEnabled && !isEditMode) {
+      if (title && text && !isEditMode) {
         if (checkpointTitle !== title || checkpointText !== text) {
           saveDraft({ title, text });
         }
       }
     }, autoSavePeriod);
     return () => {
-      // Clear browser window focus listener
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      // Clear auto save interval
+      // Clear event listener
+      window.removeEventListener("blur", handleBlur);
       clearInterval(autoSave);
     };
-  }, [accessToken, autoSaveEnabled, draftLoaded, isEditMode, lastCheckpoint, text, title]);
+  }, [accessToken, draftLoaded, isEditMode, lastCheckpoint, text, title]);
   function confirmRemoveDraft() {
     confirmAlert({
       title: "잠시만요!",
