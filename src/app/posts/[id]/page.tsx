@@ -3,39 +3,20 @@
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import type { IPostData, IPostProps } from "@/app/types";
 import { OpenGraph } from "@/app/opengraph";
-import axios, { isAxiosError } from "axios";
+import { Post } from "@/app/utility/post";
 import { Utility } from "@/app/utility";
 import { Metadata } from "next";
 import Image from "next/image";
 import dayjs from "dayjs";
 
 const utility = new Utility();
-
-async function getPost(id: string): Promise<IPostData> {
-  try {
-    if (!utility.isPostId(id)) {
-      throw new Error("게시글 ID 형식이 잘못되었습니다.");
-    }
-    const params = new URLSearchParams();
-    params.append("id", id);
-    const res = await axios.get<IPostData>(`${process.env.INTERNAL_API_URL}/post/view`, {
-      params,
-    });
-    return res.data;
-  } catch (err: any) {
-    if (isAxiosError(err) && err.response) {
-      throw new Error(err.response.data.message);
-    } else {
-      throw new Error(err.message);
-    }
-  }
-}
+const post = new Post();
 
 export async function generateMetadata({ params }: IPostProps): Promise<Metadata> {
   const { id } = params;
   let data: IPostData | undefined;
   try {
-    data = await getPost(id);
+    data = await post.get(id);
   } catch (err) {}
   if (data) {
     const description = utility.convertDescription(data.text);
@@ -55,7 +36,7 @@ export default async function ViewPostPage({ params }: { params: { id: string } 
   let data: IPostData | undefined;
   let error: string | undefined;
   try {
-    data = await getPost(params.id);
+    data = await post.get(params.id);
   } catch (err: any) {
     error = err.message;
   }
