@@ -17,6 +17,7 @@ import "@uiw/react-markdown-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
+import { Cookie } from "../constants";
 
 const maxTitleLength = 50;
 const maxTextLength = 5000;
@@ -34,9 +35,10 @@ const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((
 
 export default function WritePage() {
   const router = useRouter();
+  const { name } = Cookie;
   const searchParams = useSearchParams();
   const postId = searchParams.get("post_id");
-  const accessToken = getCookie("access_token");
+  const accessToken = getCookie(name);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true);
   const [draftLoaded, setDraftLoaded] = useState<boolean>(false);

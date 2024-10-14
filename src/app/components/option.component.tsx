@@ -9,11 +9,13 @@ import { getCookie } from "cookies-next";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { Cookie } from "../constants";
 
 export function PostOption(props: PostOptionProps) {
-  const { postId } = props;
   const router = useRouter();
-  const token = getCookie("access_token");
+  const { postId } = props;
+  const { name } = Cookie;
+  const token = getCookie(name);
   const [disabled, setDisabled] = useState<boolean>(false);
   function confirmDelete(id: number) {
     confirmAlert({

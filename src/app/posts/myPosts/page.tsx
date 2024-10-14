@@ -10,11 +10,13 @@ import { getCookie } from "cookies-next";
 import { Utility } from "@/app/utility";
 import React, { useState } from "react";
 import useSWR from "swr";
+import { Cookie } from "@/app/constants";
 
 const utility = new Utility();
 
 export default function PrivatePostPage() {
-  const token = getCookie("access_token");
+  const { name } = Cookie;
+  const token = getCookie(name);
   const [page, setPage] = useState<number>(1);
   const { data, error, isLoading } = useSWR<IPaginationData<IMyPost[]>>(
     {

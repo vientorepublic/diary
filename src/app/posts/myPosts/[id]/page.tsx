@@ -11,12 +11,14 @@ import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { Cookie } from "@/app/constants";
 
 const utility = new Utility();
 
 export default function ViewPrivatePostPage({ params }: { params: { id: string } }) {
   const { id } = params;
-  const token = getCookie("access_token");
+  const { name } = Cookie;
+  const token = getCookie(name);
   const [fetching, setFetching] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [post, setPost] = useState<IPostData>();

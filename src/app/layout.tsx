@@ -6,7 +6,7 @@ import { Navbar } from "./components/navbar.component";
 import { ToastLayout } from "./layout/toast.layout";
 import { DataLayout } from "./layout/data.layout";
 import NextTopLoader from "nextjs-toploader";
-import { OpenGraph } from "./opengraph";
+import { OpenGraph } from "./constants";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/static/css/loader.css";
 import "@/app/static/css/main.css";
