@@ -20,10 +20,6 @@ export class Utility {
     };
     return html.replace(/[&<>]/g, (match) => escapeChars[match]);
   }
-  public isPostId(id: string): boolean {
-    const idNum = Number(id);
-    return !isNaN(idNum) && Number.isInteger(idNum) && idNum > 0;
-  }
   public convertDescription(input: string): string {
     const removeEOL = input.replace(/\n/g, " ");
     const plainText = this.stripMarkdown(removeEOL);
