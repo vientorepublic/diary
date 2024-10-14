@@ -11,13 +11,13 @@ import { useRouter } from "nextjs-toploader/app";
 import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import { Cookie } from "../constants";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "@uiw/react-markdown-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
-import { Cookie } from "../constants";
 
 const maxTitleLength = 50;
 const maxTextLength = 5000;

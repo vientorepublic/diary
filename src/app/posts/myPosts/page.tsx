@@ -7,10 +7,10 @@ import { PostCard } from "@/app/components/card.component";
 import { Alert } from "@/app/components/alert.component";
 import { swrFetcher } from "@/app/utility/fetcher";
 import { getCookie } from "cookies-next";
+import { Cookie } from "@/app/constants";
 import { Utility } from "@/app/utility";
 import React, { useState } from "react";
 import useSWR from "swr";
-import { Cookie } from "@/app/constants";
 
 const utility = new Utility();
 

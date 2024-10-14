@@ -6,10 +6,10 @@ import { useRouter } from "nextjs-toploader/app";
 import type { PostOptionProps } from "../types";
 import { fetcher } from "../utility/fetcher";
 import { getCookie } from "cookies-next";
+import { Cookie } from "../constants";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Cookie } from "../constants";
 
 export function PostOption(props: PostOptionProps) {
   const router = useRouter();

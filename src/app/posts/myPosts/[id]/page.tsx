@@ -6,12 +6,12 @@ import { fetcher } from "@/app/utility/fetcher";
 import type { IPostData } from "@/app/types";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import { Cookie } from "@/app/constants";
 import { Utility } from "@/app/utility";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Image from "next/image";
 import dayjs from "dayjs";
-import { Cookie } from "@/app/constants";
 
 const utility = new Utility();
 
