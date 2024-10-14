@@ -40,7 +40,6 @@ export default function WritePage() {
   const postId = searchParams.get("post_id");
   const accessToken = getCookie(name);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true);
   const [draftLoaded, setDraftLoaded] = useState<boolean>(false);
   const [publicPost, setPublicPost] = useState<boolean>(true);
   const [title, setTitle] = useState<string>("");
@@ -149,7 +148,6 @@ export default function WritePage() {
     }
     if (postId) {
       getPost(postId);
-      setAutoSaveEnabled(false);
       setIsEditMode(true);
     }
   }, [accessToken, postId]);
@@ -202,11 +200,20 @@ export default function WritePage() {
       saveDraft({ title, text });
     };
     window.addEventListener("blur", handleBlur);
+    const autoSave = setInterval(() => {
+      const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
+      if (title && text && !isEditMode) {
+        if (checkpointTitle !== title || checkpointText !== text) {
+          saveDraft({ title, text });
+        }
+      }
+    }, autoSavePeriod);
     return () => {
       // Clear event listener
       window.removeEventListener("blur", handleBlur);
+      clearInterval(autoSave);
     };
-  }, [accessToken, autoSaveEnabled, draftLoaded, isEditMode, lastCheckpoint, text, title]);
+  }, [accessToken, draftLoaded, isEditMode, lastCheckpoint, text, title]);
   function confirmRemoveDraft() {
     confirmAlert({
       title: "잠시만요!",
