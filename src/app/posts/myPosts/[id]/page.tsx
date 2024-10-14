@@ -6,6 +6,7 @@ import { fetcher } from "@/app/utility/fetcher";
 import type { IPostData } from "@/app/types";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import { Cookie } from "@/app/constants";
 import { Utility } from "@/app/utility";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -16,7 +17,8 @@ const utility = new Utility();
 
 export default function ViewPrivatePostPage({ params }: { params: { id: string } }) {
   const { id } = params;
-  const token = getCookie("access_token");
+  const { name } = Cookie;
+  const token = getCookie(name);
   const [fetching, setFetching] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [post, setPost] = useState<IPostData>();

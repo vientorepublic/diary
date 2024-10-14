@@ -7,6 +7,7 @@ import { fetcher } from "@/app/utility/fetcher";
 import { UserStore } from "@/app/store/user";
 import { useForm } from "react-hook-form";
 import { setCookie } from "cookies-next";
+import { Cookie } from "@/app/constants";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -28,13 +29,16 @@ export default function LoginPage() {
         ...data,
         g_recaptcha_response: token,
       });
+      // Set token cookie
+      const { name, secure, maxAge, sameSite, path } = Cookie;
       const { access_token } = result.data.data;
-      setCookie("access_token", access_token, {
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 7,
-        sameSite: "strict",
-        path: "/",
+      setCookie(name, access_token, {
+        secure,
+        maxAge,
+        sameSite,
+        path,
       });
+      // Init user profile
       const user = await fetcher.get<IUserInfo>("/auth/user/profile", {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -50,6 +54,7 @@ export default function LoginPage() {
       });
       setDisabled(false);
       toast.success(result.data.message);
+      // Check redirect path
       const redirect = params.get("redirect_to");
       if (redirect) {
         router.push(redirect);

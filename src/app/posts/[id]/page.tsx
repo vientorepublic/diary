@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import type { IPostData, IPostProps } from "@/app/types";
-import { OpenGraph } from "@/app/opengraph";
+import { OpenGraph } from "@/app/constants";
 import { Post } from "@/app/utility/post";
 import { Utility } from "@/app/utility";
 import { Metadata } from "next";

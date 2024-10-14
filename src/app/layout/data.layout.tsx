@@ -4,11 +4,13 @@ import { ReactNode, useEffect } from "react";
 import { fetcher } from "../utility/fetcher";
 import { UserStore } from "../store/user";
 import type { IUserInfo } from "../types";
+import { Cookie } from "../constants";
 import toast from "react-hot-toast";
 
 export function DataLayout({ children }: { children: ReactNode }) {
-  const { setUser, removeUser, setLoading, user_id } = UserStore();
-  const token = getCookie("access_token");
+  const { name } = Cookie;
+  const { setUser, removeUser, setLoading } = UserStore();
+  const token = getCookie(name);
   useEffect(() => {
     async function getUser() {
       try {
@@ -22,10 +24,10 @@ export function DataLayout({ children }: { children: ReactNode }) {
         });
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
-        const cookie = getCookie("access_token");
+        const cookie = getCookie(name);
         if (cookie) {
           removeUser();
-          deleteCookie("access_token");
+          deleteCookie(name);
           toast("세션이 만료 되었습니다. 다시 로그인 해주세요.");
         }
       } finally {
@@ -34,6 +36,6 @@ export function DataLayout({ children }: { children: ReactNode }) {
     }
     if (token) getUser();
     else setLoading(false);
-  }, [removeUser, setLoading, setUser, token, user_id]);
+  }, [name, removeUser, setLoading, setUser, token]);
   return children;
 }

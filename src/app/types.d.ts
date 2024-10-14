@@ -142,3 +142,11 @@ export interface IContainerSize {
   w: number;
   h: number;
 }
+
+export interface ICookie {
+  name: string;
+  secure: boolean;
+  maxAge: number;
+  sameSite: boolean | "strict" | "lax" | "none";
+  path: string;
+}

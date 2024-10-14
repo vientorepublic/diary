@@ -11,6 +11,7 @@ import { useRouter } from "nextjs-toploader/app";
 import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import { Cookie } from "../constants";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "@uiw/react-markdown-editor/markdown-editor.css";
@@ -34,9 +35,10 @@ const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((
 
 export default function WritePage() {
   const router = useRouter();
+  const { name } = Cookie;
   const searchParams = useSearchParams();
   const postId = searchParams.get("post_id");
-  const accessToken = getCookie("access_token");
+  const accessToken = getCookie(name);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true);
   const [draftLoaded, setDraftLoaded] = useState<boolean>(false);

@@ -6,14 +6,16 @@ import { useRouter } from "nextjs-toploader/app";
 import type { PostOptionProps } from "../types";
 import { fetcher } from "../utility/fetcher";
 import { getCookie } from "cookies-next";
+import { Cookie } from "../constants";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export function PostOption(props: PostOptionProps) {
-  const { postId } = props;
   const router = useRouter();
-  const token = getCookie("access_token");
+  const { postId } = props;
+  const { name } = Cookie;
+  const token = getCookie(name);
   const [disabled, setDisabled] = useState<boolean>(false);
   function confirmDelete(id: number) {
     confirmAlert({
