@@ -177,22 +177,27 @@ export default function WritePage() {
   useEffect(() => {
     async function saveDraft(data: IWritePost) {
       try {
-        const res = await fetcher.post(
-          "/post/draft/saveDraft",
-          {
-            ...data,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+        const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
+        if (title && text && !isEditMode) {
+          if (checkpointTitle !== title || checkpointText !== text) {
+            const res = await fetcher.post(
+              "/post/draft/saveDraft",
+              {
+                ...data,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+            );
+            setLastCheckpoint({
+              ...data,
+            });
+            if (!draftLoaded) setDraftLoaded(true);
+            toast.success(res.data.message);
           }
-        );
-        setLastCheckpoint({
-          ...data,
-        });
-        if (!draftLoaded) setDraftLoaded(true);
-        toast.success(res.data.message);
+        }
       } catch (err) {}
     }
     // Auto save when browser window lost focus
@@ -200,16 +205,9 @@ export default function WritePage() {
       saveDraft({ title, text });
     };
     window.addEventListener("blur", handleBlur);
-    const autoSave = setInterval(() => {
-      const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
-      if (title && text && !isEditMode) {
-        if (checkpointTitle !== title || checkpointText !== text) {
-          saveDraft({ title, text });
-        }
-      }
-    }, autoSavePeriod);
+    // Auto save interval
+    const autoSave = setInterval(() => saveDraft({ title, text }), autoSavePeriod);
     return () => {
-      // Clear event listener
       window.removeEventListener("blur", handleBlur);
       clearInterval(autoSave);
     };
