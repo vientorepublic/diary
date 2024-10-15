@@ -71,7 +71,9 @@ export default function PostPage() {
             </div>
             {pageData && pageData.data && (
               <div className="flex flex-col gap-4 justify-center items-center mt-10">
-                <p className="">현재 {pageData.pagination.currentPage}페이지</p>
+                <p className="">
+                  {pageData.pagination.currentPage} / {pageData.pagination.lastPageNumber}
+                </p>
                 <div className="flex flex-row gap-4 justify-center items-center">
                   <button
                     className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
