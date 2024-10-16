@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RenderMarkdown } from "@/app/components/markdown.component";
+import { RecentPosts } from "@/app/components/recent.component";
 import type { IPostData, IPostProps } from "@/app/types";
 import { OpenGraph } from "@/app/constants";
 import { Post } from "@/app/utility/post";
@@ -59,6 +60,11 @@ export default async function ViewPostPage({ params }: { params: { id: string } 
           <pre className="pretendard text-wrap overflow-hidden">
             <RenderMarkdown>{utility.escapeHTML(data.text)}</RenderMarkdown>
           </pre>
+          <div className="mt-40">
+            <hr className="border-gray-700" />
+            <h1 className="text-4xl py-7">최근 게시글</h1>
+            <RecentPosts />
+          </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-3 h-screen">

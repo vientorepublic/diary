@@ -38,7 +38,7 @@ export default function PostPage() {
         {isLoading ? (
           <div className="flex flex-col gap-4 justify-center items-center h-screen">
             <div className="dots-loader-white"></div>
-            <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
+            <p className="text-xl">게시글을 불러오고 있어요...</p>
           </div>
         ) : error ? (
           <div className="flex flex-col gap-4 justify-center items-center h-screen">
@@ -47,9 +47,9 @@ export default function PostPage() {
           </div>
         ) : (
           <div className="text-left py-20">
-            <div className="phrase-text text-gray-100 mb-10">
+            <div className="text-gray-100 mb-10">
               <h1 className="text-4xl">모든 게시글</h1>
-              <h2 className="text-2xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
+              <h2 className="text-xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
             </div>
             <div className="grid grid-wrap lg:grid-cols-3 gap-5">
               {pageData &&
