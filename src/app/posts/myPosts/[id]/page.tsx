@@ -49,7 +49,7 @@ export default function ViewPrivatePostPage({ params }: { params: { id: string }
       {fetching ? (
         <div className="flex flex-col gap-4 justify-center items-center h-screen">
           <div className="dots-loader-white"></div>
-          <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
+          <p className="text-xl">게시글을 불러오고 있어요...</p>
         </div>
       ) : error ? (
         <div className="flex flex-col gap-4 justify-center items-center h-screen">

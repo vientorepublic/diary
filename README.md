@@ -32,6 +32,4 @@ NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
 
 # 라이선스
 
-- 본 리포지토리: MIT
-
-- 프로젝트명, 랜덤 명언 폰트: [네이버 클로바 AI - 나눔손글씨 바른히피](https://clova.ai/handwriting/list.html)
+`LICENSE` 파일을 참고해주세요.

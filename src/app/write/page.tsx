@@ -28,7 +28,7 @@ const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((
   loading: () => (
     <div className="flex flex-col gap-4 justify-center items-center h-400px">
       <div className="dots-loader-white"></div>
-      <p className="phrase-text text-2xl">텍스트 편집기를 불러오고 있어요...</p>
+      <p className="text-xl">텍스트 편집기를 불러오고 있어요...</p>
     </div>
   ),
 });
@@ -309,8 +309,8 @@ export default function WritePage() {
             {isEditMode ? <FontAwesomeIcon icon={faSave} className="mr-2" /> : <FontAwesomeIcon icon={faUpload} className="mr-2" />}
             {isEditMode ? "저장하기" : "게시하기"}
           </button>
-          <div className="my-5 text-lg phrase-text">
-            <h1 className="text-3xl text-bold">도움말</h1>
+          <div className="my-5 text-base">
+            <h1 className="text-2xl text-bold">도움말</h1>
             <div className="flex flex-row gap-2">
               <FontAwesomeIcon icon={faEye} className="mt-1.5" />
               <p>: 미리보기 패널을 엽니다.</p>

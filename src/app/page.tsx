@@ -1,35 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import type { IPaginationData, IPhraseData, IPostPreview } from "./types";
 import { faCode, faList, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Spotlight, { SpotlightCard } from "./components/spotlight.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PostCard } from "./components/card.component";
-import { Alert } from "./components/alert.component";
-import { swrFetcher } from "./utility/fetcher";
+import { RecentPosts } from "./components/recent.component";
 import { useEffect, useState } from "react";
+import type { IPhraseData } from "./types";
 import { UserStore } from "./store/user";
-import { Utility } from "./utility";
 import Link from "next/link";
 import axios from "axios";
-import useSWR from "swr";
-
-const utility = new Utility();
 
 export default function Home() {
   const { user_id, loading } = UserStore();
   const [phrase, setPhrase] = useState<IPhraseData>();
   const [fetching, setFetching] = useState<boolean>(true);
-  // @ts-ignore
-  const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
-    {
-      url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=1`,
-    },
-    swrFetcher,
-    {
-      refreshInterval: 5000,
-    }
-  );
   useEffect(() => {
     async function getPhrase() {
       try {
@@ -61,7 +45,7 @@ export default function Home() {
           </div>
           <hr className="my-10 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400" />
         </div>
-        <div className="phrase-text text-2xl my-10">
+        <div className="text-xl my-10">
           {fetching ? (
             <p>Loading...</p>
           ) : (
@@ -152,35 +136,9 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center">
         <div className="py-10 w-full lg:w-4/5">
           <h1 className="text-5xl font-bold">최근 게시글</h1>
-          {isLoading ? (
-            <div className="flex flex-col gap-5 py-20 justify-center items-center">
-              <div className="dots-loader-white"></div>
-              <p className="phrase-text text-2xl">게시글을 불러오고 있어요...</p>
-            </div>
-          ) : error ? (
-            <div className="flex py-20 justify-center items-center">
-              {/* stack,message,name,code,config,request,response,status */}
-              <Alert>{error.response ? error.response.data.message : error.message}</Alert>
-            </div>
-          ) : (
-            <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
-              {data &&
-                data.data.map((e, i) => {
-                  return (
-                    <PostCard
-                      title={utility.shortenString(10, e.title)}
-                      text={utility.shortenString(50, e.preview)}
-                      author={utility.shortenString(10, e.author)}
-                      isPublic={true}
-                      profileImage={e.profile_image}
-                      createdAt={e.created_at}
-                      buttonLink={`/posts/${e.id}`}
-                      key={i}
-                    />
-                  );
-                })}
-            </div>
-          )}
+          <div className="mt-10">
+            <RecentPosts />
+          </div>
         </div>
       </div>
     </section>

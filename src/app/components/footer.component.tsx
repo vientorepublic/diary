@@ -7,7 +7,7 @@ export function Footer() {
         <div className="md:flex md:justify-between">
           <div className="mb-10 md:mb-0">
             <div className="flex items-center">
-              <span className="phrase-text text-4xl font-bold">글귀저장소</span>
+              <span className="text-2xl font-bold">diary.viento.me</span>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
