@@ -18,14 +18,6 @@ export default function VerifyPage() {
           toast.error("필수 인자가 누락되었습니다.");
           return;
         }
-        // Validating Identifier
-        const params = new URLSearchParams();
-        params.append("identifier", identifier);
-        const validate = await fetcher.get("/auth/verify/validate", {
-          params,
-        });
-        console.debug(validate.data);
-        // Applying account verification
         const result = await fetcher.post("/auth/verify", {
           identifier,
         });
