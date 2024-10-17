@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import type { IPaginationData, IPostPreview } from "../types";
 import { swrFetcher } from "../utility/fetcher";
@@ -10,7 +9,6 @@ import useSWR from "swr";
 const utility = new Utility();
 
 export function RecentPosts() {
-  // @ts-ignore
   const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
     {
       url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=1`,
