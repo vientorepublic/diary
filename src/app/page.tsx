@@ -137,7 +137,7 @@ export default function Home() {
         <div className="py-10 w-full lg:w-4/5">
           <h1 className="text-5xl font-bold">최근 게시글</h1>
           <div className="mt-10">
-            <RecentPosts />
+            <RecentPosts refresh />
           </div>
         </div>
       </div>

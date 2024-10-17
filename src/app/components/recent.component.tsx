@@ -1,5 +1,5 @@
 "use client";
-import type { IPaginationData, IPostPreview } from "../types";
+import type { IPaginationData, IPostPreview, IRecentPostProps } from "../types";
 import { swrFetcher } from "../utility/fetcher";
 import { PostCard } from "./card.component";
 import { Alert } from "./alert.component";
@@ -8,14 +8,15 @@ import useSWR from "swr";
 
 const utility = new Utility();
 
-export function RecentPosts() {
+export function RecentPosts(props: IRecentPostProps) {
+  const { refresh } = props;
   const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
     {
       url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=1`,
     },
     swrFetcher,
     {
-      refreshInterval: 5000,
+      refreshInterval: refresh ? 5000 : undefined,
     }
   );
   return isLoading ? (
