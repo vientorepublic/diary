@@ -1,9 +1,9 @@
 "use client";
 import { faEdit, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { confirmAlert } from "react-confirm-alert";
 import { useRouter } from "nextjs-toploader/app";
 import type { PostOptionProps } from "../types";
+import { confirmModal } from "../utility/modal";
 import { fetcher } from "../utility/fetcher";
 import { getCookie } from "cookies-next";
 import { Cookie } from "../constants";
@@ -18,23 +18,10 @@ export function PostOption(props: PostOptionProps) {
   const token = getCookie(name);
   const [disabled, setDisabled] = useState<boolean>(false);
   function confirmDelete(id: number) {
-    confirmAlert({
+    confirmModal({
       title: "잠시만요!",
       message: "정말 게시글을 삭제 하시겠어요? 삭제된 게시글은 복구할 수 없어요.",
-      buttons: [
-        {
-          label: "예",
-          onClick: () => {
-            removePost(id);
-          },
-        },
-        {
-          label: "아니요",
-          onClick: () => {
-            return;
-          },
-        },
-      ],
+      callback: () => removePost(id),
     });
   }
   async function removePost(id: number) {

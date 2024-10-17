@@ -150,3 +150,10 @@ export interface ICookie {
   sameSite: boolean | "strict" | "lax" | "none";
   path: string;
 }
+
+export interface IConfirmModalProps {
+  title: string;
+  message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  callback: () => any;
+}
