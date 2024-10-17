@@ -175,11 +175,12 @@ export default function WritePage() {
   }, [accessToken, postId]);
   // Auto Save
   useEffect(() => {
-    async function saveDraft(data: IWritePost) {
+    async function saveDraft(data: IWritePost, event?: BeforeUnloadEvent) {
       try {
         const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
         if (title && text && !isEditMode) {
           if (checkpointTitle !== title || checkpointText !== text) {
+            if (event) event.preventDefault();
             const res = await fetcher.post(
               "/post/draft/saveDraft",
               {
@@ -200,15 +201,20 @@ export default function WritePage() {
         }
       } catch (err) {}
     }
-    // Auto save when browser window lost focus
     const handleBlur = () => {
       saveDraft({ title, text });
     };
+    // Listener/Interval
+    const beforeUnload = (e: BeforeUnloadEvent) => {
+      saveDraft({ title, text }, e);
+    };
     window.addEventListener("blur", handleBlur);
-    // Auto save interval
+    window.addEventListener("beforeunload", beforeUnload);
     const autoSave = setInterval(() => saveDraft({ title, text }), autoSavePeriod);
+    // Clear listener/interval before unload page
     return () => {
       window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("beforeunload", beforeUnload);
       clearInterval(autoSave);
     };
   }, [accessToken, draftLoaded, isEditMode, lastCheckpoint, text, title]);
