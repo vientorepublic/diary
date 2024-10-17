@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,8 +22,8 @@ export default function PrivatePostPage() {
       url: `${process.env.NEXT_PUBLIC_API_URL}/post/myPosts?page=${page}`,
       token,
     },
-    // @ts-ignore
-    swrFetcher
+    swrFetcher,
+    {}
   );
   return (
     <section className="flex flex-col items-center justify-center px-10">
