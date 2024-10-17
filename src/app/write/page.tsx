@@ -4,10 +4,10 @@ import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faSave, 
 import type { IDraftPost, IPostData, IWritePost } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "../components/alert.component";
-import { confirmAlert } from "react-confirm-alert";
 import { useSearchParams } from "next/navigation";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
+import { confirmModal } from "../utility/modal";
 import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
@@ -201,10 +201,10 @@ export default function WritePage() {
         }
       } catch (err) {}
     }
+    // Listener/Interval
     const handleBlur = () => {
       saveDraft({ title, text });
     };
-    // Listener/Interval
     const beforeUnload = (e: BeforeUnloadEvent) => {
       saveDraft({ title, text }, e);
     };
@@ -219,23 +219,10 @@ export default function WritePage() {
     };
   }, [accessToken, draftLoaded, isEditMode, lastCheckpoint, text, title]);
   function confirmRemoveDraft() {
-    confirmAlert({
+    confirmModal({
       title: "잠시만요!",
       message: "정말 저장된 초안을 삭제 하시겠어요? 현재 작성 중인 내용도 함께 삭제됩니다.",
-      buttons: [
-        {
-          label: "예",
-          onClick: () => {
-            removeDraft();
-          },
-        },
-        {
-          label: "아니요",
-          onClick: () => {
-            return;
-          },
-        },
-      ],
+      callback: () => removeDraft(),
     });
   }
   async function removeDraft() {
