@@ -157,3 +157,7 @@ export interface IConfirmModalProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   callback: () => any;
 }
+
+export interface IRecentPostProps {
+  refresh?: boolean;
+}
