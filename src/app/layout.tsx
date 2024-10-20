@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { NextDevtoolsProvider } from "@next-devtools/core";
 import { Footer } from "./components/footer.component";
 import { Navbar } from "./components/navbar.component";
 import { ToastLayout } from "./layout/toast.layout";
@@ -26,16 +27,18 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="bg-gray-900 text-gray-100">
-        <NextTopLoader showSpinner={true} height={2} />
-        <DataLayout>
-          <ToastLayout>
-            <Suspense>
-              <Navbar />
-              {children}
-              <Footer />
-            </Suspense>
-          </ToastLayout>
-        </DataLayout>
+        <NextDevtoolsProvider>
+          <NextTopLoader showSpinner={true} height={2} />
+          <DataLayout>
+            <ToastLayout>
+              <Suspense>
+                <Navbar />
+                {children}
+                <Footer />
+              </Suspense>
+            </ToastLayout>
+          </DataLayout>
+        </NextDevtoolsProvider>
       </body>
     </html>
   );
