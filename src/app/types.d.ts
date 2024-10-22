@@ -29,6 +29,15 @@ export interface IPost {
   edited_at?: number;
 }
 
+export interface IWritePostPayload extends IWritePost {
+  g_recaptcha_response: string;
+  public_post: boolean;
+}
+
+export interface IEditPostPayload extends IWritePostPayload {
+  id: number;
+}
+
 export interface IMyPost extends IPost {
   public_post: boolean;
   preview: string;
@@ -81,6 +90,13 @@ export interface IUserInfo {
   profile_image: string;
   created_at: number;
   permission: number;
+}
+
+interface User extends IUserInfo {
+  loading: boolean;
+  setLoading: (state: boolean) => void;
+  setUser: (data: IUserInfo) => void;
+  removeUser: () => void;
 }
 
 export interface IPostProps {
