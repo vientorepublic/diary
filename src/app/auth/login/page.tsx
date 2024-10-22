@@ -1,5 +1,5 @@
 "use client";
-import type { ILoginAuthForm, IssueTokenResponse, IUserInfo } from "@/app/types";
+import type { ILoginAuthForm, ILoginResponse, IUserInfo } from "@/app/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { useReCaptcha } from "next-recaptcha-v3";
@@ -25,7 +25,7 @@ export default function LoginPage() {
     setDisabled(true);
     try {
       const token = await executeRecaptcha("login");
-      const result = await fetcher.post<IssueTokenResponse>("/auth/login", {
+      const result = await fetcher.post<ILoginResponse>("/auth/login", {
         ...data,
         g_recaptcha_response: token,
       });

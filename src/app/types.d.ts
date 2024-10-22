@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -65,18 +67,11 @@ export interface DefaultResponse {
   message: string;
 }
 
-export interface IssueTokenResponse extends DefaultResponse {
+export interface ILoginResponse extends DefaultResponse {
   data: {
     access_token: string;
     expires_at: number;
   };
-}
-
-export interface IUserProfile {
-  id: number;
-  user_id: string;
-  profile_image: string;
-  permission: number;
 }
 
 export interface IUserInfo {
@@ -101,7 +96,7 @@ export interface IRegisterAuthForm {
   user_id: string;
   email: string;
   passphrase: string;
-  agree: boolean;
+  agree_terms: boolean;
 }
 
 export interface ICardParams {
@@ -124,12 +119,12 @@ export interface HTMLEscapeChars {
 }
 
 export type SpotlightProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 };
 
 export type SpotlightCardProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 };
 
@@ -154,8 +149,7 @@ export interface ICookie {
 export interface IConfirmModalProps {
   title: string;
   message: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  callback: () => any;
+  callback: () => void;
 }
 
 export interface IRecentPostProps {
