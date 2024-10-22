@@ -13,7 +13,6 @@ export class Post {
       }
       const params = new URLSearchParams();
       params.append("id", id);
-      // Optimization: Send request to internal host
       const res = await axios.get<IPostData>(`${process.env.INTERNAL_API_URL}/post/view`, {
         params,
       });

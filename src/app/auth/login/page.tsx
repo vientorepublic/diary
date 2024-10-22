@@ -44,14 +44,7 @@ export default function LoginPage() {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      setUser({
-        id: user.data.id,
-        user_id: user.data.user_id,
-        email: user.data.email,
-        profile_image: user.data.profile_image,
-        created_at: user.data.created_at,
-        permission: user.data.permission,
-      });
+      setUser(user.data);
       setDisabled(false);
       toast.success(result.data.message);
       // Check redirect path
