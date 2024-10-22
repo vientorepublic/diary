@@ -22,7 +22,7 @@ export default function RegisterPage() {
   const [disabled, setDisabled] = useState<boolean>(false);
   const { executeRecaptcha } = useReCaptcha();
   async function submit(data: IRegisterAuthForm) {
-    if (!data.agree) {
+    if (!data.agree_terms) {
       toast.error("회원가입을 완료하려면 약관을 동의하셔야 합니다.");
       return;
     }
@@ -145,7 +145,7 @@ export default function RegisterPage() {
                         type="checkbox"
                         value=""
                         disabled={disabled}
-                        {...register("agree", {
+                        {...register("agree_terms", {
                           required: "* 약관에 동의해야 합니다.",
                         })}
                         className="disabled:bg-gray-200 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -153,7 +153,7 @@ export default function RegisterPage() {
                       <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-gray">
                         사용자 약관에 동의합니다.
                       </label>
-                      {errors.agree && <p className="text-sm text-red-500 mt-2">{errors.agree.message}</p>}
+                      {errors.agree_terms && <p className="text-sm text-red-500 mt-2">{errors.agree_terms.message}</p>}
                     </div>
                     {disabled ? (
                       <div className="flex justify-center items-center mt-8">

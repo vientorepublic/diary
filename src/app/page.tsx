@@ -12,7 +12,11 @@ import axios from "axios";
 
 export default function Home() {
   const { user_id, loading } = UserStore();
-  const [phrase, setPhrase] = useState<IPhraseData>();
+  const [phrase, setPhrase] = useState<IPhraseData>({
+    text: "",
+    author: "",
+  });
+  const [error, setError] = useState<boolean>(false);
   const [fetching, setFetching] = useState<boolean>(true);
   useEffect(() => {
     async function getPhrase() {
@@ -22,6 +26,7 @@ export default function Home() {
         setPhrase(res.data[randomIndex]);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
+        setError(true);
       } finally {
         setFetching(false);
       }
@@ -48,12 +53,14 @@ export default function Home() {
         <div className="text-xl my-10">
           {fetching ? (
             <p>Loading...</p>
+          ) : error ? (
+            // Fallback
+            <p>성공이란 한 걸음씩 앞으로 나아가며 가치 있는 이상을 실현하는 것이다. - 나이팅게일</p>
           ) : (
-            phrase && (
-              <p>
-                {phrase.text} - {phrase.author}
-              </p>
-            )
+            // Random Phrase
+            <p>
+              {phrase.text} - {phrase.author}
+            </p>
           )}
         </div>
         <div className="flex flex-col sm:w-auto w-full sm:flex-row gap-3">
