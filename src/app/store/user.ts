@@ -1,5 +1,5 @@
+import type { IUserInfo, User } from "../types";
 import { create } from "zustand";
-import { IUserInfo } from "../types";
 
 const value: IUserInfo = {
   id: 0,
@@ -9,13 +9,6 @@ const value: IUserInfo = {
   created_at: 0,
   permission: 0,
 };
-
-interface User extends IUserInfo {
-  loading: boolean;
-  setLoading: (state: boolean) => void;
-  setUser: (data: IUserInfo) => void;
-  removeUser: () => void;
-}
 
 export const UserStore = create<User>((set) => ({
   loading: true,

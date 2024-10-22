@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faSave, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
-import type { IDraftPost, IPostData, IWritePost } from "../types";
+import type { IDraftPost, IEditPostPayload, IPostData, IWritePost, IWritePostPayload } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "../components/alert.component";
 import { useSearchParams } from "next/navigation";
@@ -60,13 +60,16 @@ export default function WritePage() {
     setUploading(true);
     try {
       const token = await executeRecaptcha("write_post");
+      const payload: IWritePostPayload = {
+        title: data.title.trim(),
+        text: data.text.trim(),
+        g_recaptcha_response: token,
+        public_post,
+      };
       const res = await fetcher.post(
         "/post/save",
         {
-          title: data.title.trim(),
-          text: data.text.trim(),
-          g_recaptcha_response: token,
-          public_post,
+          ...payload,
         },
         {
           headers: {
@@ -96,14 +99,17 @@ export default function WritePage() {
     setUploading(true);
     try {
       const token = await executeRecaptcha("edit_post");
+      const payload: IEditPostPayload = {
+        id: Number(postId), // Post ID
+        title: data.title.trim(),
+        text: data.text.trim(),
+        g_recaptcha_response: token,
+        public_post,
+      };
       const res = await fetcher.patch(
         "/post/edit",
         {
-          id: Number(postId), // Post ID
-          title: data.title.trim(),
-          text: data.text.trim(),
-          g_recaptcha_response: token,
-          public_post,
+          ...payload,
         },
         {
           headers: {
