@@ -20,11 +20,7 @@ export default function PostPage() {
   useEffect(() => {
     if (pageIndex) setPage(Number(pageIndex));
   }, [pageIndex]);
-  const {
-    data: pageData,
-    isLoading,
-    error,
-  } = useSWR<IPaginationData<IPostPreview[]>>(
+  const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
     {
       url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=${page}`,
     },
@@ -51,9 +47,9 @@ export default function PostPage() {
               <h2 className="text-xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
             </div>
             <div className="grid grid-wrap lg:grid-cols-3 gap-5">
-              {pageData &&
-                pageData.data &&
-                pageData.data.map((e, i) => {
+              {data &&
+                data.data &&
+                data.data.map((e, i) => {
                   return (
                     <PostCard
                       title={utility.shortenString(10, e.title)}
@@ -68,10 +64,10 @@ export default function PostPage() {
                   );
                 })}
             </div>
-            {pageData && pageData.data && (
+            {data && data.data && (
               <div className="flex flex-col gap-4 justify-center items-center mt-10">
                 <p className="">
-                  {pageData.pagination.currentPage} / {pageData.pagination.lastPageNumber}
+                  {data.pagination.currentPage} / {data.pagination.lastPageNumber}
                 </p>
                 <div className="flex flex-row gap-4 justify-center items-center">
                   <button
@@ -84,7 +80,7 @@ export default function PostPage() {
                   </button>
                   <button
                     className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-                    disabled={page === pageData.pagination.lastPageNumber}
+                    disabled={page === data.pagination.lastPageNumber}
                     onClick={() => setPage(page + 1)}
                   >
                     Next
