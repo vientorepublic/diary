@@ -115,7 +115,7 @@ export interface IRegisterAuthForm {
   agree_terms: boolean;
 }
 
-export interface ICardParams {
+export interface ICardProps {
   title: string;
   text: string;
   author: string;
@@ -123,7 +123,6 @@ export interface ICardParams {
   profileImage: string;
   createdAt: number;
   buttonLink: string;
-  className?: string;
 }
 
 export interface PostOptionProps {
