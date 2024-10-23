@@ -1,7 +1,13 @@
-import axios, { isAxiosError } from "axios";
+import axios, { AxiosInstance, isAxiosError } from "axios";
 import type { IPostData } from "../types";
 
 export class Post {
+  private http: AxiosInstance;
+  constructor() {
+    this.http = axios.create({
+      baseURL: process.env.INTERNAL_API_URL,
+    });
+  }
   public isPostId(id: string): boolean {
     const idNum = Number(id);
     return !isNaN(idNum) && Number.isInteger(idNum) && idNum > 0;
@@ -13,7 +19,7 @@ export class Post {
       }
       const params = new URLSearchParams();
       params.append("id", id);
-      const res = await axios.get<IPostData>(`${process.env.INTERNAL_API_URL}/post/view`, {
+      const res = await this.http.get<IPostData>("/post/view", {
         params,
       });
       return res.data;
