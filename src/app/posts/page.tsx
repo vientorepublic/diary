@@ -4,9 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IPaginationData, IPostPreview } from "../types";
 import { PostCard } from "../components/card.component";
 import { Alert } from "../components/alert.component";
-import { useSearchParams } from "next/navigation";
 import { swrFetcher } from "../utility/fetcher";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Utility } from "../utility";
 import React from "react";
 import useSWR from "swr";
@@ -14,12 +13,7 @@ import useSWR from "swr";
 const utility = new Utility();
 
 export default function PostPage() {
-  const params = useSearchParams();
-  const pageIndex = params.get("page");
   const [page, setPage] = useState<number>(1);
-  useEffect(() => {
-    if (pageIndex) setPage(Number(pageIndex));
-  }, [pageIndex]);
   const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
     {
       url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=${page}`,

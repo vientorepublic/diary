@@ -33,11 +33,12 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
   }
 }
 
-export default async function ViewPostPage({ params }: { params: { id: string } }) {
+export default async function ViewPostPage({ params }: IPostProps) {
+  const { id } = params;
   let data: IPostData | undefined;
   let error: string | undefined;
   try {
-    data = await post.get(params.id);
+    data = await post.get(id);
   } catch (err: any) {
     error = err.message;
   }

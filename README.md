@@ -24,6 +24,10 @@
 
 # 환경변수
 
+> [!NOTE]
+> 빠른 서버측 데이터 페칭을 위해 백엔드 호스트를 가르키는 환경변수를 분리합니다.
+> `INTERNAL_API_URL`은 백엔드 서버가 동일 네트워크 안에 있다면 내부망 주소를 사용하세요.
+
 ```
 NEXT_PUBLIC_API_URL=
 INTERNAL_API_URL=
