@@ -3,7 +3,7 @@ import { RenderMarkdown } from "@/app/components/markdown.component";
 import { PostOption } from "@/app/components/option.component";
 import { Alert } from "@/app/components/alert.component";
 import { fetcher } from "@/app/utility/fetcher";
-import type { IPostData } from "@/app/types";
+import type { IPostData, IPostProps } from "@/app/types";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { Cookie } from "@/app/constants";
@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 
 const utility = new Utility();
 
-export default function ViewPrivatePostPage({ params }: { params: { id: string } }) {
+export default function ViewPrivatePostPage({ params }: IPostProps) {
   const { id } = params;
   const { name } = Cookie;
   const token = getCookie(name);
