@@ -1,4 +1,5 @@
 import type { HTMLEscapeChars } from "../types";
+import { Markdown } from "./regex";
 
 export class Utility {
   public shortenString(maxLength: number, str: string): string {
@@ -9,8 +10,7 @@ export class Utility {
     }
   }
   public stripMarkdown(input: string): string {
-    const markdownRegex = /[*_~`#+\-\[\]{}|<>]/g;
-    return input.replace(markdownRegex, "");
+    return input.replace(Markdown, "");
   }
   public escapeHTML(html: string): string {
     const escapeChars: HTMLEscapeChars = {
@@ -19,6 +19,10 @@ export class Utility {
       ">": "&gt;",
     };
     return html.replace(/[&<>]/g, (match) => escapeChars[match]);
+  }
+  public isPostId(id: string): boolean {
+    const idNum = Number(id);
+    return !isNaN(idNum) && Number.isInteger(idNum) && idNum > 0;
   }
   public convertDescription(input: string): string {
     const removeEOL = input.replace(/\n/g, " ");

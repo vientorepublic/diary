@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import { RecentPosts } from "@/app/components/recent.component";
 import type { IPostData, IPostProps } from "@/app/types";
@@ -39,8 +38,10 @@ export default async function ViewPostPage({ params }: IPostProps) {
   let error: string | undefined;
   try {
     data = await post.get(id);
-  } catch (err: any) {
-    error = err.message;
+  } catch (err) {
+    if (err instanceof Error) {
+      error = err.message;
+    }
   }
   return (
     <section className="flex flex-col items-center justify-center px-10">

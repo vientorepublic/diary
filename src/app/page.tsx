@@ -21,9 +21,9 @@ export default function Home() {
   useEffect(() => {
     async function getPhrase() {
       try {
-        const res = await axios.get<IPhraseData[]>("/phrase.json");
-        const randomIndex = Math.floor(Math.random() * res.data.length);
-        setPhrase(res.data[randomIndex]);
+        const { data } = await axios.get<IPhraseData[]>("/phrase.json");
+        const randomIndex = Math.floor(Math.random() * data.length);
+        setPhrase(data[randomIndex]);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         setError(true);
