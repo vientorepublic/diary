@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import { RecentPosts } from "@/app/components/recent.component";
 import type { IPostData, IPostProps } from "@/app/types";
@@ -14,20 +13,23 @@ const post = new Post();
 
 export async function generateMetadata({ params }: IPostProps): Promise<Metadata> {
   const { id } = params;
-  let data: IPostData | undefined;
   try {
-    data = await post.get(id);
-  } catch (err) {}
-  if (data) {
-    const description = utility.convertDescription(data.text);
+    const { title, text } = await post.get(id);
+    const description = utility.convertDescription(text);
     return {
-      title: data.title,
-      description: description,
+      title: `${title} | ${OpenGraph.title}`,
+      description,
     };
-  } else {
+  } catch (err) {
+    let error: string;
+    if (err instanceof Error) {
+      error = err.message;
+    } else {
+      error = OpenGraph.description;
+    }
     return {
       title: OpenGraph.title,
-      description: OpenGraph.description,
+      description: error,
     };
   }
 }
@@ -41,6 +43,8 @@ export default async function ViewPostPage({ params }: IPostProps) {
   } catch (err) {
     if (err instanceof Error) {
       error = err.message;
+    } else {
+      error = "Unknown Error";
     }
   }
   return (
