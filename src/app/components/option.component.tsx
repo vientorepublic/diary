@@ -29,14 +29,14 @@ export function PostOption(props: PostOptionProps) {
     try {
       const params = new URLSearchParams();
       params.append("id", String(id));
-      const res = await fetcher.delete("/post/remove", {
+      const { data } = await fetcher.delete("/post/remove", {
         params,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       router.push("/posts/myPosts");
-      toast.success(res.data.message);
+      toast.success(data.message);
     } catch (err) {
       if (isAxiosError(err) && err.response) {
         toast.error(err.response.data.message);

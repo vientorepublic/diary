@@ -27,13 +27,13 @@ export default function ViewPrivatePostPage({ params }: IPostProps) {
       try {
         const params = new URLSearchParams();
         params.append("id", id);
-        const res = await fetcher.get<IPostData>("/post/viewPrivate", {
+        const { data } = await fetcher.get<IPostData>("/post/viewPrivate", {
           params,
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setPost(res.data);
+        setPost(data);
       } catch (err) {
         if (isAxiosError(err) && err.response) {
           setError(err.response.data.message);

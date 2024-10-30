@@ -29,11 +29,11 @@ export default function RegisterPage() {
     setDisabled(true);
     try {
       const token = await executeRecaptcha("register");
-      const result = await fetcher.post("/auth/register", {
+      const { data: result } = await fetcher.post("/auth/register", {
         ...data,
         g_recaptcha_response: token,
       });
-      toast.success(result.data.message);
+      toast.success(result.message);
       const redirect = params.get("redirect_to");
       if (redirect) {
         router.push(redirect);

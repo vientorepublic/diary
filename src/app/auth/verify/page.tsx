@@ -18,10 +18,10 @@ export default function VerifyPage() {
           toast.error("필수 인자가 누락되었습니다.");
           return;
         }
-        const result = await fetcher.post("/auth/verify", {
+        const { data } = await fetcher.post("/auth/verify", {
           identifier,
         });
-        toast.success(result.data.message);
+        toast.success(data.message);
       } catch (err) {
         if (isAxiosError(err)) {
           if (err.response) {

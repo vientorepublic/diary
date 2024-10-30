@@ -25,13 +25,13 @@ export default function LoginPage() {
     setDisabled(true);
     try {
       const token = await executeRecaptcha("login");
-      const result = await fetcher.post<ILoginResponse>("/auth/login", {
+      const { data: result } = await fetcher.post<ILoginResponse>("/auth/login", {
         ...data,
         g_recaptcha_response: token,
       });
       // Set token cookie
       const { name, secure, maxAge, sameSite, path } = Cookie;
-      const { access_token } = result.data.data;
+      const { access_token } = result.data;
       setCookie(name, access_token, {
         secure,
         maxAge,
@@ -39,14 +39,14 @@ export default function LoginPage() {
         path,
       });
       // Init user profile
-      const user = await fetcher.get<IUserInfo>("/auth/user/profile", {
+      const { data: user } = await fetcher.get<IUserInfo>("/auth/user/profile", {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      setUser(user.data);
+      setUser(user);
       setDisabled(false);
-      toast.success(result.data.message);
+      toast.success(result.message);
       // Check redirect path
       const redirect = params.get("redirect_to");
       if (redirect) {
