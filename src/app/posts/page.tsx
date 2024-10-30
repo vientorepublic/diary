@@ -35,7 +35,7 @@ export default function PostPage() {
             <Alert>{error.response ? error.response.data.message : error.message}</Alert>
           </div>
         ) : (
-          <div className="text-left py-20">
+          <div className="text-left py-20 h-svh">
             <div className="text-gray-100 mb-10">
               <h1 className="text-4xl">모든 게시글</h1>
               <h2 className="text-xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
@@ -60,7 +60,7 @@ export default function PostPage() {
             </div>
             {data && data.data && (
               <div className="flex flex-col gap-4 justify-center items-center mt-10">
-                <p className="">
+                <p>
                   {data.pagination.currentPage} / {data.pagination.lastPageNumber}
                 </p>
                 <div className="flex flex-row gap-4 justify-center items-center">

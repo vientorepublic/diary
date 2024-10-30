@@ -66,7 +66,7 @@ export default function WritePage() {
         g_recaptcha_response: token,
         public_post,
       };
-      const res = await fetcher.post(
+      const { data: result } = await fetcher.post(
         "/post/save",
         {
           ...payload,
@@ -82,7 +82,7 @@ export default function WritePage() {
       } else {
         router.push("/posts/myPosts");
       }
-      toast.success(res.data.message);
+      toast.success(result.message);
     } catch (err) {
       if (isAxiosError(err) && err.response) {
         toast.error(err.response.data.message);
@@ -106,7 +106,7 @@ export default function WritePage() {
         g_recaptcha_response: token,
         public_post,
       };
-      const res = await fetcher.patch(
+      const { data: result } = await fetcher.patch(
         "/post/edit",
         {
           ...payload,
@@ -122,7 +122,7 @@ export default function WritePage() {
       } else {
         router.push("/posts/myPosts");
       }
-      toast.success(res.data.message);
+      toast.success(result.message);
     } catch (err) {
       if (isAxiosError(err) && err.response) {
         toast.error(err.response.data.message);
@@ -137,13 +137,13 @@ export default function WritePage() {
       try {
         const params = new URLSearchParams();
         params.append("id", id);
-        const res = await fetcher.get<IPostData>("/post/viewPrivate", {
+        const { data: result } = await fetcher.get<IPostData>("/post/viewPrivate", {
           params,
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const { title, text } = res.data;
+        const { title, text } = result;
         setTitle(title);
         setText(text);
       } catch (err) {
@@ -161,12 +161,12 @@ export default function WritePage() {
   useEffect(() => {
     async function loadDraft() {
       try {
-        const res = await fetcher.get<IDraftPost>("/post/draft/loadDraft", {
+        const { data } = await fetcher.get<IDraftPost>("/post/draft/loadDraft", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const { title, text } = res.data;
+        const { title, text } = data;
         setTitle(title);
         setText(text);
         setLastCheckpoint({
@@ -187,7 +187,7 @@ export default function WritePage() {
         if (title && text && !isEditMode) {
           if (checkpointTitle !== title || checkpointText !== text) {
             if (event) event.preventDefault();
-            const res = await fetcher.post(
+            const { data: result } = await fetcher.post(
               "/post/draft/saveDraft",
               {
                 ...data,
@@ -202,7 +202,7 @@ export default function WritePage() {
               ...data,
             });
             if (!draftLoaded) setDraftLoaded(true);
-            toast.success(res.data.message);
+            toast.success(result.message);
           }
         }
       } catch (err) {}
@@ -233,7 +233,7 @@ export default function WritePage() {
   }
   async function removeDraft() {
     try {
-      const res = await fetcher.delete("/post/draft/removeDraft", {
+      const { data } = await fetcher.delete("/post/draft/removeDraft", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -245,7 +245,7 @@ export default function WritePage() {
         text: "",
       });
       setDraftLoaded(false);
-      toast.success(res.data.message);
+      toast.success(data.message);
     } catch (err) {
       if (isAxiosError(err) && err.response) {
         toast.error(err.response.data.message);

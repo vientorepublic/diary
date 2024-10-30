@@ -14,12 +14,12 @@ export function DataLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function getUser() {
       try {
-        const user = await fetcher.get<IUserInfo>("/auth/user/profile", {
+        const { data } = await fetcher.get<IUserInfo>("/auth/user/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(user.data);
+        setUser(data);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         const cookie = getCookie(name);

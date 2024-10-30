@@ -26,7 +26,7 @@ export class Utility {
   }
   public convertDescription(input: string): string {
     const removeEOL = input.replace(/\n/g, " ");
-    const plainText = this.stripMarkdown(removeEOL);
+    const plainText = this.stripMarkdown(removeEOL).trim();
     return this.shortenString(100, plainText);
   }
 }

@@ -1,5 +1,3 @@
-import { withNextDevtools } from "@next-devtools/core/plugin";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -17,4 +15,4 @@ const nextConfig = {
   },
 };
 
-export default withNextDevtools(nextConfig);
+export default nextConfig;
