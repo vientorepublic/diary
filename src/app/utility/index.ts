@@ -25,7 +25,7 @@ export class Utility {
     return !isNaN(idNum) && Number.isInteger(idNum) && idNum > 0;
   }
   public convertDescription(input: string): string {
-    const removeEOL = input.replace(/\n/g, " ");
+    const removeEOL = input.replace(/\n/g, " ").trim();
     const plainText = this.stripMarkdown(removeEOL);
     return this.shortenString(100, plainText);
   }
