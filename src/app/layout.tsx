@@ -1,5 +1,5 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { ReactNode, Suspense } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "./components/footer.component";
 import { Navbar } from "./components/navbar.component";
@@ -29,11 +29,9 @@ export default function RootLayout({
         <NextTopLoader showSpinner={true} height={2} />
         <DataLayout>
           <ToastLayout>
-            <Suspense>
-              <Navbar />
-              {children}
-              <Footer />
-            </Suspense>
+            <Navbar />
+            {children}
+            <Footer />
           </ToastLayout>
         </DataLayout>
       </body>
