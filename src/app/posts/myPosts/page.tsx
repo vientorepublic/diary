@@ -19,7 +19,7 @@ export default function PrivatePostPage() {
   const [page, setPage] = useState<number>(1);
   const { data, error, isLoading } = useSWR<IPaginationData<IMyPost[]>>(
     {
-      url: `${process.env.NEXT_PUBLIC_API_URL}/post/myPosts?page=${page}`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/post/myPosts?page=${page}&sort=latest`,
       token,
     },
     swrFetcher,

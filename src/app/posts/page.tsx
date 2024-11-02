@@ -1,14 +1,14 @@
 "use client";
+import type { IPaginationData, IPostPreview, ISearchQuery, PostSearchTypes } from "../types";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IPaginationData, IPostPreview, ISearchQuery, PostSearchTypes } from "../types";
+import { fetcher, swrFetcher } from "../utility/fetcher";
 import { PostCard } from "../components/card.component";
 import { Alert } from "../components/alert.component";
-import { fetcher, swrFetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
+import { isAxiosError } from "axios";
 import { Utility } from "../utility";
 import useSWR from "swr";
-import { isAxiosError } from "axios";
 
 const utility = new Utility();
 
@@ -50,6 +50,8 @@ export default function PostPage() {
         const params = new URLSearchParams();
         params.append("type", type);
         params.append("page", String(page));
+        // TODO: add sorting options
+        params.append("sort", "latest");
         params.append("query", query);
         const { data } = await fetcher.get<IPaginationData<IPostPreview[]>>("/search", {
           params,
@@ -73,7 +75,7 @@ export default function PostPage() {
   }, [debouncedValue, searchPage, searchType]);
   const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
     {
-      url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=${page}`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=${page}&sort=latest`,
     },
     swrFetcher,
     {
