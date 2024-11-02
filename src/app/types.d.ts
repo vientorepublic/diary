@@ -172,6 +172,7 @@ export interface IRecentPostProps {
 }
 
 export type PostSearchTypes = "title" | "text" | "user_id";
+export type SortOptions = "latest" | "oldest";
 
 export interface ISearchQuery {
   type: PostSearchTypes;

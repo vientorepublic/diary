@@ -2,7 +2,7 @@
 import type { IPaginationData, IPostPreview, ISearchQuery, PostSearchTypes } from "../types";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fetcher, swrFetcher } from "../utility/fetcher";
+import { fetcher, swrHttp } from "../utility/fetcher";
 import { PostCard } from "../components/card.component";
 import { Alert } from "../components/alert.component";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export default function PostPage() {
   const [searchPage, setSearchPage] = useState<number>(1);
   const [searchError, setSearchError] = useState<string>("");
   const [searchType, setSearchType] = useState<PostSearchTypes>("title");
-  const [searchResult, setSearchResult] = useState<IPaginationData<IPostPreview[]>>();
+  const [searchResult, setSearchResult] = useState<IPaginationData<IPostPreview[]> | null>(null);
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(inputValue);
@@ -32,15 +32,7 @@ export default function PostPage() {
   useEffect(() => {
     function resetSearchData() {
       setSearchError("");
-      setSearchResult({
-        data: [],
-        pagination: {
-          totalItemCount: 0,
-          lastPageNumber: 0,
-          currentPage: 0,
-          pageSize: 0,
-        },
-      });
+      setSearchResult(null);
     }
     async function searchPost(searchQuery: ISearchQuery) {
       setSearchLoading(true);
@@ -75,9 +67,9 @@ export default function PostPage() {
   }, [debouncedValue, searchPage, searchType]);
   const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
     {
-      url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=${page}&sort=latest`,
+      url: `/post/posts?page=${page}&sort=latest`,
     },
-    swrFetcher,
+    swrHttp,
     {
       revalidateOnFocus: inputValue ? false : true,
     }

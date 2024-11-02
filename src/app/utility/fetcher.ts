@@ -5,9 +5,9 @@ export const fetcher = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "",
 });
 
-export async function swrFetcher(params: IFetcherParams) {
+export async function swrHttp(params: IFetcherParams) {
   const { url, token } = params;
-  const { data } = await axios.get(url, {
+  const { data } = await fetcher.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
