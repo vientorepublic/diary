@@ -93,7 +93,7 @@ export default function PostPage() {
             <Alert>{error.response ? error.response.data.message : error.message}</Alert>
           </div>
         ) : (
-          <div className="text-left py-20 h-svh">
+          <div className="text-left py-20">
             <h1 className="text-4xl">모든 게시글</h1>
             <h2 className="text-xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
             {/* Search form */}
