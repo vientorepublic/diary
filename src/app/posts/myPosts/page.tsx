@@ -1,10 +1,10 @@
 "use client";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import type { IMyPost, IPaginationData, SortOptions } from "@/app/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IMyPost, IPaginationData } from "@/app/types";
 import { PostCard } from "@/app/components/card.component";
 import { Alert } from "@/app/components/alert.component";
-import { swrFetcher } from "@/app/utility/fetcher";
+import { swrHttp } from "@/app/utility/fetcher";
 import { getCookie } from "cookies-next";
 import { Cookie } from "@/app/constants";
 import { Utility } from "@/app/utility";
@@ -17,33 +17,58 @@ export default function PrivatePostPage() {
   const { name } = Cookie;
   const token = getCookie(name);
   const [page, setPage] = useState<number>(1);
+  const [sort, setSort] = useState<SortOptions>("latest");
   const { data, error, isLoading } = useSWR<IPaginationData<IMyPost[]>>(
     {
-      url: `${process.env.NEXT_PUBLIC_API_URL}/post/myPosts?page=${page}&sort=latest`,
+      url: `/post/myPosts?page=${page}&sort=${sort}`,
       token,
     },
-    swrFetcher,
+    swrHttp,
     {}
   );
   return (
-    <section className="flex flex-col items-center justify-center px-10">
-      <div className="py-10 w-full lg:w-4/5">
+    <section className="flex flex-col items-center justify-center text-left px-10">
+      <div className="py-40 w-full lg:w-4/5">
+        <div className="text-gray-100 mb-10">
+          <h1 className="text-4xl">나의 게시글</h1>
+          <h2 className="text-xl mt-2">게시글을 모두 확인할 수 있습니다. 비공개 게시글을 포함합니다.</h2>
+          <form className="mt-2">
+            <input
+              id="radio-latest"
+              type="radio"
+              value="latest"
+              defaultChecked
+              onChange={() => setSort("latest")}
+              name="default-radio"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label htmlFor="radio-latest" className="ms-2 mr-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+              내림차순
+            </label>
+            <input
+              id="radio-oldest"
+              type="radio"
+              value="oldest"
+              onChange={() => setSort("oldest")}
+              name="default-radio"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label htmlFor="radio-oldest" className="ms-2 mr-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+              오름차순
+            </label>
+          </form>
+        </div>
         {isLoading ? (
-          <div className="flex flex-col gap-4 justify-center items-center h-screen">
+          <div className="flex flex-col gap-4 justify-center items-center py-20">
             <div className="dots-loader-white"></div>
             <p className="text-xl">게시글을 불러오고 있어요...</p>
           </div>
         ) : error ? (
-          <div className="flex flex-col gap-4 justify-center items-center h-screen">
-            {/* stack,message,name,code,config,request,response,status */}
+          <div className="flex flex-col gap-4 justify-center items-center py-20">
             <Alert>{error.response ? error.response.data.message : error.message}</Alert>
           </div>
         ) : (
-          <div className="text-left py-20">
-            <div className="text-gray-100 mb-10">
-              <h1 className="text-4xl">나의 게시글</h1>
-              <h2 className="text-xl mt-2">게시글을 모두 확인할 수 있습니다. 비공개 게시글을 포함합니다.</h2>
-            </div>
+          <>
             <div className="grid grid-wrap lg:grid-cols-3 gap-5">
               {data &&
                 data.data &&
@@ -87,7 +112,7 @@ export default function PrivatePostPage() {
                 </div>
               </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </section>
