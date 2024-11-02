@@ -12,7 +12,7 @@ export function RecentPosts(props: IRecentPostProps) {
   const { refresh } = props;
   const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
     {
-      url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=1`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/post/posts?page=1&sort=latest`,
     },
     swrFetcher,
     {

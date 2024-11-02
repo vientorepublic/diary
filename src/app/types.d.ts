@@ -170,3 +170,11 @@ export interface IConfirmModalProps {
 export interface IRecentPostProps {
   refresh?: boolean;
 }
+
+export type PostSearchTypes = "title" | "text" | "user_id";
+
+export interface ISearchQuery {
+  type: PostSearchTypes;
+  page: number;
+  query: string;
+}
