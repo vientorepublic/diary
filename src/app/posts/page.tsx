@@ -90,14 +90,14 @@ export default function PostPage() {
           </div>
         ) : error ? (
           <div className="flex flex-col gap-4 justify-center items-center h-screen">
-            {/* stack,message,name,code,config,request,response,status */}
             <Alert>{error.response ? error.response.data.message : error.message}</Alert>
           </div>
         ) : (
           <div className="text-left py-20 h-svh">
             <h1 className="text-4xl">모든 게시글</h1>
             <h2 className="text-xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
-            <div className="my-7">
+            {/* Search form */}
+            <form className="my-7">
               <input
                 type="text"
                 value={inputValue}
@@ -118,29 +118,28 @@ export default function PostPage() {
                 제목
               </label>
               <input
-                id="radio-title"
+                id="radio-text"
                 type="radio"
                 value="text"
                 onChange={() => setSearchType("text")}
                 name="default-radio"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
-              <label htmlFor="radio-title" className="ms-2 mr-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <label htmlFor="radio-text" className="ms-2 mr-4 text-sm font-medium text-gray-900 dark:text-gray-300">
                 본문
               </label>
               <input
-                id="radio-title"
+                id="radio-author"
                 type="radio"
                 value="user_id"
                 onChange={() => setSearchType("user_id")}
                 name="default-radio"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
-              <label htmlFor="radio-title" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <label htmlFor="radio-author" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 작성자
               </label>
-              {/* {searchResult && debouncedValue && <p className="mt-2">검색 결과: {searchLoading ? "-" : searchResult.pagination.totalItemCount}개</p>} */}
-            </div>
+            </form>
             <div className="grid grid-wrap lg:grid-cols-3 gap-5">
               {debouncedValue ? (
                 searchLoading ? (
@@ -202,17 +201,18 @@ export default function PostPage() {
                 <div className="flex flex-row gap-4 justify-center items-center">
                   {debouncedValue && searchResult ? (
                     <>
+                      {/* Search result pagination */}
                       <button
                         className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
                         onClick={() => setSearchPage(searchPage - 1)}
-                        disabled={searchPage === 1}
+                        disabled={searchError.length !== 0 || searchPage === 1}
                       >
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
                         Previous
                       </button>
                       <button
                         className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-                        disabled={searchPage === searchResult.pagination.lastPageNumber}
+                        disabled={searchError.length !== 0 || searchPage === searchResult.pagination.lastPageNumber}
                         onClick={() => setSearchPage(searchPage + 1)}
                       >
                         Next
@@ -222,6 +222,7 @@ export default function PostPage() {
                   ) : (
                     !searchError && (
                       <>
+                        {/* All posts pagination */}
                         <button
                           className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
                           onClick={() => setPage(page - 1)}
