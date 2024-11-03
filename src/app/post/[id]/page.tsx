@@ -7,6 +7,7 @@ import { Utility } from "@/app/utility";
 import { Metadata } from "next";
 import Image from "next/image";
 import dayjs from "dayjs";
+import Link from "next/link";
 
 const utility = new Utility();
 const post = new Post();
@@ -52,10 +53,10 @@ export default async function ViewPostPage({ params }: IPostProps) {
       {data ? (
         <div className="py-40 w-full lg:w-4/5">
           <h1 className="text-4xl font-bold">{data.title}</h1>
-          <div className="flex flex-row gap-2 mt-3">
+          <Link className="flex flex-row gap-2 mt-3" href={`/user/${data.author}`}>
             <Image className="w-6 h-6 rounded-full" src={data.profile_image} width={6} height={6} alt="" />
             <span className="text-gray-100 text-base">{data.author}</span>
-          </div>
+          </Link>
           <p className="text-gray-500 text-base mt-2">{dayjs(data.created_at).format("YYYY.MM.DD HH:mm:ss")} 게시됨</p>
           {data.edited_at && data.edited_at !== 0 ? (
             <p className="text-gray-500 text-base">{dayjs(data.edited_at).format("YYYY.MM.DD HH:mm:ss")} 수정됨</p>

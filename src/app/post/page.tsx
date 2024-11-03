@@ -186,7 +186,7 @@ export default function PostPage() {
                           isPublic={true}
                           profileImage={e.profile_image}
                           createdAt={e.created_at}
-                          buttonLink={`/posts/${e.id}`}
+                          buttonLink={`/post/${e.id}`}
                           key={i}
                         />
                       );
@@ -204,7 +204,7 @@ export default function PostPage() {
                         isPublic={true}
                         profileImage={e.profile_image}
                         createdAt={e.created_at}
-                        buttonLink={`/posts/${e.id}`}
+                        buttonLink={`/post/${e.id}`}
                         key={i}
                       />
                     );
