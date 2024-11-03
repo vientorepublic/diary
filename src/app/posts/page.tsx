@@ -32,8 +32,8 @@ export default function PostPage() {
   }, [inputValue]);
   useEffect(() => {
     function resetSearchData() {
-      setSearchError("");
       setSearchResult(null);
+      setSearchError("");
     }
     async function searchPost(searchQuery: ISearchQuery) {
       setSearchLoading(true);
@@ -64,6 +64,8 @@ export default function PostPage() {
         query: debouncedValue,
         sort,
       });
+    } else {
+      resetSearchData();
     }
   }, [debouncedValue, searchPage, searchType, sort]);
   const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
@@ -81,7 +83,7 @@ export default function PostPage() {
       <div className="py-10 w-full lg:w-4/5">
         <div className="text-left py-20">
           <h1 className="text-4xl">모든 게시글</h1>
-          <div className="flex flex-col gap-3 my-7">
+          <div className="flex flex-col gap-2 my-7">
             {/* Search form */}
             <form>
               <input
