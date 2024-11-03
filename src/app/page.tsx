@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import { faCode, faList, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Spotlight, { SpotlightCard } from "./components/spotlight.component";
@@ -141,7 +140,7 @@ export default function Home() {
       </div>
       {/* Recent Posts */}
       <div className="flex flex-col items-center justify-center">
-        <div className="py-10 w-full lg:w-4/5">
+        <div className="py-20 w-full lg:w-4/5">
           <h1 className="text-5xl font-bold">최근 게시글</h1>
           <div className="mt-10">
             <RecentPosts refresh />

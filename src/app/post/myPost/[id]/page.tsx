@@ -12,6 +12,7 @@ import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Image from "next/image";
 import dayjs from "dayjs";
+import Link from "next/link";
 
 const utility = new Utility();
 
@@ -59,10 +60,10 @@ export default function ViewPrivatePostPage({ params }: IPostProps) {
         post && (
           <div className="py-40 w-full lg:w-4/5">
             <h1 className="text-4xl font-bold">{post.title}</h1>
-            <div className="flex flex-row gap-2 mt-3">
+            <Link className="flex flex-row gap-2 mt-3" href={`/user/${post.author}`}>
               <Image className="w-6 h-6 rounded-full" src={post.profile_image} width={6} height={6} alt="" />
               <span className="text-gray-100 text-base">{post.author}</span>
-            </div>
+            </Link>
             <p className="text-gray-500 text-base mt-2">{dayjs(post.created_at).format("YYYY.MM.DD HH:mm:ss")} 게시됨</p>
             {post.edited_at && post.edited_at !== 0 ? (
               <p className="text-gray-500 text-base">{dayjs(post.edited_at).format("YYYY.MM.DD HH:mm:ss")} 수정됨</p>
