@@ -81,7 +81,6 @@ export default function PostPage() {
       <div className="py-10 w-full lg:w-4/5">
         <div className="text-left py-20">
           <h1 className="text-4xl">모든 게시글</h1>
-          <h2 className="text-xl mt-2">게시글은 가장 최근에 게시된 순서로 정렬됩니다.</h2>
           <div className="flex flex-col gap-3 my-7">
             {/* Search form */}
             <form>
@@ -212,62 +211,52 @@ export default function PostPage() {
               </div>
               {data && data.data && (
                 <div className="flex flex-col gap-4 justify-center items-center mt-10">
+                  <p>
+                    {debouncedValue && searchResult
+                      ? `${searchResult.pagination.currentPage} / ${searchResult.pagination.lastPageNumber}`
+                      : !searchError && `${data.pagination.currentPage} / ${data.pagination.lastPageNumber}`}
+                  </p>
                   {debouncedValue && searchResult ? (
-                    <p>
-                      {searchResult.pagination.currentPage} / {searchResult.pagination.lastPageNumber}
-                    </p>
+                    <div className="flex flex-row gap-4 justify-center items-center">
+                      <button
+                        className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
+                        onClick={() => setSearchPage(searchPage - 1)}
+                        disabled={searchError.length !== 0 || searchPage === 1}
+                      >
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+                        Previous
+                      </button>
+                      <button
+                        className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
+                        disabled={searchError.length !== 0 || searchPage === searchResult.pagination.lastPageNumber}
+                        onClick={() => setSearchPage(searchPage + 1)}
+                      >
+                        Next
+                        <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
+                      </button>
+                    </div>
                   ) : (
                     !searchError && (
-                      <p>
-                        {data.pagination.currentPage} / {data.pagination.lastPageNumber}
-                      </p>
-                    )
-                  )}
-                  <div className="flex flex-row gap-4 justify-center items-center">
-                    {debouncedValue && searchResult ? (
-                      <>
-                        {/* Search result pagination */}
+                      <div className="flex flex-row gap-4 justify-center items-center">
                         <button
                           className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-                          onClick={() => setSearchPage(searchPage - 1)}
-                          disabled={searchError.length !== 0 || searchPage === 1}
+                          onClick={() => setPage(page - 1)}
+                          disabled={page === 1}
                         >
                           <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
                           Previous
                         </button>
                         <button
                           className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-                          disabled={searchError.length !== 0 || searchPage === searchResult.pagination.lastPageNumber}
-                          onClick={() => setSearchPage(searchPage + 1)}
+                          disabled={page === data.pagination.lastPageNumber}
+                          onClick={() => setPage(page + 1)}
                         >
                           Next
                           <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
                         </button>
-                      </>
-                    ) : (
-                      !searchError && (
-                        <>
-                          {/* All posts pagination */}
-                          <button
-                            className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-                            onClick={() => setPage(page - 1)}
-                            disabled={page === 1}
-                          >
-                            <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
-                            Previous
-                          </button>
-                          <button
-                            className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 disabled:bg-gray-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
-                            disabled={page === data.pagination.lastPageNumber}
-                            onClick={() => setPage(page + 1)}
-                          >
-                            Next
-                            <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
-                          </button>
-                        </>
-                      )
-                    )}
-                  </div>
+                      </div>
+                    )
+                  )}
                 </div>
               )}
             </>
