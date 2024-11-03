@@ -35,7 +35,7 @@ export function PostOption(props: PostOptionProps) {
           Authorization: `Bearer ${token}`,
         },
       });
-      router.push("/posts/myPosts");
+      router.push("/post/myPost");
       toast.success(data.message);
     } catch (err) {
       if (isAxiosError(err) && err.response) {

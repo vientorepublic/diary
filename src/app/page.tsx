@@ -78,7 +78,7 @@ export default function Home() {
             </Link>
           )}
           <Link
-            href="/posts"
+            href="/post"
             className="px-6 py-3 mb-2 text-lg text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-700 rounded-2xl sm:w-auto sm:mb-0"
           >
             <FontAwesomeIcon icon={faList} className="mr-2" />

@@ -78,9 +78,9 @@ export default function WritePage() {
         }
       );
       if (publicPost) {
-        router.push("/posts");
+        router.push("/post");
       } else {
-        router.push("/posts/myPosts");
+        router.push("/post/myPost");
       }
       toast.success(result.message);
     } catch (err) {
@@ -118,9 +118,9 @@ export default function WritePage() {
         }
       );
       if (publicPost) {
-        router.push("/posts");
+        router.push("/post");
       } else {
-        router.push("/posts/myPosts");
+        router.push("/post/myPost");
       }
       toast.success(result.message);
     } catch (err) {

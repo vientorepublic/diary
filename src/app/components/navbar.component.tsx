@@ -36,8 +36,10 @@ export function Navbar() {
               {isOpen && (
                 <div className="absolute z-30 mt-5 divide-y rounded-lg shadow w-44 bg-gray-700 divide-gray-600 top-full right-0">
                   <div className="px-4 py-3 text-sm text-white">
-                    <div>{permission === 1 ? <span className="text-green-500">{user_id}</span> : user_id}</div>
-                    <div className="font-medium truncate">{email}</div>
+                    <Link href={`/user/${user_id}`} onClick={() => closeDropdown()}>
+                      <div>{permission === 1 ? <span className="text-green-500">{user_id}</span> : user_id}</div>
+                      <div className="font-medium truncate">{email}</div>
+                    </Link>
                   </div>
                   <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                     <li>
@@ -46,7 +48,7 @@ export function Navbar() {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/posts/myPosts" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
+                      <Link href="/post/myPost" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
                         나의 게시글
                       </Link>
                     </li>

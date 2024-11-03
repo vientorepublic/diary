@@ -92,6 +92,19 @@ export interface IUserInfo {
   permission: number;
 }
 
+export interface IUserStats {
+  postCount: number;
+  lastActivityDate: number;
+}
+
+export interface IUserProfile {
+  id: number;
+  user_id: string;
+  profile_image: string;
+  permission: number;
+  stats: IUserStats;
+}
+
 interface User extends IUserInfo {
   loading: boolean;
   setLoading: (state: boolean) => void;
