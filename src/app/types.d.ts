@@ -177,5 +177,6 @@ export type SortOptions = "latest" | "oldest";
 export interface ISearchQuery {
   type: PostSearchTypes;
   page: number;
+  sort: SortOptions;
   query: string;
 }
