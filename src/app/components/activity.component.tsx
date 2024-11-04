@@ -27,25 +27,23 @@ export function UserActivity(props: IUserActivityProps) {
       <Alert>{error.response ? error.response.data.message : error.message}</Alert>
     </div>
   ) : (
-    <div className="py-10 w-full lg:w-4/5">
-      <div className="grid grid-wrap lg:grid-cols-3 gap-5">
-        {data &&
-          data.data.map((e, i) => {
-            return (
-              <PostCard
-                title={utility.shortenString(10, e.title)}
-                text={utility.shortenString(50, e.preview)}
-                author={utility.shortenString(10, e.author)}
-                userId={e.author}
-                isPublic={true}
-                profileImage={e.profile_image}
-                createdAt={e.created_at}
-                buttonLink={`/post/${e.id}`}
-                key={i}
-              />
-            );
-          })}
-      </div>
+    <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
+      {data &&
+        data.data.map((e, i) => {
+          return (
+            <PostCard
+              title={utility.shortenString(10, e.title)}
+              text={utility.shortenString(50, e.preview)}
+              author={utility.shortenString(10, e.author)}
+              userId={e.author}
+              isPublic={true}
+              profileImage={e.profile_image}
+              createdAt={e.created_at}
+              buttonLink={`/post/${e.id}`}
+              key={i}
+            />
+          );
+        })}
     </div>
   );
 }
