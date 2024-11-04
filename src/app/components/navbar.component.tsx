@@ -43,13 +43,13 @@ export function Navbar() {
                   </div>
                   <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                     <li>
-                      <Link href="/write" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
-                        새 글 쓰기
+                      <Link href="/post/myPost" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
+                        나의 게시글
                       </Link>
                     </li>
                     <li>
-                      <Link href="/post/myPost" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
-                        나의 게시글
+                      <Link href="/write" onClick={() => closeDropdown()} className="block px-4 py-2 hover:bg-gray-600 text-white">
+                        새 글 쓰기
                       </Link>
                     </li>
                   </ul>

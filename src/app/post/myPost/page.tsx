@@ -78,6 +78,7 @@ export default function PrivatePostPage() {
                       title={utility.shortenString(10, e.title)}
                       text={utility.shortenString(50, e.preview)}
                       author={utility.shortenString(10, e.author)}
+                      userId={e.author}
                       isPublic={e.public_post}
                       profileImage={e.profile_image}
                       createdAt={e.created_at}
@@ -89,7 +90,7 @@ export default function PrivatePostPage() {
             </div>
             {data && data.data && (
               <div className="flex flex-col gap-4 justify-center items-center mt-10">
-                <p className="">
+                <p>
                   {data.pagination.currentPage} / {data.pagination.lastPageNumber}
                 </p>
                 <div className="flex flex-row gap-4 justify-center items-center">

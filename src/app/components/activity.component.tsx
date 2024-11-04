@@ -1,5 +1,5 @@
 "use client";
-import type { IPaginationData, IPostPreview, IRecentPostProps } from "../types";
+import type { IPaginationData, IPostPreview, IUserActivityProps } from "../types";
 import { swrHttp } from "../utility/fetcher";
 import { PostCard } from "./card.component";
 import { Alert } from "./alert.component";
@@ -8,16 +8,14 @@ import useSWR from "swr";
 
 const utility = new Utility();
 
-export function RecentPosts(props: IRecentPostProps) {
-  const { refresh } = props;
-  const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
+export function UserActivity(props: IUserActivityProps) {
+  const { id } = props;
+  const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
     {
-      url: `/post/posts?page=1&sort=latest`,
+      url: `/search?type=user_id&page=1&sort=latest&query=${id}`,
     },
     swrHttp,
-    {
-      refreshInterval: refresh ? 5000 : undefined,
-    }
+    {}
   );
   return isLoading ? (
     <div className="flex flex-col gap-5 py-20 justify-center items-center">
@@ -29,7 +27,7 @@ export function RecentPosts(props: IRecentPostProps) {
       <Alert>{error.response ? error.response.data.message : error.message}</Alert>
     </div>
   ) : (
-    <div className="grid grid-wrap lg:grid-cols-3 gap-5">
+    <div className="grid grid-wrap lg:grid-cols-3 gap-5 py-10">
       {data &&
         data.data.map((e, i) => {
           return (

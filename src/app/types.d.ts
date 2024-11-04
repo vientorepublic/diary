@@ -105,6 +105,10 @@ export interface IUserProfile {
   stats: IUserStats;
 }
 
+export interface IUserActivityProps {
+  id: string;
+}
+
 interface User extends IUserInfo {
   loading: boolean;
   setLoading: (state: boolean) => void;
@@ -132,6 +136,7 @@ export interface ICardProps {
   title: string;
   text: string;
   author: string;
+  userId: string;
   isPublic: boolean;
   profileImage: string;
   createdAt: number;
