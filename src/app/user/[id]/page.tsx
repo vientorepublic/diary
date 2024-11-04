@@ -4,6 +4,7 @@ import { User } from "@/app/utility/user";
 import { Metadata } from "next";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { UserActivity } from "@/app/components/activity.component";
 
 const user = new User();
 
@@ -46,9 +47,9 @@ export default async function UserProfilePage({ params }: { params: { id: string
   }
   return (
     <section className="flex flex-col items-center justify-center px-10">
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center py-20">
         {data ? (
-          <div className="flex flex-col gap-2 py-20 items-center justify-center text-center">
+          <div className="flex flex-col py-20 items-center justify-center text-center">
             <Image className="w-32 h-32 rounded-full mb-4" src={data.profile_image} width={150} height={150} alt="" priority />
             <h1 className="text-3xl font-bold">{data.user_id}</h1>
             <h2 className="text-xl">
@@ -56,6 +57,7 @@ export default async function UserProfilePage({ params }: { params: { id: string
               {data.stats.lastActivityDate ? dayjs(data.stats.lastActivityDate).format("YYYY.MM.DD HH:mm:ss") : "N/A"}
             </h2>
             {data.permission === 1 && <span className="text-green-500">이 사용자는 특수 권한을 가지고 있습니다.</span>}
+            <UserActivity id={data.user_id} />
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-3">

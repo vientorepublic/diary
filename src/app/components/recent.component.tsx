@@ -26,7 +26,6 @@ export function RecentPosts(props: IRecentPostProps) {
     </div>
   ) : error ? (
     <div className="flex py-20 justify-center items-center">
-      {/* stack,message,name,code,config,request,response,status */}
       <Alert>{error.response ? error.response.data.message : error.message}</Alert>
     </div>
   ) : (

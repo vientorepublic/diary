@@ -89,7 +89,7 @@ export default function PrivatePostPage() {
             </div>
             {data && data.data && (
               <div className="flex flex-col gap-4 justify-center items-center mt-10">
-                <p className="">
+                <p>
                   {data.pagination.currentPage} / {data.pagination.lastPageNumber}
                 </p>
                 <div className="flex flex-row gap-4 justify-center items-center">
