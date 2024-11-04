@@ -136,6 +136,7 @@ export interface ICardProps {
   title: string;
   text: string;
   author: string;
+  userId: string;
   isPublic: boolean;
   profileImage: string;
   createdAt: number;
