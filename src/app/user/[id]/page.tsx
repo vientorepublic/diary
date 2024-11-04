@@ -1,4 +1,7 @@
+import { faCheckCircle, faGear, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { UserActivity } from "@/app/components/activity.component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "@/app/components/tooltip.component";
 import type { IUserProfile } from "@/app/types";
 import { OpenGraph } from "@/app/constants";
 import { User } from "@/app/utility/user";
@@ -51,14 +54,29 @@ export default async function UserProfilePage({ params }: { params: { id: string
         <div className="py-40 w-full lg:w-4/5">
           <div className="flex flex-col items-center justify-center text-center">
             <Image className="w-32 h-32 rounded-full mb-4" src={data.profile_image} width={150} height={150} alt="" priority />
-            <h1 className="text-3xl font-bold">{data.user_id}</h1>
+            <div className="flex flex-row gap-2">
+              <h1 className="text-3xl font-bold">{data.user_id}</h1>
+              {data.verified ? (
+                <Tooltip message="이 계정은 이메일 인증을 받았습니다.">
+                  <FontAwesomeIcon icon={faCheckCircle} className="text-sky-500 text-xl" />
+                </Tooltip>
+              ) : (
+                <Tooltip message="이 계정은 아직 인증되지 않았습니다.">
+                  <FontAwesomeIcon icon={faXmarkCircle} className="text-orange-500 text-xl" />
+                </Tooltip>
+              )}
+              {data.permission === 1 && (
+                <Tooltip message="이 계정은 특수 권한을 가지고 있습니다.">
+                  <FontAwesomeIcon icon={faGear} className="text-green-500 text-xl" />
+                </Tooltip>
+              )}
+            </div>
             <h2 className="text-xl">
               공개 게시글 {data.stats.postCount}개 / 최근 활동일:{" "}
               {data.stats.lastActivityDate ? dayjs(data.stats.lastActivityDate).format("YYYY.MM.DD HH:mm:ss") : "N/A"}
             </h2>
-            {data.permission === 1 && <span className="text-green-500">이 사용자는 특수 권한을 가지고 있습니다.</span>}
           </div>
-          <UserActivity id={data.user_id} />
+          <UserActivity id={data.user_id} sort="latest" />
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-3 h-screen">
