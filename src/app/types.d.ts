@@ -100,6 +100,7 @@ export interface IUserStats {
 export interface IUserProfile {
   id: number;
   user_id: string;
+  verified: boolean;
   profile_image: string;
   permission: number;
   stats: IUserStats;
