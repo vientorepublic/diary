@@ -83,13 +83,16 @@ export interface ILoginResponse extends DefaultResponse {
   };
 }
 
-export interface IUserInfo {
+export interface IUser {
   id: number;
   user_id: string;
-  email: string;
   profile_image: string;
   created_at: number;
   permission: number;
+}
+
+export interface IUserInfo extends IUser {
+  email: string;
 }
 
 export interface IUserStats {
@@ -97,20 +100,17 @@ export interface IUserStats {
   lastActivityDate: number;
 }
 
-export interface IUserProfile {
-  id: number;
-  user_id: string;
+export interface IUserProfile extends IUser {
   verified: boolean;
-  profile_image: string;
-  permission: number;
   stats: IUserStats;
 }
 
 export interface IUserActivityProps {
+  sort: SortOptions;
   id: string;
 }
 
-interface User extends IUserInfo {
+export interface User extends IUserInfo {
   loading: boolean;
   setLoading: (state: boolean) => void;
   setUser: (data: IUserInfo) => void;

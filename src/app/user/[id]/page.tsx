@@ -76,7 +76,7 @@ export default async function UserProfilePage({ params }: { params: { id: string
               {data.stats.lastActivityDate ? dayjs(data.stats.lastActivityDate).format("YYYY.MM.DD HH:mm:ss") : "N/A"}
             </h2>
           </div>
-          <UserActivity id={data.user_id} />
+          <UserActivity id={data.user_id} sort="latest" />
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-3 h-screen">
