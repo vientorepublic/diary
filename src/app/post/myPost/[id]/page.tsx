@@ -2,8 +2,8 @@
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import { PostOption } from "@/app/components/option.component";
 import { Alert } from "@/app/components/alert.component";
-import { fetcher } from "@/app/utility/fetcher";
 import type { IPostData, IPostProps } from "@/app/types";
+import { fetcher } from "@/app/utility/fetcher";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { Cookie } from "@/app/constants";
@@ -11,8 +11,8 @@ import { Utility } from "@/app/utility";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Image from "next/image";
-import dayjs from "dayjs";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 const utility = new Utility();
 

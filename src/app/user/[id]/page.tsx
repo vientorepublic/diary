@@ -1,10 +1,10 @@
+import { UserActivity } from "@/app/components/activity.component";
+import type { IUserProfile } from "@/app/types";
 import { OpenGraph } from "@/app/constants";
-import { IUserProfile } from "@/app/types";
 import { User } from "@/app/utility/user";
 import { Metadata } from "next";
 import Image from "next/image";
 import dayjs from "dayjs";
-import { UserActivity } from "@/app/components/activity.component";
 
 const user = new User();
 

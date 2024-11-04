@@ -1,10 +1,10 @@
 "use client";
-import useSWR from "swr";
 import type { IPaginationData, IPostPreview, IUserActivityProps } from "../types";
 import { swrHttp } from "../utility/fetcher";
 import { PostCard } from "./card.component";
 import { Alert } from "./alert.component";
 import { Utility } from "../utility";
+import useSWR from "swr";
 
 const utility = new Utility();
 
