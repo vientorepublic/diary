@@ -41,7 +41,7 @@ export default function Home() {
         </div>
         <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12">
           <div className="mb-8 text-3xl sm:text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl">
-            <div className="flex flex-col gap-10 text-center">
+            <div className="flex flex-col gap-5 text-center">
               <h1 className="relative px-4 py-4 text-gray-100">오늘 하루는 어땠나요?</h1>
               <div className="flex flex-row justify-center items-center">
                 <h1 className="text-gray-100">
@@ -52,7 +52,7 @@ export default function Home() {
           </div>
           <hr className="my-10 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400" />
         </div>
-        <div className="text-xl my-10">
+        <div className="text-xl mb-10">
           {fetching ? (
             <p>Loading...</p>
           ) : error ? (
