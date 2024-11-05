@@ -3,13 +3,14 @@
 import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faSave, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
 import type { IDraftPost, IEditPostPayload, IPostData, IWritePost, IWritePostPayload } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Alert } from "../components/alert.component";
+import { Alert, VerificationAlert } from "../components/alert.component";
 import { useSearchParams } from "next/navigation";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
 import { confirmModal } from "../utility/modal";
 import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
+import { UserStore } from "../store/user";
 import { getCookie } from "cookies-next";
 import { Cookie } from "../constants";
 import { isAxiosError } from "axios";
@@ -39,6 +40,7 @@ export default function WritePage() {
   const searchParams = useSearchParams();
   const postId = searchParams.get("post_id");
   const accessToken = getCookie(name);
+  const { user_id } = UserStore();
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [draftLoaded, setDraftLoaded] = useState<boolean>(false);
   const [publicPost, setPublicPost] = useState<boolean>(true);
@@ -256,7 +258,7 @@ export default function WritePage() {
     <section className="flex flex-col items-center justify-center px-10 py-20">
       <div className="py-10 w-full md:w-4/5">
         <div className="flex flex-col gap-3 py-5">
-          <Alert>일부 마크다운 문법을 지원합니다. 지원 범위는 추후 확대 될 예정입니다.</Alert>
+          <VerificationAlert id={user_id} />
           <Alert>게시하기 전에 제목, 본문 내용이 가이드라인을 위반하지 않는지 다시 한 번 확인 부탁드립니다.</Alert>
         </div>
         <div className="mb-1">

@@ -1,6 +1,7 @@
 "use client";
 import { faCode, faList, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Spotlight, { SpotlightCard } from "./components/spotlight.component";
+import { VerificationAlert } from "./components/alert.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RecentPosts } from "./components/recent.component";
 import { useEffect, useState } from "react";
@@ -34,8 +35,10 @@ export default function Home() {
   }, []);
   return (
     <section className="px-10 text-center">
-      {/* Main Section */}
       <div className="flex flex-col justify-center items-center h-screen">
+        <div className="py-5">
+          <VerificationAlert id={user_id} />
+        </div>
         <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12">
           <div className="mb-8 text-3xl sm:text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl">
             <div className="flex flex-col gap-10 text-center">
@@ -53,7 +56,6 @@ export default function Home() {
           {fetching ? (
             <p>Loading...</p>
           ) : error ? (
-            // Fallback
             <p>성공이란 한 걸음씩 앞으로 나아가며 가치 있는 이상을 실현하는 것이다. - 나이팅게일</p>
           ) : (
             // Random Phrase
@@ -85,7 +87,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      {/* Main Content - Spolight Cards */}
       <div className="flex flex-col items-center justify-center">
         <div className="py-10 w-full lg:w-4/5">
           <h1 className="text-5xl font-bold">자유로운 소통의 공간</h1>
@@ -138,7 +139,6 @@ export default function Home() {
           </Spotlight>
         </div>
       </div>
-      {/* Recent Posts */}
       <div className="flex flex-col items-center justify-center">
         <div className="py-20 w-full lg:w-4/5">
           <h1 className="text-5xl font-bold">최근 게시글</h1>
