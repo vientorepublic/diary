@@ -28,7 +28,7 @@ export function VerificationAlert({ id }: { id: string }) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {}
     }
-    checkVerification(id);
+    if (id) checkVerification(id);
   }, [id]);
   return (
     !verified && (
