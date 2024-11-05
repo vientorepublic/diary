@@ -1,7 +1,7 @@
 "use client";
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import { PostOption } from "@/app/components/option.component";
-import { Alert } from "@/app/components/alert.component";
+import { Warning } from "@/app/components/alert.component";
 import type { IPostData, IPostProps } from "@/app/types";
 import { fetcher } from "@/app/utility/fetcher";
 import { useEffect, useState } from "react";
@@ -54,7 +54,7 @@ export default function ViewPrivatePostPage({ params }: IPostProps) {
         </div>
       ) : error ? (
         <div className="flex flex-col gap-4 justify-center items-center h-screen">
-          <Alert>{error}</Alert>
+          <Warning>{error}</Warning>
         </div>
       ) : (
         post && (

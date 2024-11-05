@@ -2,7 +2,7 @@
 import type { IPaginationData, IPostPreview, IRecentPostProps } from "../types";
 import { swrHttp } from "../utility/fetcher";
 import { PostCard } from "./card.component";
-import { Alert } from "./alert.component";
+import { Warning } from "./alert.component";
 import { Utility } from "../utility";
 import useSWR from "swr";
 
@@ -26,7 +26,7 @@ export function RecentPosts(props: IRecentPostProps) {
     </div>
   ) : error ? (
     <div className="flex py-20 justify-center items-center">
-      <Alert>{error.response ? error.response.data.message : error.message}</Alert>
+      <Warning>{error.response ? error.response.data.message : error.message}</Warning>
     </div>
   ) : (
     <div className="grid grid-wrap lg:grid-cols-3 gap-5">
