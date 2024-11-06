@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export function Footer() {
   return (
     <footer>
@@ -25,14 +23,9 @@ export function Footer() {
               <h2 className="mb-6 text-sm font-semibold uppercase text-white">Legal</h2>
               <ul className="text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link href="/PrivacyPolicy" className="hover:underline">
-                    개인정보 보호정책
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="/Guideline" className="hover:underline">
+                  <a href="https://flax-prawn-7e2.notion.site/Viento-Diary-Guideline-136a8c930a8b80949b0af99a0dd5bdd7" className="hover:underline">
                     가이드라인
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>

@@ -52,7 +52,7 @@ export default function Home() {
           </div>
           <hr className="my-10 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400" />
         </div>
-        <div className="text-xl mb-10">
+        <div className="text-xl mb-10 max-w-2xl">
           {fetching ? (
             <p>Loading...</p>
           ) : error ? (
