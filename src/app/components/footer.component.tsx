@@ -23,7 +23,7 @@ export function Footer() {
               <h2 className="mb-6 text-sm font-semibold uppercase text-white">Legal</h2>
               <ul className="text-gray-400 font-medium">
                 <li className="mb-4">
-                  <a href="https://www.notion.so/Viento-Diary-Guideline-136a8c930a8b80949b0af99a0dd5bdd7" className="hover:underline">
+                  <a href="https://flax-prawn-7e2.notion.site/Viento-Diary-Guideline-136a8c930a8b80949b0af99a0dd5bdd7" className="hover:underline">
                     가이드라인
                   </a>
                 </li>
