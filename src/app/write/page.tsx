@@ -55,7 +55,9 @@ export default function WritePage() {
   const textLengthExceed = text.trim().length > maxTextLength;
   const { executeRecaptcha } = useReCaptcha();
   async function publish(data: IWritePost, public_post: boolean) {
-    if (!data.title.trim() || !data.text.trim()) {
+    const title = data.title.trim();
+    const text = data.text.trim();
+    if (!title || !text) {
       toast.error("제목 또는 본문이 비어있습니다.");
       return;
     }
@@ -63,10 +65,10 @@ export default function WritePage() {
     try {
       const token = await executeRecaptcha("write_post");
       const payload: IWritePostPayload = {
-        title: data.title.trim(),
-        text: data.text.trim(),
-        g_recaptcha_response: token,
+        title,
+        text,
         public_post,
+        g_recaptcha_response: token,
       };
       const { data: result } = await fetcher.post(
         "/post/save",
@@ -94,7 +96,9 @@ export default function WritePage() {
     }
   }
   async function editPost(data: IWritePost, public_post: boolean) {
-    if (!data.title.trim() || !data.text.trim()) {
+    const title = data.title.trim();
+    const text = data.text.trim();
+    if (!title || !text) {
       toast.error("제목 또는 본문이 비어있습니다.");
       return;
     }
@@ -102,11 +106,11 @@ export default function WritePage() {
     try {
       const token = await executeRecaptcha("edit_post");
       const payload: IEditPostPayload = {
-        id: Number(postId), // Post ID
-        title: data.title.trim(),
-        text: data.text.trim(),
-        g_recaptcha_response: token,
+        title,
+        text,
         public_post,
+        id: Number(postId),
+        g_recaptcha_response: token,
       };
       const { data: result } = await fetcher.patch(
         "/post/edit",

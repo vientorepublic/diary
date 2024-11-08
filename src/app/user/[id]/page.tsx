@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "@/app/components/tooltip.component";
 import type { IUserProfile } from "@/app/types";
 import { OpenGraph } from "@/app/constants";
-import { User } from "@/app/utility/user";
+import { User } from "@/app/utility/ssr";
 import { Metadata } from "next";
 import Image from "next/image";
 import dayjs from "dayjs";

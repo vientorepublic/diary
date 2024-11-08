@@ -2,12 +2,12 @@ import { RenderMarkdown } from "@/app/components/markdown.component";
 import { RecentPosts } from "@/app/components/recent.component";
 import type { IPostData, IPostProps } from "@/app/types";
 import { OpenGraph } from "@/app/constants";
-import { Post } from "@/app/utility/post";
+import { Post } from "@/app/utility/ssr";
 import { Utility } from "@/app/utility";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Image from "next/image";
-import dayjs from "dayjs";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 const utility = new Utility();
 const post = new Post();
@@ -58,11 +58,7 @@ export default async function ViewPostPage({ params }: IPostProps) {
             <span className="text-gray-100 text-base">{data.author}</span>
           </Link>
           <p className="text-gray-500 text-base mt-2">{dayjs(data.created_at).format("YYYY.MM.DD HH:mm:ss")} 게시됨</p>
-          {data.edited_at && data.edited_at !== 0 ? (
-            <p className="text-gray-500 text-base">{dayjs(data.edited_at).format("YYYY.MM.DD HH:mm:ss")} 수정됨</p>
-          ) : (
-            <></>
-          )}
+          {data.edited_at !== 0 && <p className="text-gray-500 text-base">{dayjs(data.edited_at).format("YYYY.MM.DD HH:mm:ss")} 수정됨</p>}
           <hr className="border-gray-700 my-5" />
           <pre className="pretendard text-wrap overflow-hidden">
             <RenderMarkdown>{utility.escapeHTML(data.text)}</RenderMarkdown>

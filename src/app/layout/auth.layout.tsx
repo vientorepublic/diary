@@ -1,6 +1,6 @@
 "use client";
+import { type ReactNode, useEffect } from "react";
 import { useRouter } from "nextjs-toploader/app";
-import { ReactNode, useEffect } from "react";
 import { getCookie } from "cookies-next";
 import { Cookie } from "../constants";
 

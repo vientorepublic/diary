@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { ReactNode, Suspense } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "./components/footer.component";
 import { Navbar } from "./components/navbar.component";
 import { ToastLayout } from "./layout/toast.layout";
 import { DataLayout } from "./layout/data.layout";
+import { type ReactNode, Suspense } from "react";
 import NextTopLoader from "nextjs-toploader";
 import { OpenGraph } from "./constants";
+import type { Metadata } from "next";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/static/css/loader.css";
 import "@/app/static/css/main.css";
