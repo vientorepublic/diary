@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { swrHttp } from "../utility/fetcher";
 import { PostCard } from "./card.component";
 import { Alert } from "./alert.component";
-import { UserStore } from "../store/user";
 import { Utility } from "../utility";
 import { useState } from "react";
 import useSWR from "swr";
@@ -14,7 +13,6 @@ const utility = new Utility();
 
 export function UserActivity(props: IUserActivityProps) {
   const { id, sort } = props;
-  const { user_id } = UserStore();
   const [page, setPage] = useState<number>(1);
   const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
     {
@@ -48,7 +46,7 @@ export function UserActivity(props: IUserActivityProps) {
                 isPublic={true}
                 profileImage={e.profile_image}
                 createdAt={e.created_at}
-                buttonLink={user_id ? `/post/myPost/${e.id}` : `/post/${e.id}`}
+                buttonLink={`/post/${e.id}`}
                 key={i}
               />
             );
