@@ -1,6 +1,6 @@
 "use client";
 import { deleteCookie, getCookie } from "cookies-next";
-import { ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 import { fetcher } from "../utility/fetcher";
 import { UserStore } from "../store/user";
 import type { IUserInfo } from "../types";

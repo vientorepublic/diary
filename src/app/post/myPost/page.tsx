@@ -8,7 +8,7 @@ import { swrHttp } from "@/app/utility/fetcher";
 import { getCookie } from "cookies-next";
 import { Cookie } from "@/app/constants";
 import { Utility } from "@/app/utility";
-import React, { useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 
 const utility = new Utility();
