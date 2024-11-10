@@ -1,5 +1,6 @@
 "use client";
 import { UserStore } from "../store/user";
+import { brandName } from "../constants";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +18,7 @@ export function Navbar() {
     <nav className="bg-gray-800 fixed w-full z-50 top-0 start-0 border-gray-600 shadow-md">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center rtl:space-x-reverse">
-          <span className="text-2xl font-bold">diary.viento.me</span>
+          <span className="text-2xl font-bold">{brandName}</span>
         </Link>
         <div className="flex md:order-2 space-x-2 rtl:space-x-reverse">
           {loading ? (

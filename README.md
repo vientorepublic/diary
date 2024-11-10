@@ -29,10 +29,21 @@
 > `INTERNAL_API_URL`은 백엔드 서버가 동일 네트워크 안에 있다면 내부망 주소를 사용하세요.
 
 ```
+NEXT_PUBLIC_BRAND_NAME=
 NEXT_PUBLIC_API_URL=
 INTERNAL_API_URL=
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
 ```
+
+## 환경변수 설명
+
+- `NEXT_PUBLIC_BRAND_NAME`: 웹사이트의 브랜드 이름입니다. 비워둘 시 기본값은 `diary.viento.me`입니다.
+
+- `NEXT_PUBLIC_API_URL`: 프론트엔드에서 백엔드에 요청을 보내기 위한 호스트 URL입니다.
+
+- `INTERNAL_API_URL`: 프론트엔드의 서버 사이드에서 백엔드로 요청을 보내기 위한 호스트 URL입니다.
+
+- `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`: Google reCAPTCHA의 사이트 키 입니다.
 
 # 라이선스
 

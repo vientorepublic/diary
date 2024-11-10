@@ -6,6 +6,7 @@ declare global {
       NEXT_PUBLIC_API_URL: string;
       INTERNAL_API_URL: string;
       NEXT_PUBLIC_RECAPTCHA_SITE_KEY: string;
+      NEXT_PUBLIC_BRAND_NAME: string;
     }
   }
 }
@@ -43,11 +44,6 @@ export interface IMyPost extends IPost {
   preview: string;
 }
 
-export interface IDraftPost {
-  title: string;
-  text: string;
-}
-
 export interface IPostPreview extends IPost {
   preview: string;
 }
@@ -55,6 +51,7 @@ export interface IPostPreview extends IPost {
 export interface IPostData extends IPost {
   text: string;
 }
+
 export interface IPaginationInfo {
   totalItemCount: number;
   lastPageNumber: number;
