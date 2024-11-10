@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export function Tooltip({ message, children }: { message: string; children: ReactNode }) {
   return (

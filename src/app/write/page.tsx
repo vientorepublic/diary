@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faSave, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
-import type { IDraftPost, IEditPostPayload, IPostData, IWritePost, IWritePostPayload } from "../types";
+import type { IEditPostPayload, IPostData, IWritePost, IWritePostPayload } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert, VerificationAlert } from "../components/alert.component";
 import { useSearchParams } from "next/navigation";
@@ -167,7 +167,7 @@ export default function WritePage() {
   useEffect(() => {
     async function loadDraft() {
       try {
-        const { data } = await fetcher.get<IDraftPost>("/post/draft/loadDraft", {
+        const { data } = await fetcher.get<IWritePost>("/post/draft/loadDraft", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

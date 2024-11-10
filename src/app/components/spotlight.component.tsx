@@ -1,6 +1,6 @@
 "use client";
 import type { IContainerSize, IMousePosition, SpotlightCardProps, SpotlightProps } from "../types";
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import useMousePosition from "../utility/mouse";
 
 export default function Spotlight({ children, className = "" }: SpotlightProps) {
