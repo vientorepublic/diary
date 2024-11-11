@@ -1,22 +1,20 @@
+import { MetadataConfig, ViewportConfig } from "./constants";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "./components/footer.component";
 import { Navbar } from "./components/navbar.component";
 import { ToastLayout } from "./layout/toast.layout";
 import { DataLayout } from "./layout/data.layout";
 import { type ReactNode, Suspense } from "react";
-import NextTopLoader from "nextjs-toploader";
-import { OpenGraph } from "./constants";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import NextTopLoader from "nextjs-toploader";
 import "@/app/static/css/loader.css";
 import "@/app/static/css/main.css";
 import "@/app/globals.css";
-config.autoAddCss = false;
 
-export const metadata: Metadata = {
-  title: OpenGraph.title,
-  description: OpenGraph.description,
-};
+config.autoAddCss = false;
+export const metadata: Metadata = MetadataConfig;
+export const viewport: Viewport = ViewportConfig;
 
 export default function RootLayout({
   children,
