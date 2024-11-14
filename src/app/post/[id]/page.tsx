@@ -1,7 +1,7 @@
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import { RecentPosts } from "@/app/components/recent.component";
 import type { IPostData, IPostProps } from "@/app/types";
-import { OpenGraph } from "@/app/constants";
+import { MetadataConfig } from "@/app/constants";
 import { Post } from "@/app/utility/ssr";
 import { Utility } from "@/app/utility";
 import type { Metadata } from "next";
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
     const { title, text } = await post.get(id);
     const description = utility.convertDescription(text);
     return {
-      title: `${title} | ${OpenGraph.title}`,
+      title: `${title} | ${MetadataConfig.title}`,
       description,
     };
   } catch (err) {
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
     if (err instanceof Error) {
       error = err.message;
     } else {
-      error = OpenGraph.description;
+      error = MetadataConfig.description;
     }
     return {
-      title: OpenGraph.title,
+      title: MetadataConfig.title,
       description: error,
     };
   }

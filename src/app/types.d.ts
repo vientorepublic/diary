@@ -11,9 +11,13 @@ declare global {
   }
 }
 
-export interface IPhraseData {
+export interface IPhrase {
   text: string;
   author: string;
+}
+
+export interface IMessage {
+  message: string;
 }
 
 export interface IWritePost {
@@ -52,6 +56,16 @@ export interface IPostData extends IPost {
   text: string;
 }
 
+export type PostSearchTypes = "title" | "text" | "user_id";
+export type SortOptions = "latest" | "oldest";
+
+export interface ISearchQuery {
+  type: PostSearchTypes;
+  page: number;
+  sort: SortOptions;
+  query: string;
+}
+
 export interface IPaginationInfo {
   totalItemCount: number;
   lastPageNumber: number;
@@ -59,7 +73,7 @@ export interface IPaginationInfo {
   pageSize: number;
 }
 
-export interface IPaginationData<T> {
+export interface IPagination<T> {
   data: T;
   pagination: IPaginationInfo;
 }
@@ -185,14 +199,4 @@ export interface IConfirmModalProps {
 
 export interface IRecentPostProps {
   refresh?: boolean;
-}
-
-export type PostSearchTypes = "title" | "text" | "user_id";
-export type SortOptions = "latest" | "oldest";
-
-export interface ISearchQuery {
-  type: PostSearchTypes;
-  page: number;
-  sort: SortOptions;
-  query: string;
 }

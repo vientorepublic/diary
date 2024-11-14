@@ -1,4 +1,5 @@
-import type { HTMLEscapeChars } from "../types";
+import axios from "axios";
+import type { HTMLEscapeChars, IPhrase } from "../types";
 import { Markdown } from "./regex";
 
 export class Utility {
@@ -28,5 +29,10 @@ export class Utility {
     const removeEOL = input.replace(/\n/g, " ");
     const plainText = this.stripMarkdown(removeEOL).trim();
     return this.shortenString(100, plainText);
+  }
+  public async getPhrase(): Promise<IPhrase> {
+    const { data } = await axios.get<IPhrase[]>("/phrase.json");
+    const index = Math.floor(Math.random() * data.length);
+    return data[index];
   }
 }

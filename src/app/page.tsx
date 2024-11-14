@@ -5,14 +5,16 @@ import { VerificationAlert } from "./components/alert.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RecentPosts } from "./components/recent.component";
 import { useEffect, useState } from "react";
-import type { IPhraseData } from "./types";
 import { UserStore } from "./store/user";
+import type { IPhrase } from "./types";
+import { Utility } from "./utility";
 import Link from "next/link";
-import axios from "axios";
+
+const utility = new Utility();
 
 export default function Home() {
   const { user_id, loading } = UserStore();
-  const [phrase, setPhrase] = useState<IPhraseData>({
+  const [phrase, setPhrase] = useState<IPhrase>({
     text: "",
     author: "",
   });
@@ -21,9 +23,8 @@ export default function Home() {
   useEffect(() => {
     async function getPhrase() {
       try {
-        const { data } = await axios.get<IPhraseData[]>("/phrase.json");
-        const randomIndex = Math.floor(Math.random() * data.length);
-        setPhrase(data[randomIndex]);
+        const phrase = await utility.getPhrase();
+        setPhrase(phrase);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         setError(true);

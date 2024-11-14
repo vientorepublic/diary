@@ -1,5 +1,5 @@
 "use client";
-import type { IPaginationData, IPostPreview, ISearchQuery, PostSearchTypes, SortOptions } from "../types";
+import type { IPagination, IPostPreview, ISearchQuery, PostSearchTypes, SortOptions } from "../types";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetcher, swrHttp } from "../utility/fetcher";
@@ -21,7 +21,7 @@ export default function PostPage() {
   const [searchPage, setSearchPage] = useState<number>(1);
   const [searchError, setSearchError] = useState<string>("");
   const [searchType, setSearchType] = useState<PostSearchTypes>("title");
-  const [searchResult, setSearchResult] = useState<IPaginationData<IPostPreview[]> | null>(null);
+  const [searchResult, setSearchResult] = useState<IPagination<IPostPreview[]> | null>(null);
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(inputValue);
@@ -45,7 +45,7 @@ export default function PostPage() {
         params.append("page", String(page));
         params.append("sort", sort);
         params.append("query", query);
-        const { data } = await fetcher.get<IPaginationData<IPostPreview[]>>("/search", {
+        const { data } = await fetcher.get<IPagination<IPostPreview[]>>("/search", {
           params,
         });
         setSearchResult(data);
@@ -68,7 +68,7 @@ export default function PostPage() {
       resetSearchData();
     }
   }, [debouncedValue, searchPage, searchType, sort]);
-  const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
+  const { data, isLoading, error } = useSWR<IPagination<IPostPreview[]>>(
     {
       url: `/post/posts?page=${page}&sort=${sort}`,
     },

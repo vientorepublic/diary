@@ -1,6 +1,6 @@
 "use client";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import type { IMyPost, IPaginationData, SortOptions } from "@/app/types";
+import type { IMyPost, IPagination, SortOptions } from "@/app/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PostCard } from "@/app/components/card.component";
 import { Alert } from "@/app/components/alert.component";
@@ -18,7 +18,7 @@ export default function PrivatePostPage() {
   const token = getCookie(name);
   const [page, setPage] = useState<number>(1);
   const [sort, setSort] = useState<SortOptions>("latest");
-  const { data, error, isLoading } = useSWR<IPaginationData<IMyPost[]>>(
+  const { data, error, isLoading } = useSWR<IPagination<IMyPost[]>>(
     {
       url: `/post/myPosts?page=${page}&sort=${sort}`,
       token,

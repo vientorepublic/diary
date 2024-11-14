@@ -1,5 +1,5 @@
 "use client";
-import type { IPaginationData, IPostPreview, IUserActivityProps } from "../types";
+import type { IPagination, IPostPreview, IUserActivityProps } from "../types";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { swrHttp } from "../utility/fetcher";
@@ -14,7 +14,7 @@ const utility = new Utility();
 export function UserActivity(props: IUserActivityProps) {
   const { id, sort } = props;
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading, error } = useSWR<IPaginationData<IPostPreview[]>>(
+  const { data, isLoading, error } = useSWR<IPagination<IPostPreview[]>>(
     {
       url: `/search?type=user_id&page=${page}&sort=${sort}&query=${id}`,
     },

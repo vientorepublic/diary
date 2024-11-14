@@ -2,8 +2,8 @@ import { faCheckCircle, faGear, faXmarkCircle } from "@fortawesome/free-solid-sv
 import { UserActivity } from "@/app/components/activity.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "@/app/components/tooltip.component";
+import { MetadataConfig } from "@/app/constants";
 import type { IUserProfile } from "@/app/types";
-import { OpenGraph } from "@/app/constants";
 import { User } from "@/app/utility/ssr";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   try {
     const { user_id, profile_image } = await user.get(id);
     return {
-      title: `사용자:${user_id} | ${OpenGraph.title}`,
+      title: `사용자:${user_id} | ${MetadataConfig.title}`,
       openGraph: {
         images: profile_image,
       },
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     if (err instanceof Error) {
       error = err.message;
     } else {
-      error = OpenGraph.description;
+      error = MetadataConfig.description;
     }
     return {
-      title: OpenGraph.title,
+      title: MetadataConfig.title,
       description: error,
     };
   }

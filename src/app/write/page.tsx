@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faSave, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
-import type { IEditPostPayload, IPostData, IWritePost, IWritePostPayload } from "../types";
+import type { IEditPostPayload, IMessage, IPostData, IWritePost, IWritePostPayload } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert, VerificationAlert } from "../components/alert.component";
 import { useSearchParams } from "next/navigation";
@@ -70,7 +70,7 @@ export default function WritePage() {
         public_post,
         g_recaptcha_response: token,
       };
-      const { data: result } = await fetcher.post(
+      const { data: result } = await fetcher.post<IMessage>(
         "/post/save",
         {
           ...payload,
@@ -112,7 +112,7 @@ export default function WritePage() {
         id: Number(postId),
         g_recaptcha_response: token,
       };
-      const { data: result } = await fetcher.patch(
+      const { data: result } = await fetcher.patch<IMessage>(
         "/post/edit",
         {
           ...payload,
@@ -193,7 +193,7 @@ export default function WritePage() {
         if (title && text && !isEditMode) {
           if (checkpointTitle !== title || checkpointText !== text) {
             if (event) event.preventDefault();
-            const { data: result } = await fetcher.post(
+            const { data: result } = await fetcher.post<IMessage>(
               "/post/draft/saveDraft",
               {
                 ...data,
@@ -213,7 +213,7 @@ export default function WritePage() {
         }
       } catch (err) {}
     }
-    // Listener/Interval
+    // listener/interval
     const handleBlur = () => {
       saveDraft({ title, text });
     };
@@ -239,7 +239,7 @@ export default function WritePage() {
   }
   async function removeDraft() {
     try {
-      const { data } = await fetcher.delete("/post/draft/removeDraft", {
+      const { data } = await fetcher.delete<IMessage>("/post/draft/removeDraft", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

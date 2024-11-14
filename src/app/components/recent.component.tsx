@@ -1,5 +1,5 @@
 "use client";
-import type { IPaginationData, IPostPreview, IRecentPostProps } from "../types";
+import type { IPagination, IPostPreview, IRecentPostProps } from "../types";
 import { swrHttp } from "../utility/fetcher";
 import { PostCard } from "./card.component";
 import { Warning } from "./alert.component";
@@ -10,7 +10,7 @@ const utility = new Utility();
 
 export function RecentPosts(props: IRecentPostProps) {
   const { refresh } = props;
-  const { data, error, isLoading } = useSWR<IPaginationData<IPostPreview[]>>(
+  const { data, error, isLoading } = useSWR<IPagination<IPostPreview[]>>(
     {
       url: `/post/posts?page=1&sort=latest`,
     },
