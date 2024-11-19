@@ -1,8 +1,8 @@
 "use client";
 import type { IPagination, IPostPreview, IRecentPostProps } from "../types";
-import { swrHttp } from "../utility/fetcher";
 import { PostCard } from "./card.component";
 import { Warning } from "./alert.component";
+import { fetcher } from "../utility/http";
 import { Utility } from "../utility";
 import useSWR from "swr";
 
@@ -14,7 +14,7 @@ export function RecentPosts(props: IRecentPostProps) {
     {
       url: `/post/posts?page=1&sort=latest`,
     },
-    swrHttp,
+    fetcher,
     {
       refreshInterval: refresh ? 5000 : undefined,
     }

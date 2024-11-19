@@ -2,9 +2,9 @@
 import type { IPagination, IPostPreview, ISearchQuery, PostSearchTypes, SortOptions } from "../types";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fetcher, swrHttp } from "../utility/fetcher";
 import { PostCard } from "../components/card.component";
 import { Alert } from "../components/alert.component";
+import { axios, fetcher } from "../utility/http";
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
 import { Utility } from "../utility";
@@ -45,7 +45,7 @@ export default function PostPage() {
         params.append("page", String(page));
         params.append("sort", sort);
         params.append("query", query);
-        const { data } = await fetcher.get<IPagination<IPostPreview[]>>("/search", {
+        const { data } = await axios.get<IPagination<IPostPreview[]>>("/search", {
           params,
         });
         setSearchResult(data);
@@ -72,7 +72,7 @@ export default function PostPage() {
     {
       url: `/post/posts?page=${page}&sort=${sort}`,
     },
-    swrHttp,
+    fetcher,
     {
       // Disable revalidation when input value is not empty
       revalidateOnFocus: inputValue ? false : true,

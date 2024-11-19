@@ -4,7 +4,7 @@ import type { IMyPost, IPagination, SortOptions } from "@/app/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PostCard } from "@/app/components/card.component";
 import { Alert } from "@/app/components/alert.component";
-import { swrHttp } from "@/app/utility/fetcher";
+import { fetcher } from "@/app/utility/http";
 import { getCookie } from "cookies-next";
 import { Cookie } from "@/app/constants";
 import { Utility } from "@/app/utility";
@@ -23,7 +23,7 @@ export default function PrivatePostPage() {
       url: `/post/myPosts?page=${page}&sort=${sort}`,
       token,
     },
-    swrHttp,
+    fetcher,
     {}
   );
   return (

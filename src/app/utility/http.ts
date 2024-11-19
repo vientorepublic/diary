@@ -1,13 +1,14 @@
 import type { IFetcherParams } from "../types";
-import axios from "axios";
+import _axios from "axios";
+const { create } = _axios;
 
-export const fetcher = axios.create({
+export const axios = create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "",
 });
 
-export async function swrHttp(params: IFetcherParams) {
+export async function fetcher(params: IFetcherParams) {
   const { url, token } = params;
-  const { data } = await fetcher.get(url, {
+  const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

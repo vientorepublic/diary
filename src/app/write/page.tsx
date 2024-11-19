@@ -8,10 +8,10 @@ import { useSearchParams } from "next/navigation";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
 import { confirmModal } from "../utility/modal";
-import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
 import { UserStore } from "../store/user";
 import { getCookie } from "cookies-next";
+import { axios } from "../utility/http";
 import { Cookie } from "../constants";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -70,7 +70,7 @@ export default function WritePage() {
         public_post,
         g_recaptcha_response: token,
       };
-      const { data: result } = await fetcher.post<IMessage>(
+      const { data: result } = await axios.post<IMessage>(
         "/post/save",
         {
           ...payload,
@@ -112,7 +112,7 @@ export default function WritePage() {
         id: Number(postId),
         g_recaptcha_response: token,
       };
-      const { data: result } = await fetcher.patch<IMessage>(
+      const { data: result } = await axios.patch<IMessage>(
         "/post/edit",
         {
           ...payload,
@@ -143,7 +143,7 @@ export default function WritePage() {
       try {
         const params = new URLSearchParams();
         params.append("id", id);
-        const { data: result } = await fetcher.get<IPostData>("/post/viewPrivate", {
+        const { data: result } = await axios.get<IPostData>("/post/viewPrivate", {
           params,
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -167,7 +167,7 @@ export default function WritePage() {
   useEffect(() => {
     async function loadDraft() {
       try {
-        const { data } = await fetcher.get<IWritePost>("/post/draft/loadDraft", {
+        const { data } = await axios.get<IWritePost>("/post/draft/loadDraft", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -193,7 +193,7 @@ export default function WritePage() {
         if (title && text && !isEditMode) {
           if (checkpointTitle !== title || checkpointText !== text) {
             if (event) event.preventDefault();
-            const { data: result } = await fetcher.post<IMessage>(
+            const { data: result } = await axios.post<IMessage>(
               "/post/draft/saveDraft",
               {
                 ...data,
@@ -239,7 +239,7 @@ export default function WritePage() {
   }
   async function removeDraft() {
     try {
-      const { data } = await fetcher.delete<IMessage>("/post/draft/removeDraft", {
+      const { data } = await axios.delete<IMessage>("/post/draft/removeDraft", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

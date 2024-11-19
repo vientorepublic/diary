@@ -1,8 +1,8 @@
 "use client";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fetcher } from "../utility/fetcher";
 import { useEffect, useState } from "react";
+import { axios } from "../utility/http";
 import { IUserProfile } from "../types";
 
 export function Alert({ children }: { children: string }) {
@@ -30,7 +30,7 @@ export function VerificationAlert({ id }: { id: string }) {
       try {
         const params = new URLSearchParams();
         params.append("id", id);
-        const { data } = await fetcher.get<IUserProfile>("/auth/user/userProfile", {
+        const { data } = await axios.get<IUserProfile>("/auth/user/userProfile", {
           params,
         });
         setVerified(data.verified);
