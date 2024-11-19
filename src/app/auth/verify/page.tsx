@@ -1,8 +1,8 @@
 "use client";
 import CloseTabImage from "@/app/static/image/undraw_close_tab.svg";
 import { useSearchParams } from "next/navigation";
-import { fetcher } from "@/app/utility/fetcher";
 import { useEffect, useState } from "react";
+import { axios } from "@/app/utility/http";
 import { isAxiosError } from "axios";
 import toast from "react-hot-toast";
 import Image from "next/image";
@@ -18,7 +18,7 @@ export default function VerifyPage() {
           toast.error("필수 인자가 누락되었습니다.");
           return;
         }
-        const { data } = await fetcher.post("/auth/verify", {
+        const { data } = await axios.post("/auth/verify", {
           identifier,
         });
         toast.success(data.message);

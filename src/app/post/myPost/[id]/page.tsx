@@ -3,8 +3,8 @@ import { RenderMarkdown } from "@/app/components/markdown.component";
 import { PostOption } from "@/app/components/option.component";
 import { Warning } from "@/app/components/alert.component";
 import type { IPostData, IPostProps } from "@/app/types";
-import { fetcher } from "@/app/utility/fetcher";
 import { useEffect, useState } from "react";
+import { axios } from "@/app/utility/http";
 import { getCookie } from "cookies-next";
 import { Cookie } from "@/app/constants";
 import { Utility } from "@/app/utility";
@@ -28,7 +28,7 @@ export default function ViewPrivatePostPage({ params }: IPostProps) {
       try {
         const params = new URLSearchParams();
         params.append("id", id);
-        const { data } = await fetcher.get<IPostData>("/post/viewPrivate", {
+        const { data } = await axios.get<IPostData>("/post/viewPrivate", {
           params,
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,9 +1,9 @@
 "use client";
 import { deleteCookie, getCookie } from "cookies-next";
 import { type ReactNode, useEffect } from "react";
-import { fetcher } from "../utility/fetcher";
 import { UserStore } from "../store/user";
 import type { IUserInfo } from "../types";
+import { axios } from "../utility/http";
 import { Cookie } from "../constants";
 import toast from "react-hot-toast";
 
@@ -14,7 +14,7 @@ export function DataLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function getUser() {
       try {
-        const { data } = await fetcher.get<IUserInfo>("/auth/user/profile", {
+        const { data } = await axios.get<IUserInfo>("/auth/user/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -3,8 +3,8 @@ import type { ILoginAuthForm, ILoginResponse, IUserInfo } from "@/app/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { useReCaptcha } from "next-recaptcha-v3";
-import { fetcher } from "@/app/utility/fetcher";
 import { UserStore } from "@/app/store/user";
+import { axios } from "@/app/utility/http";
 import { useForm } from "react-hook-form";
 import { setCookie } from "cookies-next";
 import { Cookie } from "@/app/constants";
@@ -25,7 +25,7 @@ export default function LoginPage() {
     setDisabled(true);
     try {
       const token = await executeRecaptcha("login");
-      const { data: result } = await fetcher.post<ILoginResponse>("/auth/login", {
+      const { data: result } = await axios.post<ILoginResponse>("/auth/login", {
         ...data,
         g_recaptcha_response: token,
       });
@@ -39,7 +39,7 @@ export default function LoginPage() {
         path,
       });
       // Init user profile
-      const { data: user } = await fetcher.get<IUserInfo>("/auth/user/profile", {
+      const { data: user } = await axios.get<IUserInfo>("/auth/user/profile", {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

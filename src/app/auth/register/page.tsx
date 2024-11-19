@@ -4,7 +4,7 @@ import type { IRegisterAuthForm } from "@/app/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { useReCaptcha } from "next-recaptcha-v3";
-import { fetcher } from "@/app/utility/fetcher";
+import { axios } from "@/app/utility/http";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { useState } from "react";
@@ -29,7 +29,7 @@ export default function RegisterPage() {
     setDisabled(true);
     try {
       const token = await executeRecaptcha("register");
-      const { data: result } = await fetcher.post("/auth/register", {
+      const { data: result } = await axios.post("/auth/register", {
         ...data,
         g_recaptcha_response: token,
       });

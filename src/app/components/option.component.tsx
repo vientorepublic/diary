@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "nextjs-toploader/app";
 import type { PostOptionProps } from "../types";
 import { confirmModal } from "../utility/modal";
-import { fetcher } from "../utility/fetcher";
 import { getCookie } from "cookies-next";
+import { axios } from "../utility/http";
 import { Cookie } from "../constants";
 import { isAxiosError } from "axios";
 import { useState } from "react";
@@ -29,7 +29,7 @@ export function PostOption(props: PostOptionProps) {
     try {
       const params = new URLSearchParams();
       params.append("id", String(id));
-      const { data } = await fetcher.delete("/post/remove", {
+      const { data } = await axios.delete("/post/remove", {
         params,
         headers: {
           Authorization: `Bearer ${token}`,

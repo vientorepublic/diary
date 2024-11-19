@@ -2,9 +2,9 @@
 import type { IPagination, IPostPreview, IUserActivityProps } from "../types";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { swrHttp } from "../utility/fetcher";
 import { PostCard } from "./card.component";
 import { Alert } from "./alert.component";
+import { fetcher } from "../utility/http";
 import { Utility } from "../utility";
 import { useState } from "react";
 import useSWR from "swr";
@@ -18,7 +18,7 @@ export function UserActivity(props: IUserActivityProps) {
     {
       url: `/search?type=user_id&page=${page}&sort=${sort}&query=${id}`,
     },
-    swrHttp,
+    fetcher,
     {
       shouldRetryOnError: false,
     }
