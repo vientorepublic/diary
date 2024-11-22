@@ -6,9 +6,10 @@ import type { PostOptionProps } from "../types";
 import { confirmModal } from "../utility/modal";
 import { getCookie } from "cookies-next";
 import { axios } from "../utility/http";
-import { Cookie } from "../constants";
+import { Cookie } from "../config";
 import { isAxiosError } from "axios";
 import { useState } from "react";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import toast from "react-hot-toast";
 
 export function PostOption(props: PostOptionProps) {

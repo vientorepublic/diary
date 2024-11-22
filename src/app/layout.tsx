@@ -1,4 +1,4 @@
-import { MetadataConfig, ViewportConfig } from "./constants";
+import { MetadataConfig, ViewportConfig } from "./config";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "./components/footer.component";
 import { Navbar } from "./components/navbar.component";

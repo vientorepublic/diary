@@ -1,6 +1,6 @@
 "use client";
 import { UserStore } from "../store/user";
-import { brandName } from "../constants";
+import { brandName } from "../config";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";

@@ -6,7 +6,7 @@ import { PostCard } from "@/app/components/card.component";
 import { Alert } from "@/app/components/alert.component";
 import { fetcher } from "@/app/utility/http";
 import { getCookie } from "cookies-next";
-import { Cookie } from "@/app/constants";
+import { Cookie } from "@/app/config";
 import { Utility } from "@/app/utility";
 import { useState } from "react";
 import useSWR from "swr";

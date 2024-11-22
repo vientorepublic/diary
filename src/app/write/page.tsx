@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { UserStore } from "../store/user";
 import { getCookie } from "cookies-next";
 import { axios } from "../utility/http";
-import { Cookie } from "../constants";
+import { Cookie } from "../config";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "@uiw/react-markdown-editor/markdown-editor.css";
@@ -27,7 +27,7 @@ const autoSavePeriod = 10000;
 const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((mod) => mod.default), {
   ssr: false,
   loading: () => (
-    <div className="flex flex-col gap-4 justify-center items-center h-400px">
+    <div className="flex flex-col gap-4 justify-center items-center h-96">
       <div className="dots-loader-white"></div>
       <p className="text-xl">텍스트 편집기를 불러오고 있어요...</p>
     </div>

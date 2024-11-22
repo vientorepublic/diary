@@ -2,7 +2,7 @@ import { faCheckCircle, faGear, faXmarkCircle } from "@fortawesome/free-solid-sv
 import { UserActivity } from "@/app/components/activity.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "@/app/components/tooltip.component";
-import { MetadataConfig } from "@/app/constants";
+import { MetadataConfig } from "@/app/config";
 import type { IUserProfile } from "@/app/types";
 import { User } from "@/app/utility/ssr";
 import { Metadata } from "next";

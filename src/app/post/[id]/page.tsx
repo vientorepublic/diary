@@ -1,7 +1,7 @@
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import { RecentPosts } from "@/app/components/recent.component";
 import type { IPostData, IPostProps } from "@/app/types";
-import { MetadataConfig } from "@/app/constants";
+import { MetadataConfig } from "@/app/config";
 import { Post } from "@/app/utility/ssr";
 import { Utility } from "@/app/utility";
 import type { Metadata } from "next";

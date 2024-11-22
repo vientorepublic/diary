@@ -2,7 +2,7 @@
 import { type ReactNode, useEffect } from "react";
 import { useRouter } from "nextjs-toploader/app";
 import { getCookie } from "cookies-next";
-import { Cookie } from "../constants";
+import { Cookie } from "../config";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
