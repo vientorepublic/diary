@@ -3,7 +3,7 @@ import { deleteCookie, getCookie } from "cookies-next";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { UserStore } from "@/app/store/user";
-import { Cookie } from "@/app/constants";
+import { Cookie } from "@/app/config";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 

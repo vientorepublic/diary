@@ -4,7 +4,7 @@ import { type ReactNode, useEffect } from "react";
 import { UserStore } from "../store/user";
 import type { IUserInfo } from "../types";
 import { axios } from "../utility/http";
-import { Cookie } from "../constants";
+import { Cookie } from "../config";
 import toast from "react-hot-toast";
 
 export function DataLayout({ children }: { children: ReactNode }) {

@@ -7,7 +7,7 @@ import { UserStore } from "@/app/store/user";
 import { axios } from "@/app/utility/http";
 import { useForm } from "react-hook-form";
 import { setCookie } from "cookies-next";
-import { Cookie } from "@/app/constants";
+import { Cookie } from "@/app/config";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";

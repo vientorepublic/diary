@@ -83,7 +83,7 @@ export default function PostPage() {
       <div className="py-10 w-full lg:w-4/5">
         <div className="text-left py-20">
           <h1 className="text-4xl">모든 게시글</h1>
-          <div className="flex flex-col gap-2 my-7">
+          <div className="flex flex-col gap-1 my-7">
             {/* Search form */}
             <form>
               <input
@@ -93,6 +93,7 @@ export default function PostPage() {
                 className="block w-full p-2.5 rounded-xl bg-gray-700 disabled:bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 mb-4"
                 placeholder="검색어를 입력해주세요."
               />
+              <p className="text-gray-500 text-base mb-1">검색 필터</p>
               <input
                 id="radio-title"
                 type="radio"

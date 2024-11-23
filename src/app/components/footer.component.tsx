@@ -1,4 +1,4 @@
-import { brandName } from "../constants";
+import { brandName } from "../config";
 
 export function Footer() {
   return (
