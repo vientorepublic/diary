@@ -2,8 +2,9 @@
 "use client";
 import { faBold, faExpand, faEye, faHeading, faImage, faItalic, faLink, faSave, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
 import type { IEditPostPayload, IMessage, IPostData, IWritePost, IWritePostPayload } from "../types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { autoSavePeriod, Cookie, maxTextLength, maxTitleLength } from "../config";
 import { Alert, VerificationAlert } from "../components/alert.component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSearchParams } from "next/navigation";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useRouter } from "nextjs-toploader/app";
@@ -12,17 +13,12 @@ import { useEffect, useState } from "react";
 import { UserStore } from "../store/user";
 import { getCookie } from "cookies-next";
 import { axios } from "../utility/http";
-import { Cookie } from "../config";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "@uiw/react-markdown-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
-
-const maxTitleLength = 50;
-const maxTextLength = 5000;
-const autoSavePeriod = 10000;
 
 const MarkdownEditor = dynamic(() => import("@uiw/react-markdown-editor").then((mod) => mod.default), {
   ssr: false,
@@ -137,6 +133,34 @@ export default function WritePage() {
       setUploading(false);
     }
   }
+  function confirmRemoveDraft() {
+    confirmModal({
+      title: "잠시만요!",
+      message: "정말 저장된 초안을 삭제 하시겠어요? 현재 작성 중인 내용도 함께 삭제됩니다.",
+      callback: () => removeDraft(),
+    });
+  }
+  async function removeDraft() {
+    try {
+      const { data } = await axios.delete<IMessage>("/post/draft/removeDraft", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setTitle("");
+      setText("");
+      setLastCheckpoint({
+        title: "",
+        text: "",
+      });
+      setDraftLoaded(false);
+      toast.success(data.message);
+    } catch (err) {
+      if (isAxiosError(err) && err.response) {
+        toast.error(err.response.data.message);
+      }
+    }
+  }
   // Check edit mode
   useEffect(() => {
     async function getPost(id: string) {
@@ -188,11 +212,11 @@ export default function WritePage() {
   // Auto Save
   useEffect(() => {
     async function saveDraft(data: IWritePost, event?: BeforeUnloadEvent) {
-      try {
+      if (title && text && !isEditMode) {
         const { title: checkpointTitle, text: checkpointText } = lastCheckpoint;
-        if (title && text && !isEditMode) {
-          if (checkpointTitle !== title || checkpointText !== text) {
-            if (event) event.preventDefault();
+        if (checkpointTitle !== title || checkpointText !== text) {
+          if (event) event.preventDefault();
+          try {
             const { data: result } = await axios.post<IMessage>(
               "/post/draft/saveDraft",
               {
@@ -209,11 +233,10 @@ export default function WritePage() {
             });
             if (!draftLoaded) setDraftLoaded(true);
             toast.success(result.message);
-          }
+          } catch (err) {}
         }
-      } catch (err) {}
+      }
     }
-    // listener/interval
     const handleBlur = () => {
       saveDraft({ title, text });
     };
@@ -223,41 +246,12 @@ export default function WritePage() {
     window.addEventListener("blur", handleBlur);
     window.addEventListener("beforeunload", beforeUnload);
     const autoSave = setInterval(() => saveDraft({ title, text }), autoSavePeriod);
-    // Clear listener/interval before unload page
     return () => {
       window.removeEventListener("blur", handleBlur);
       window.removeEventListener("beforeunload", beforeUnload);
       clearInterval(autoSave);
     };
   }, [accessToken, draftLoaded, isEditMode, lastCheckpoint, text, title]);
-  function confirmRemoveDraft() {
-    confirmModal({
-      title: "잠시만요!",
-      message: "정말 저장된 초안을 삭제 하시겠어요? 현재 작성 중인 내용도 함께 삭제됩니다.",
-      callback: () => removeDraft(),
-    });
-  }
-  async function removeDraft() {
-    try {
-      const { data } = await axios.delete<IMessage>("/post/draft/removeDraft", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      setTitle("");
-      setText("");
-      setLastCheckpoint({
-        title: "",
-        text: "",
-      });
-      setDraftLoaded(false);
-      toast.success(data.message);
-    } catch (err) {
-      if (isAxiosError(err) && err.response) {
-        toast.error(err.response.data.message);
-      }
-    }
-  }
   return (
     <section className="flex flex-col items-center justify-center px-10 py-20">
       <div className="py-10 w-full md:w-4/5">
