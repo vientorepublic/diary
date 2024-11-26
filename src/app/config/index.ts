@@ -2,6 +2,9 @@ import type { ICookie } from "../types";
 import type { Viewport } from "next";
 
 export const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || "diary.viento.me";
+export const maxTitleLength = 50;
+export const maxTextLength = 5000;
+export const autoSavePeriod = 10000;
 
 export const MetadataConfig = {
   title: "글귀저장소",
