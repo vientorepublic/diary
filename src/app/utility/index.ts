@@ -1,6 +1,6 @@
-import axios from "axios";
 import type { HTMLEscapeChars, IPhrase } from "../types";
 import { Markdown } from "./regex";
+import axios from "axios";
 
 export class Utility {
   public shortenString(maxLength: number, str: string): string {
