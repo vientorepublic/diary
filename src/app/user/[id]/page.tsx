@@ -11,8 +11,8 @@ import dayjs from "dayjs";
 
 const user = new User();
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
   try {
     const { user_id, profile_image } = await user.get(id);
     return {
@@ -35,8 +35,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 }
 
-export default async function UserProfilePage({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function UserProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   let data: IUserProfile | undefined;
   let error: string | undefined;
   try {

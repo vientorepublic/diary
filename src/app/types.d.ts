@@ -129,7 +129,7 @@ export interface User extends IUserInfo {
 }
 
 export interface IPostProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export interface ILoginAuthForm {
