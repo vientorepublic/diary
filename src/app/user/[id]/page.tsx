@@ -2,8 +2,8 @@ import { faCheckCircle, faGear, faXmarkCircle } from "@fortawesome/free-solid-sv
 import { UserActivity } from "@/app/components/activity.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "@/app/components/tooltip.component";
+import type { IdProps, IUserProfile } from "@/app/types";
 import { MetadataConfig } from "@/app/config";
-import type { IUserProfile } from "@/app/types";
 import { User } from "@/app/utility/ssr";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 const user = new User();
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: IdProps): Promise<Metadata> {
   const { id } = await params;
   try {
     const { user_id, profile_image } = await user.get(id);
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 }
 
-export default async function UserProfilePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function UserProfilePage({ params }: IdProps) {
   const { id } = await params;
   let data: IUserProfile | undefined;
   let error: string | undefined;

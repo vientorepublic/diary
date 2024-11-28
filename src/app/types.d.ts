@@ -128,7 +128,7 @@ export interface User extends IUserInfo {
   removeUser: () => void;
 }
 
-export interface IPostProps {
+export interface IdProps {
   params: Promise<{ id: string }>;
 }
 
