@@ -1,6 +1,6 @@
 import { RenderMarkdown } from "@/app/components/markdown.component";
 import { RecentPosts } from "@/app/components/recent.component";
-import type { IPostData, IPostProps } from "@/app/types";
+import type { IPostData, IdProps } from "@/app/types";
 import { MetadataConfig } from "@/app/config";
 import { Post } from "@/app/utility/ssr";
 import { Utility } from "@/app/utility";
@@ -12,8 +12,8 @@ import dayjs from "dayjs";
 const utility = new Utility();
 const post = new Post();
 
-export async function generateMetadata({ params }: IPostProps): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata({ params }: IdProps): Promise<Metadata> {
+  const { id } = await params;
   try {
     const { title, text } = await post.get(id);
     const description = utility.convertDescription(text);
@@ -35,8 +35,8 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
   }
 }
 
-export default async function ViewPostPage({ params }: IPostProps) {
-  const { id } = params;
+export default async function ViewPostPage({ params }: IdProps) {
+  const { id } = await params;
   let data: IPostData | undefined;
   let error: string | undefined;
   try {

@@ -128,8 +128,8 @@ export interface User extends IUserInfo {
   removeUser: () => void;
 }
 
-export interface IPostProps {
-  params: { id: string };
+export interface IdProps {
+  params: Promise<{ id: string }>;
 }
 
 export interface ILoginAuthForm {
