@@ -82,7 +82,7 @@ export default function PrivatePostPage() {
                       isPublic={e.public_post}
                       profileImage={e.profile_image}
                       createdAt={e.created_at}
-                      buttonLink={`/post/myPost/${e.id}`}
+                      buttonLink={`/post/myPost/view?id=${e.id}`}
                       key={i}
                     />
                   );

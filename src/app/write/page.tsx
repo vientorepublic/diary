@@ -16,7 +16,7 @@ import { axios } from "../utility/http";
 import { isAxiosError } from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "@uiw/react-markdown-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
+// import "@uiw/react-markdown-preview/markdown.css";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 

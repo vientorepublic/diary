@@ -13,7 +13,7 @@ const utility = new Utility();
 const post = new Post();
 
 export async function generateMetadata({ params }: IPostProps): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
   try {
     const { title, text } = await post.get(id);
     const description = utility.convertDescription(text);
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: IPostProps): Promise<Metadata
 }
 
 export default async function ViewPostPage({ params }: IPostProps) {
-  const { id } = params;
+  const { id } = await params;
   let data: IPostData | undefined;
   let error: string | undefined;
   try {
