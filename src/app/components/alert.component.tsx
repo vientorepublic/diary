@@ -1,9 +1,9 @@
 "use client";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IUserProfile } from "../types";
 import { useEffect, useState } from "react";
 import { axios } from "../utility/http";
-import { IUserProfile } from "../types";
 
 export function Alert({ children }: { children: string }) {
   return (
