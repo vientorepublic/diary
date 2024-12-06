@@ -17,8 +17,8 @@ import dayjs from "dayjs";
 const utility = new Utility();
 
 export default function ViewPrivatePostPage() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const params = useSearchParams();
+  const id = params.get("id");
   const { name } = Cookie;
   const token = getCookie(name);
   const [fetching, setFetching] = useState<boolean>(true);
