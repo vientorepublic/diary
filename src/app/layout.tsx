@@ -4,8 +4,8 @@ import { Footer } from "./components/footer.component";
 import { Navbar } from "./components/navbar.component";
 import { ToastLayout } from "./layout/toast.layout";
 import { DataLayout } from "./layout/data.layout";
+import { Suspense, type ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
-import type { ReactNode } from "react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import NextTopLoader from "nextjs-toploader";
 import "@/app/static/css/loader.css";
@@ -25,13 +25,15 @@ export default function RootLayout({
     <html lang="ko">
       <body className="bg-gray-900 text-gray-100">
         <NextTopLoader showSpinner={true} height={2} />
-        <DataLayout>
-          <ToastLayout>
-            <Navbar />
-            {children}
-            <Footer />
-          </ToastLayout>
-        </DataLayout>
+        <Suspense>
+          <DataLayout>
+            <ToastLayout>
+              <Navbar />
+              {children}
+              <Footer />
+            </ToastLayout>
+          </DataLayout>
+        </Suspense>
       </body>
     </html>
   );
